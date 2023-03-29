@@ -309,6 +309,12 @@
 
 <!-- SCRIPTS -->
 
+<!-- PWA -->
+<script src="<?= base_url('assets/js/upup.min.js') ?>"></script>
+<script>
+    UpUp.start({ content: 'Cannot reach site. Please check your internet connection.', scope: '/' });
+</script>
+
 <script>
     function toggleMenu() {
         var menuItems = document.getElementsByClassName('menu-item');
