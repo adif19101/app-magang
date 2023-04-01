@@ -395,7 +395,30 @@ class Auth extends ShieldAuth
      */
     public function loginRedirect(): string
     {
-        $url = setting('Auth.redirects')['login'];
+
+        $url = '';
+
+        switch (true) {
+            case auth()->user()->inGroup('user'):
+                $url = '/user';
+                break;
+            
+            case auth()->user()->inGroup('admin'):
+                $url = '/admin';
+                break;
+                
+            case auth()->user()->inGroup('company'):
+                $url = '/company';
+                break;
+            
+            case auth()->user()->inGroup('superadmin'):
+                $url = '/admin';
+                break;
+
+            default:
+                $url = setting('Auth.redirects')['login'];
+                break;
+        }
 
         return $this->getUrl($url);
     }

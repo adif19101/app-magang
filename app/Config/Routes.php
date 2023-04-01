@@ -30,10 +30,23 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-// $routes->get('/login', 'Auth::login');
-// $routes->get('/register', 'Auth::register');
 $routes->get('/home', 'Home::home');
 $routes->get('/default-home', 'Home::defaultHome');
+
+// TODO delete later
+$routes->get('/superadmin', 'Home::superadmin');
+
+$routes->group('admin', ['filter' => 'group:admin,superadmin'], static function ($routes) {
+    $routes->group(
+        '',
+        ['filter' => ['group:admin,superadmin', 'permission:users.manage']],
+        static function ($routes) {
+            $routes->resource('users');
+            $routes->get('/', 'Admin::index');
+            $routes->get('users', 'Admin::users');
+        }
+    );
+});
 
 service('auth')->routes($routes);
 

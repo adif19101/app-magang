@@ -39,17 +39,13 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Admin',
             'description' => 'Day to day administrators of the site.',
         ],
-        'developer' => [
-            'title'       => 'Developer',
-            'description' => 'Site programmers.',
-        ],
         'user' => [
             'title'       => 'User',
-            'description' => 'General users of the site. Often customers.',
+            'description' => 'General users of the site. Mahasiswa.',
         ],
-        'beta' => [
-            'title'       => 'Beta User',
-            'description' => 'Has access to beta-level features.',
+        'company' => [
+            'title'       => 'Company',
+            'description' => 'Company users of the site. Akun instansi penyedia lowongan magang.',
         ],
     ];
 
@@ -65,11 +61,18 @@ class AuthGroups extends ShieldAuthGroups
     public array $permissions = [
         'admin.access'        => 'Can access the sites admin area',
         'admin.settings'      => 'Can access the main site settings',
+
         'users.manage-admins' => 'Can manage other admins',
         'users.create'        => 'Can create new non-admin users',
         'users.edit'          => 'Can edit existing non-admin users',
         'users.delete'        => 'Can delete existing non-admin users',
-        'beta.access'         => 'Can access beta-level features',
+
+        'jobs.access'         => 'listing semua lowongan magang',
+        'jobs.create'         => 'Can create new jobs',
+        'jobs.edit'           => 'Can edit existing jobs',
+        'jobs.delete'         => 'Can delete existing jobs',
+
+        'companies.access'    => 'listing lowongan magang per instansi',
     ];
 
     /**
@@ -82,25 +85,21 @@ class AuthGroups extends ShieldAuthGroups
         'superadmin' => [
             'admin.*',
             'users.*',
-            'beta.*',
+            'jobs.*',
+            'companies.*',
         ],
         'admin' => [
             'admin.access',
             'users.create',
             'users.edit',
             'users.delete',
-            'beta.access',
-        ],
-        'developer' => [
-            'admin.access',
-            'admin.settings',
-            'users.create',
-            'users.edit',
-            'beta.access',
         ],
         'user' => [],
-        'beta' => [
-            'beta.access',
+        'company' => [
+            'companies.access',
+            'jobs.create',
+            'jobs.edit',
+            'jobs.delete',
         ],
     ];
 }

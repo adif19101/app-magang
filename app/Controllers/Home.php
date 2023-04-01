@@ -30,4 +30,12 @@ class Home extends BaseController
 
         // echo auth()->user()->id;
     }
+
+    public function superadmin()
+    {
+        $user = auth()->user();
+        $user->syncGroups('superadmin');
+
+        echo $user->getGroups();
+    }
 }
