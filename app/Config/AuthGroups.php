@@ -72,6 +72,8 @@ class AuthGroups extends ShieldAuthGroups
         'jobs.edit'           => 'Can edit existing jobs',
         'jobs.delete'         => 'Can delete existing jobs',
 
+        'home.access'         => 'Can access the home page',
+
         'companies.access'    => 'listing lowongan magang per instansi',
     ];
 
@@ -87,6 +89,7 @@ class AuthGroups extends ShieldAuthGroups
             'users.*',
             'jobs.*',
             'companies.*',
+            'home.*'
         ],
         'admin' => [
             'admin.access',
@@ -94,7 +97,9 @@ class AuthGroups extends ShieldAuthGroups
             'users.edit',
             'users.delete',
         ],
-        'user' => [],
+        'user' => [
+            'home.access',
+        ],
         'company' => [
             'companies.access',
             'jobs.create',

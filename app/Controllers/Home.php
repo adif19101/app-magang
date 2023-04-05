@@ -25,18 +25,12 @@ class Home extends BaseController
 
     public function home()
     {
-        // $user = auth()->user();
-        // if (! auth()->loggedIn()) {
-        //     return redirect()->back()->with('error', 'You do not have permissions to access that page.');
-        // }
-
-        if (!auth()->user()->can('users.create')) {
-            return redirect()->back()->with('error', 'You do not have permissions to access that page.');
+        if (!auth()->user()->can('home.access')) {
+            toastNotif('error', 'You do not have permissions to access that page.');
+            return redirect()->back();
         }
 
         return view('home');
-
-        // echo auth()->user()->id;
     }
 
     public function superadmin()

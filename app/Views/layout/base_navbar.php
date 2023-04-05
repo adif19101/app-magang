@@ -18,8 +18,12 @@
                 <!-- <li class="nav-item"><a class="nav-link" href="blog-post.html">Blog Post</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="about-us.html">About Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                <?php if(auth()->loggedIn()): ?>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('logout') ?>">Logout</a></li>
+                <?php else: ?>
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('login') ?>">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= base_url('register') ?>">Register</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
