@@ -8,6 +8,13 @@ class Home extends BaseController
 {
     public function index()
     {
+        // session()->setFlashdata(
+        //     'actionMsg',
+        //     [
+        //         'icon' => 'success',
+        //         'message' => 'Welcome to CodeIgniter 4!'
+        //     ]
+        // );
         return view('index');
     }
 
@@ -23,9 +30,10 @@ class Home extends BaseController
         //     return redirect()->back()->with('error', 'You do not have permissions to access that page.');
         // }
 
-        if (! auth()->user()->can('users.create')) {
+        if (!auth()->user()->can('users.create')) {
             return redirect()->back()->with('error', 'You do not have permissions to access that page.');
         }
+
         return view('home');
 
         // echo auth()->user()->id;

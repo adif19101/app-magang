@@ -46,3 +46,11 @@ Events::on('pre_system', static function () {
         Services::toolbar()->respond();
     }
 });
+
+Events::on('login', static function () {
+    toastNotif('success', 'Login Successful!');
+});
+
+Events::on('logout', static function () {
+    toastNotif('success', 'Logout Successful!');
+});
