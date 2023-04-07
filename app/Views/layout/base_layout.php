@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/fonts/simple-line-icons.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/baguetteBox.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/vanilla-zoom.min.css') ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/font-awesome.min.css') ?>"> -->
 </head>
 
 <body>
@@ -26,6 +27,7 @@
     <script src="<?= base_url('assets/js/vanilla-zoom.js') ?>"></script>
     <script src="<?= base_url('assets/js/theme.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/d7e4f69e6f.js" crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function() {

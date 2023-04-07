@@ -48,6 +48,17 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
     );
 });
 
+$routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static function ($routes) {
+    $routes->group(
+        '',
+        ['filter' => ['group:user,superadmin', 'permission:home.access']],
+        static function ($routes) {
+            // $routes->resource('users', ['websafe' => 1]);
+            $routes->get('/', 'Mahasiswa::index');
+        }
+    );
+});
+
 service('auth')->routes($routes);
 
 /*

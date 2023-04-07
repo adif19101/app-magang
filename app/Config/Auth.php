@@ -400,7 +400,7 @@ class Auth extends ShieldAuth
 
         switch (true) {
             case auth()->user()->inGroup('user'):
-                $url = '/user';
+                $url = '/mahasiswa';
                 break;
             
             case auth()->user()->inGroup('admin'):
