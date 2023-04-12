@@ -5,30 +5,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - Brand</title>
-    <link rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css') ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css') ?>"> -->
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-payments.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>">
     <link rel="manifest" href="<?= base_url('assets/pwa/manifest.json') ?>">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
-    <link rel="stylesheet" href="<?= base_url('assets/fonts/simple-line-icons.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/baguetteBox.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/vanilla-zoom.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.css') ?>">
 </head>
 
 <body>
-    <?= $this->include('layout/base_navbar') ?>
+    <?= $this->include('layout/tabler_navbar') ?>
+
+    <!-- Page Header -->
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <h2 class="page-title">
+                        Form elements
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?= $this->renderSection('content') ?>
 
-    <?= $this->include('layout/base_footer') ?>
+    <?= $this->include('layout/tabler_footer') ?>
 
     <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
-    <script src="<?= base_url('assets/bootstrap/js/bootstrap.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/baguetteBox.min.js') ?>"></script>
-    <script src="<?= base_url('assets/js/vanilla-zoom.js') ?>"></script>
-    <script src="<?= base_url('assets/js/theme.js') ?>"></script>
+    <!-- <script src="<?= base_url('assets/bootstrap/js/bootstrap.min.js') ?>"></script> -->
+    <script src="<?= base_url('assets/js/tabler.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/d7e4f69e6f.js" crossorigin="anonymous"></script>
-    <script src="<?= base_url('assets/summernote-0.8.18-dist/summernote.js') ?>"></script>
+    <script src="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.js') ?>"></script>
 
     <script>
         $(document).ready(function() {
