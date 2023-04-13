@@ -35,11 +35,13 @@
     <?= $this->include('layout/tabler_footer') ?>
 
     <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
-    <!-- <script src="<?= base_url('assets/bootstrap/js/bootstrap.min.js') ?>"></script> -->
+    <script src="<?= base_url('assets/js/masonry.pkgd.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/tabler.min.js') ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://kit.fontawesome.com/d7e4f69e6f.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/d7e4f69e6f.js" crossorigin="anonymous"></script> -->
     <script src="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.js') ?>"></script>
+    <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/additional-methods.min.js') ?>"></script>
 
     <script>
         $(document).ready(function() {

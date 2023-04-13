@@ -4,8 +4,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
-                <img src="./static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+            <a href="<?= base_url() ?>">
+                Magang Informatika Unsika
             </a>
         </h1>
         <div class="navbar-nav flex-row order-md-last">
@@ -148,66 +148,35 @@
             <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center justify-content-between">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="./#">
+                        <a class="nav-link" href="<?= groupUrl() ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                                    <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                First
+                                Home
                             </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./#">
+                        <a class="nav-link" href="<?= groupUrl('lowongan') ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                                    <path d="M9 6l11 0"></path>
+                                    <path d="M9 12l11 0"></path>
+                                    <path d="M9 18l11 0"></path>
+                                    <path d="M5 6l0 .01"></path>
+                                    <path d="M5 12l0 .01"></path>
+                                    <path d="M5 18l0 .01"></path>
                                 </svg>
                             </span>
                             <span class="nav-link-title">
-                                Second
-                            </span>
-                            <span class="badge badge-sm bg-red">2</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#navbar-third" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Third
-                            </span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="./#">
-                                First
-                            </a>
-                            <a class="dropdown-item" href="./#">
-                                Second
-                            </a>
-                            <a class="dropdown-item" href="./#">
-                                Third
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="./#">
-                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
-                                </svg>
-                            </span>
-                            <span class="nav-link-title">
-                                Disabled
+                                Job List
                             </span>
                         </a>
                     </li>

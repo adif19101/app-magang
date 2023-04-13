@@ -99,6 +99,7 @@ class AuthGroups extends ShieldAuthGroups
         ],
         'user' => [
             'home.access',
+            'jobs.*',
         ],
         'company' => [
             'companies.access',

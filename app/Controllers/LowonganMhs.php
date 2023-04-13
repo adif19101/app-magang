@@ -28,7 +28,10 @@ class LowonganMhs extends BaseController
 
     public function create()
     {
-        
+        echo '<pre>';
+        echo var_dump($_POST);
+        // var_dump($this->request->getJsonVar());
+        die;
     }
 
     public function update(int $id)
