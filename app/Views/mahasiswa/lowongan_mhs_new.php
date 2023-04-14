@@ -1,5 +1,15 @@
 <?= $this->extend('layout/tabler_layout') ?>
 
+<?= $this->section('header-button'); ?>
+<div class="col-auto">
+    <div class="btn-list">
+        <a id="btn_save" class="btn btn-primary">
+            Simpan
+        </a>
+    </div>
+</div>
+<?= $this->endSection(); ?>
+
 <?= $this->section('content') ?>
 
 <div class="page-body">
@@ -18,7 +28,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="deskripsi" class="form-label required">Deskripsi</label>
-                                <textarea name="deskripsi" id="deskripsi"></textarea>
+                                <textarea class="summernote" name="deskripsi" id="deskripsi"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="tipe_pekerjaan" class="form-label required">Tipe Pekerjaan</label>
@@ -54,15 +64,15 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">Persyaratan</label>
-                                <textarea name="persyaratan" id="persyaratan"></textarea>
+                                <textarea class="summernote" name="persyaratan" id="persyaratan"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">Cara Mendaftar</label>
-                                <textarea name="cara_daftar" id="cara_daftar"></textarea>
+                                <textarea class="summernote" name="cara_daftar" id="cara_daftar"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Info Tambahan</label>
-                                <textarea name="info_tambahan" id="info_tambahan"></textarea>
+                                <textarea class="summernote" name="info_tambahan" id="info_tambahan"></textarea>
                             </div>
                         </div>
                     </div>
@@ -88,11 +98,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 masonry-item">
-                    <div class="text-end">
-                        <button id="btn_submit" type="submit" class="btn btn-primary my-3">Submit</button>
-                    </div>
-                </div>
             </div>
         </form>
     </div>
@@ -103,8 +108,14 @@
 <?= $this->section('scripts') ?>
 <script>
     $(document).ready(function() {
-        $('#deskripsi, #persyaratan, #cara_daftar, #info_tambahan').summernote({
+        $('.summernote').summernote({
             height: 150,
+            callbacks: {
+            onChange: function(contents, $editable) {
+                // Trigger validation when the contents of the Summernote editor change
+                $('#tambah_lowongan_mhs').validate().element('.summernote');
+            }
+        }
         });
 
         $('.masonry').masonry({
@@ -113,89 +124,103 @@
             percentPosition: true,
         });
 
-        if ($("#tambah_lowongan_mhs").length > 0) {
-            $("#tambah_lowongan_mhs").validate({
-
-                rules: {
-                    judul: {
-                        required: true,
-                        maxlength: 255
-                    },
-                    // deskripsi: {
-                    //     required: true,
-                    // },
-                    // tipe_pekerjaan: {
-                    //     required: true,
-                    // },
-                    // lama_kontrak: {
-                    //     required: true,
-                    // },
-                    // jenis_kontrak: {
-                    //     required: true,
-                    // },
-                    // deadline_daftar: {
-                    //     required: true,
-                    // },
-                    // persyaratan: {
-                    //     required: true,
-                    // },
-                    // cara_daftar: {
-                    //     required: true,
-                    // },
-                    // nama_perusahaan: {
-                    //     required: true,
-                    // },
-                    // alamat_perusahaan: {
-                    //     required: true,
-                    // },
-                    // kontak_perusahaan: {
-                    //     required: true,
-                    // },
+        $("#tambah_lowongan_mhs").validate({
+            ignore: [],
+            rules: {
+                judul: {
+                    required: true,
+                    maxlength: 255
                 },
-                // messages: {
-                // },
-                submitHandler: function(form) {
-                    
-                    $.ajax({
-                        url: "<?= base_url('mahasiswa/lowongan') ?>",
-                        type: "POST",
-                        data: $(form).serialize(),
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        dataType: "json",
-                        // processData: false,
-                        // contentType: false,
-                        success: function(response) {
-                            if (response.status == 'success') {
-                                Swal.fire(
-                                    'Success',
-                                    response.message,
-                                    'success'
-                                ).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.href = "<?= base_url('mahasiswa/lowongan') ?>";
-                                    }
-                                })
-                            } else {
-                                Swal.fire(
-                                    'Error',
-                                    response.message,
-                                    'error'
-                                )
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
+                deskripsi: {
+                    required: true,
+                },
+                tipe_pekerjaan: {
+                    required: true,
+                },
+                lama_kontrak: {
+                    required: true,
+                },
+                jenis_kontrak: {
+                    required: true,
+                },
+                deadline_daftar: {
+                    required: true,
+                },
+                persyaratan: {
+                    required: true,
+                },
+                cara_daftar: {
+                    required: true,
+                },
+                nama_perusahaan: {
+                    required: true,
+                },
+                alamat_perusahaan: {
+                    required: true,
+                },
+                kontak_perusahaan: {
+                    required: true,
+                },
+            },
+            // messages: {
+            // },
+            errorPlacement: function(error, element) {
+                if (element.hasClass("summernote")) {
+                    // Show error message inside the Summernote editor
+                    error.appendTo(element.siblings(".note-editor"));
+                } else {
+                    // Show error message normally
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function(form) {
+
+                $.ajax({
+                    url: "<?= base_url('mahasiswa/lowongan') ?>",
+                    type: "POST",
+                    data: $(form).serialize(),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    dataType: "json",
+                    // processData: false,
+                    // contentType: false,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            Swal.fire(
+                                'Success',
+                                response.message,
+                                'success'
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "<?= base_url('mahasiswa/lowongan') ?>";
+                                }
+                            })
+                        } else {
                             Swal.fire(
                                 'Error',
-                                'Something Went Wrong!',
+                                response.message,
                                 'error'
                             )
                         }
-                    });
-                }
-            })
-        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            'Error',
+                            'Something Went Wrong!',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+
+
+        $('#btn_save').on('click', function() {
+            if ($('#tambah_lowongan_mhs').valid()) {
+                $('#tambah_lowongan_mhs').submit();
+            }
+        });
     });
 </script>
 <?= $this->endSection() ?>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Brand</title>
+    <title><?= $title ?></title>
     <!-- <link rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css') ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
@@ -18,17 +18,60 @@
     <?= $this->include('layout/tabler_navbar') ?>
 
     <!-- Page Header -->
-    <div class="page-header d-print-none">
+    <div class="page-header">
+        <div class="container-xl">
+            <div class="row align-items-center mw-100">
+                <div class="col">
+                    <div class="mb-1">
+                        <ol class="breadcrumb" aria-label="breadcrumbs">
+                            <?php
+                            foreach ($breadcrumbs as $crumbs) {
+                                echo '<li class="breadcrumb-item">';
+                                if (isset($crumbs['url'])) {
+                                    echo '<a href="' . $crumbs['url'] . '">' . $crumbs['crumb'] . '</a>';
+                                } else {
+                                    echo $crumbs['crumb'];
+                                }
+                            }
+                            ?>
+                        </ol>
+                    </div>
+                    <h2 class="page-title">
+                        <span class="text-truncate"><?= $subtitle ?></span>
+                    </h2>
+                </div>
+
+                <?= $this->renderSection('header-button'); ?>
+                <!-- <div class="col-auto">
+                    <div class="btn-list">
+                        <a href="#" class="btn d-none d-md-inline-flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                                <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                                <path d="M16 5l3 3" />
+                            </svg>
+                            Edit
+                        </a>
+                        <a href="#" class="btn btn-primary">
+                            Publish
+                        </a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!-- <div class="page-header d-print-none">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <h2 class="page-title">
-                        Form elements
+                        <?= $subtitle ?>
                     </h2>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <?= $this->renderSection('content') ?>
 
