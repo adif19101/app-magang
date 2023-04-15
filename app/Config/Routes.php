@@ -60,6 +60,11 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
     );
 });
 
+$routes->group('api', function($routes) {
+    $routes->get('select2Skill', 'Api::select2Skill');
+    $routes->post('createselect2Skill', 'Api::createselect2Skill');
+});
+
 service('auth')->routes($routes);
 
 /*

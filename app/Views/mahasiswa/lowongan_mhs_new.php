@@ -31,6 +31,10 @@
                                 <textarea class="summernote" name="deskripsi" id="deskripsi"></textarea>
                             </div>
                             <div class="mb-3">
+                                <label class="form-label required">Kemampuan yang dibutuhkan</label>
+                                <select class="form-select" name="skill" id="skill"></select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="tipe_pekerjaan" class="form-label required">Tipe Pekerjaan</label>
                                 <select class="form-select" name="tipe_pekerjaan" id="tipe_pekerjaan">
                                     <option value="WFO">Work From Office</option>
@@ -111,11 +115,58 @@
         $('.summernote').summernote({
             height: 150,
             callbacks: {
-            onChange: function(contents, $editable) {
-                // Trigger validation when the contents of the Summernote editor change
-                $('#tambah_lowongan_mhs').validate().element('.summernote');
+                onChange: function(contents, $editable) {
+                    // Trigger validation when the contents of the Summernote editor change
+                    $('#tambah_lowongan_mhs').validate().element('.summernote');
+                }
             }
-        }
+        });
+
+        $('#skill').select2({
+            placeholder: 'Masukkan kemampuan yang dibutuhkan',
+            multiple: true,
+            ajax: {
+                url: "<?= base_url('api/select2Skill') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: data,
+
+                    };
+                },
+                cache: true
+            },
+            tags: true, // allow manually adding new tags
+            createTag: function(params) { // create new tag
+                return {
+                    id: params.term,
+                    text: params.term,
+                    isNew: true
+                }
+            },
+            minimumInputLength: 2 // minimum number of characters before triggering search
+        });
+
+        $('#skill').on('select2:select', function(e) {
+            var data = e.params.data;
+
+            if (data.isNew) {
+                // Add the new skill to the database
+                $.post("<?= base_url('api/createselect2Skill') ?>", {
+                    nama: data.text
+                }, function(result) {
+                    Toast.fire({
+                        icon: result.status,
+                        title: result.message
+                    });
+                });
+            }
         });
 
         $('.masonry').masonry({
@@ -132,6 +183,9 @@
                     maxlength: 255
                 },
                 deskripsi: {
+                    required: true,
+                },
+                skill: {
                     required: true,
                 },
                 tipe_pekerjaan: {
@@ -174,11 +228,19 @@
                 }
             },
             submitHandler: function(form) {
+                var form_data = $(form).serializeArray();
+                var skill_ids = $.map($(form).find('#skill option:selected'), function(option) {
+                    return option.value;
+                });
+                form_data.push({
+                    name: 'skill_ids',
+                    value: skill_ids
+                });
 
                 $.ajax({
                     url: "<?= base_url('mahasiswa/lowongan') ?>",
                     type: "POST",
-                    data: $(form).serialize(),
+                    data: form_data,
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest'
                     },

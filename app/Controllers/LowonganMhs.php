@@ -27,7 +27,7 @@ class LowonganMhs extends BaseController
             ],
         ];
 
-        $data['lowongan'] = $this->mLowongan->paginate(2);
+        $data['lowongan'] = $this->mLowongan->paginate(10);
         $data['pager'] = $this->mLowongan->pager;
 
         return view('mahasiswa/lowongan_mhs', $data);
@@ -71,7 +71,7 @@ class LowonganMhs extends BaseController
 
         $dataIn += ['user_id' => auth()->id()];
         
-        if ($this->mLowongan->insert($dataIn, false)) {
+        if ($this->mLowongan->createLowongan($dataIn)) {
             $response = [
                 'status' => 'success',
                 'message' => 'Lowongan berhasil ditambahkan',

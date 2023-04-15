@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>">
     <link rel="manifest" href="<?= base_url('assets/pwa/manifest.json') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css') ?>">
 </head>
 
 <body>
@@ -85,20 +86,22 @@
     <script src="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/additional-methods.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/select2.min.js') ?>"></script>
 
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        
         $(document).ready(function() {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
 
             <?php if (session()->getFlashdata('toast')) : ?>
                 Toast.fire({

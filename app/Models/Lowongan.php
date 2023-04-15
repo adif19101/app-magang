@@ -53,4 +53,29 @@ class Lowongan extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function createLowongan($data)
+    {
+        $this->db->transStart();
+
+        $this->insert($data);
+        
+        $idLowongan = $this->db->insertID();
+        $lowonganSkill = [];
+        $skills = explode(",", $data['skill_ids']);
+        foreach ($skills as $skill) {
+            $lowonganSkill[] = [
+                'lowongan_id' => $idLowongan,
+                'skill_id' => $skill,
+            ];
+        }
+        $this->db->table('lowongan_skill')->insertBatch($lowonganSkill);
+        
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
+    }
 }
