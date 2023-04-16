@@ -182,8 +182,9 @@
                     </li>
                 </ul>
                 <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last align-end">
-                    <form action="./" method="get" autocomplete="off" novalidate="">
-                        <div class="input-icon">
+                    <form id="search_form" name="search_form" action="<?= base_url('mahasiswa/lowongan') ?>" method="get" autocomplete="off" novalidate="">
+                    <input type="hidden" name="filter_applied" value="1">    
+                    <div class="input-icon">
                             <span class="input-icon-addon">
                                 <!-- Download SVG icon from http://tabler-icons.io/i/search -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -192,7 +193,7 @@
                                     <path d="M21 21l-6 -6"></path>
                                 </svg>
                             </span>
-                            <input type="text" value="" class="form-control" placeholder="Search…" aria-label="Search in website">
+                            <input type="text" name="search" value="<?= isset($filter['search']) ? $filter['search'] : '' ?>" class="form-control" placeholder="Cari Lowongan…" aria-label="Cari lowongan magang">
                         </div>
                     </form>
                 </div>

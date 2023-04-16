@@ -22,12 +22,20 @@ class LowonganMhs extends BaseController
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'crumb' => 'Lowongan Magang'
+                    'crumb' => 'Lowongan'
                 ],
             ],
         ];
 
-        $data['lowongan'] = $this->mLowongan->paginate(10);
+        $filter = $this->request->getGet();
+        
+        if (isset($filter['filter_applied']) && $filter['filter_applied'] == 1) {
+            $data['lowongan'] = $this->mLowongan->getLowongan($filter);
+            $data['filter'] = $filter;
+        } else {
+            $data['lowongan'] = $this->mLowongan->paginate(10);
+        }
+
         $data['pager'] = $this->mLowongan->pager;
 
         return view('mahasiswa/lowongan_mhs', $data);
@@ -45,10 +53,10 @@ class LowonganMhs extends BaseController
                 ],
                 [
                     'url' => base_url('mahasiswa/lowongan'), 
-                    'crumb' => 'Lowongan Magang'
+                    'crumb' => 'Lowongan'
                 ],
                 [
-                    'crumb' => 'Tambah Lowongan Magang'
+                    'crumb' => 'Tambah Lowongan'
                 ],
             ],
         ];

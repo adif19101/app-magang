@@ -26,12 +26,14 @@
                     <div class="mb-1">
                         <ol class="breadcrumb" aria-label="breadcrumbs">
                             <?php
-                            foreach ($breadcrumbs as $crumbs) {
-                                echo '<li class="breadcrumb-item">';
-                                if (isset($crumbs['url'])) {
-                                    echo '<a href="' . $crumbs['url'] . '">' . $crumbs['crumb'] . '</a>';
-                                } else {
-                                    echo $crumbs['crumb'];
+                            if (isset($breadcrumbs)) {
+                                foreach ($breadcrumbs as $crumbs) {
+                                    echo '<li class="breadcrumb-item">';
+                                    if (isset($crumbs['url'])) {
+                                        echo '<a href="' . $crumbs['url'] . '">' . $crumbs['crumb'] . '</a>';
+                                    } else {
+                                        echo $crumbs['crumb'];
+                                    }
                                 }
                             }
                             ?>

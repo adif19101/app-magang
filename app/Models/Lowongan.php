@@ -59,7 +59,7 @@ class Lowongan extends Model
         $this->db->transStart();
 
         $this->insert($data);
-        
+
         $idLowongan = $this->db->insertID();
         $lowonganSkill = [];
         $skills = explode(",", $data['skill_ids']);
@@ -70,12 +70,30 @@ class Lowongan extends Model
             ];
         }
         $this->db->table('lowongan_skill')->insertBatch($lowonganSkill);
-        
+
         $this->db->transComplete();
 
         if ($this->db->transStatus() === false) {
             return false;
         }
         return true;
+    }
+
+    public function getLowongan($filter)
+    {
+        if (isset($filter['search'])) {
+            $this->groupStart()
+                ->like('judul', $filter['search'])
+                ->orLike('nama_perusahaan', $filter['search'])
+                ->groupEnd();
+        }
+        if (isset($filter['jenis_kontrak'])) {
+            $this->whereIn('jenis_kontrak', $filter['jenis_kontrak']);
+        }
+        if (isset($filter['tipe_pekerjaan'])) {
+            $this->whereIn('tipe_pekerjaan', $filter['tipe_pekerjaan']);
+        }
+        $this->orderBy('id', 'DESC');
+        return $this->paginate(10);
     }
 }

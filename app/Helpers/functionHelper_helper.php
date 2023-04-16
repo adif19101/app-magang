@@ -36,3 +36,21 @@ function groupUrl($urlSegment = '')
     }
     return base_url();
 }
+
+/**
+ * cek value dari form lalu return selected atau checked(sesuai kebutuhan)
+ *
+ * @param  mixed $value
+ * @param  string|int $selectedValue
+ * @param  string $return
+ * @return void
+ */
+function formChecker($value, $selectedValue, $return)
+{
+    if (is_array($value) && in_array($selectedValue, $value)) {
+        return $return;
+    } else if ($value == $selectedValue) {
+        return $return;
+    }
+    return '';
+}
