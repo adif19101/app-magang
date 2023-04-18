@@ -54,3 +54,20 @@ function formChecker($value, $selectedValue, $return)
     }
     return '';
 }
+
+/**
+ * convertDate
+ * merubah tanggal urutan tanggal
+ *
+ * @param  string $date
+ * @return void
+ */
+function convertDate($date, $format = null)
+{
+    if ($format != null) {
+        $tanggal = new DateTime($date);
+        return $tanggal->format($format);
+    }
+    $tanggal = explode("-", $date);
+    return $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
+}

@@ -25,7 +25,7 @@ class Lowongan extends Model
         'jenis_kontrak',
         'deadline_daftar',
         'kontak_perusahaan',
-        'persyaratan',
+        'kriteria',
         'cara_daftar',
         'info_tambahan',
     ];
@@ -95,5 +95,16 @@ class Lowongan extends Model
         }
         $this->orderBy('id', 'DESC');
         return $this->paginate(10);
+    }
+
+    public function detailLowongan($id)
+    {
+        $this->select([
+            'lowongan.*',
+            'users.username',
+        ]);
+        $this->join('users', 'users.id = lowongan.user_id');
+        $this->where('lowongan.id', $id);
+        return $this->first();
     }
 }

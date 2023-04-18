@@ -73,8 +73,8 @@
                                 <input type="date" class="form-control" name="deadline_daftar" id="deadline_daftar">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label required">Persyaratan</label>
-                                <textarea class="summernote" name="persyaratan" id="persyaratan"></textarea>
+                                <label class="form-label required">Kriteria</label>
+                                <textarea class="summernote" name="kriteria" id="kriteria"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">Cara Mendaftar</label>
@@ -206,7 +206,7 @@
                 deadline_daftar: {
                     required: true,
                 },
-                persyaratan: {
+                kriteria: {
                     required: true,
                 },
                 cara_daftar: {

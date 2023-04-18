@@ -65,7 +65,27 @@ class LowonganMhs extends BaseController
 
     public function show(int $id)
     {
-        
+        $data = [
+            'title' => 'Lowongan Magang',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('mahasiswa'), 
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('mahasiswa/lowongan'), 
+                    'crumb' => 'Lowongan'
+                ],
+                [
+                    'crumb' => 'Detail Lowongan'
+                ],
+            ],
+        ];
+
+        $data['lowongan'] = $this->mLowongan->detailLowongan($id);
+        $data['subtitle'] = $data['lowongan']['judul'] . ' - ' . $data['lowongan']['nama_perusahaan'];
+
+        return view('mahasiswa/lowongan_mhs_show', $data);
     }
 
     public function edit(int $id)
