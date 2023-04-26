@@ -23,9 +23,6 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="card mb-3">
-                    <!-- <div class="card-header">
-                        <h3 class="card-title">Detail Lowongan</h3>
-                    </div> -->
                     <div class="card-body">
                         <div class="mb-3">
                             <label class="form-label">Deskripsi</label>
@@ -39,7 +36,7 @@
                             <label class="form-label">Cara Mendaftar</label>
                             <?= $lowongan['cara_daftar'] ?>
                         </div>
-                        <?php if (isset($lowongan['info_tambahan'])) : ?>
+                        <?php if ($lowongan['info_tambahan']) : ?>
                             <div class="mb-3">
                                 <label class="form-label">Info Tambahan</label>
                                 <?= $lowongan['info_tambahan'] ?>
@@ -83,19 +80,22 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="mb-3">
-                            <h3>
-                                <?= $lowongan['nama_perusahaan'] ?>
-                            </h3>
-                            <p>
-                                <?= $lowongan['alamat_perusahaan'] ?>
-                            </p>
-                            <p>
-                                <?= $lowongan['kontak_perusahaan'] ?>
-                            </p>
-                            <p>
-                                <?= $lowongan['lama_kontrak'] . ' (' . $lowongan['tipe_pekerjaan'] . ' - ' . $lowongan['jenis_kontrak'] . ')' ?>
-                            </p>
+                            <h3><?= $lowongan['nama_perusahaan'] ?></h3>
                         </div>
+                        <div class="mb-3">
+                            <small class="form-hint">Lokasi</small>
+                            <?= $lowongan['alamat_perusahaan'] ?>
+                        </div>
+                        <div class="mb-3">
+                            <small class="form-hint">Kontak</small>
+                            <?= $lowongan['kontak_perusahaan'] ?>
+                        </div>
+                        <div class="mb-3">
+                            <small class="form-hint">Profil Perusahaan</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <?= $lowongan['lama_kontrak'] . ' (' . $lowongan['tipe_pekerjaan'] . ' - ' . $lowongan['jenis_kontrak'] . ')' ?>
                     </div>
                 </div>
             </div>
