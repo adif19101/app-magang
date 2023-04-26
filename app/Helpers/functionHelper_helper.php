@@ -71,3 +71,25 @@ function convertDate($date, $format = null)
     $tanggal = explode("-", $date);
     return $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
 }
+
+/**
+ * return base_url of $fullImgPath if its exist and its file.
+ *
+ * return base_url of $defaultImg if $fullImgPath not exist.
+ *
+ * @param string $fullImgPath example: "public/uploads/" . PATH_USER_VENDOR_KTP_IMAGE . "/" . "vendor_220212123456.jpeg"
+ * @param string $defaultImg Optional. If you want to set your own default image.
+ * @return string
+ **/
+function urlImg($fullImgPath, $defaultImg = 'assets/img/default.webp')
+{
+  if (
+    empty($fullImgPath) ||
+    !is_string($fullImgPath) ||
+    !is_file($fullImgPath)
+  ) {
+    return base_url($defaultImg);
+  };
+
+  return base_url($fullImgPath);
+}

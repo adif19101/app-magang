@@ -92,6 +92,7 @@
                         </div>
                         <div class="mb-3">
                             <small class="form-hint">Profil Perusahaan</small>
+                            <!-- TODO lengkapin -->
                         </div>
                     </div>
                     <div class="card-footer">

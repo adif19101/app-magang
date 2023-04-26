@@ -89,8 +89,22 @@
                 </div>
                 <div class="col-md-6 masonry-item">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header justify-content-between">
                             <h3 class="card-title">Detail Perusahaan</h3>
+                            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_detail_perusahaan">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M3 21l18 0"></path>
+                                    <path d="M9 8l1 0"></path>
+                                    <path d="M9 12l1 0"></path>
+                                    <path d="M9 16l1 0"></path>
+                                    <path d="M14 8l1 0"></path>
+                                    <path d="M14 12l1 0"></path>
+                                    <path d="M14 16l1 0"></path>
+                                    <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"></path>
+                                </svg>
+                                Pilih Perusahaan
+                            </a>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
@@ -110,6 +124,84 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal Detail Perusahaan -->
+<div class="modal modal-blur fade" id="modal_detail_perusahaan" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="nav nav-tabs" data-bs-toggle="tabs">
+                    <li class="nav-item">
+                        <a href="#tabs_cari_perusahaan" class="nav-link fw-bold active" data-bs-toggle="tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-list-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M15 15m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                                <path d="M18.5 18.5l2.5 2.5"></path>
+                                <path d="M4 6h16"></path>
+                                <path d="M4 12h4"></path>
+                                <path d="M4 18h4"></path>
+                            </svg>
+                            Cari
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tabs_tambah_perusahaan" class="nav-link fw-bold" data-bs-toggle="tab">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-text-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M19 10h-14"></path>
+                                <path d="M5 6h14"></path>
+                                <path d="M14 14h-9"></path>
+                                <path d="M5 18h6"></path>
+                                <path d="M18 15v6"></path>
+                                <path d="M15 18h6"></path>
+                            </svg>
+                            Tambah
+                        </a>
+                    </li>
+                </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content">
+                    
+                    <!-- Cari -->
+                    <div class="tab-pane active show" id="tabs_cari_perusahaan">
+                        <div class="mb-3">
+                            <div class="input-icon mb-3">
+                                <input id="cari_perusahaan" name="cari_perusahaan" type="text" value="" class="form-control" placeholder="Nama Perusahaan...">
+                                <span class="input-icon-addon">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                        <path d="M21 21l-6 -6" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <div id="result_cari_perusahaan">
+                            <div class="container text-center">
+                                <span>
+                                    Harap mencari terlebih dahulu sebelum menambahkan perusahaan baru
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tambah -->
+                    <div class="tab-pane" id="tabs_tambah_perusahaan">
+                        <h4>Profile tab</h4>
+                        <div>Fringilla egestas nunc quis tellus diam rhoncus ultricies tristique enim at diam, sem nunc amet, pellentesque id egestas velit sed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -283,6 +375,55 @@
             }
         })
 
+        $('#cari_perusahaan').keyup(debounce(function() {
+            var cari_perusahaan = this.value;
+
+            if (cari_perusahaan == '') {
+                $('#result_cari_perusahaan').html('<div class="container text-center"><span>Harap mencari terlebih dahulu sebelum menambahkan perusahaan baru</span></div>');
+
+            } else {
+                $.ajax({
+                        url: "<?= base_url('api/searchPerusahaan') ?>",
+                        type: "POST",
+                        data: {
+                            cari_perusahaan: cari_perusahaan
+                        },
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        // dataType: "json",
+                        // processData: false,
+                        // contentType: false,
+                        success: function(response) {
+                            $('#result_cari_perusahaan').html(response);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                'Error',
+                                'Something Went Wrong!',
+                                'error'
+                            )
+                        }
+                    });
+            }
+            
+        }, 300));
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this,
+                    args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
 
         $('#btn_save').on('click', function() {
             if ($('#tambah_lowongan_mhs').valid()) {

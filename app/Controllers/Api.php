@@ -12,6 +12,7 @@ class Api extends BaseController
     public function __construct()
     {
         $this->mSkill = new \App\Models\Skill();
+        $this->mPerusahaan = new \App\Models\Perusahaan();
     }
 
     public function select2Skill()
@@ -40,6 +41,44 @@ class Api extends BaseController
         }
 
         return $this->response->setJSON($response);
+    }
+
+    public function searchPerusahaan()
+    {
+        $search = $this->request->getPost('cari_perusahaan');
+
+        $data = $this->mPerusahaan->getPerusahaan($search);
+
+        if (!$data) {
+            $response = '<div class="container text-center"><span><span class="status status-red">Perusahaan tidak ditemukan.</span> Silahkan tambahkan perusahaan baru.</span></div>';
+
+            return $this->respond($response);
+        }
+
+        $result = '<div class="row row-cards">';
+
+        foreach ($data as $key) {
+            $result = $result . '<div class="col-sm-12 col-lg-6"><div class="card card-sm"><div class="card-body"><div class="d-flex align-items-center mb-3">'
+            . '<span class="avatar me-3 rounded" style="background-image: url(' . urlImg($key['logo']) . '"></span>'
+            . '<div><div>'. $key['nama'] .'</div></div></div>';
+
+            if ($key['whatsapp']) {
+                $result = $result . '<div class="mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path><path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path></svg>'
+                . $key['whatsapp'] . '</div>';
+            }
+
+            if ($key['email']) {
+                $result = $result . '<div class="mb-3"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-at" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28"></path></svg>'
+                . $key['email'] . '</div>';
+            }
+
+            $result = $result . '<p>' . $key['deskripsi'] . '</p></div></div></div>';
+            // TODO tambahin button untuk apply
+        }
+
+        $result = $result . '</div>';
+
+        return $this->respond($result);
     }
 
     public function tesApi()
