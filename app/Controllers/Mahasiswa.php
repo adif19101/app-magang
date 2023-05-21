@@ -7,7 +7,8 @@ use App\Models\Lowongan;
 
 class Mahasiswa extends BaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->mLowongan = new Lowongan();
     }
 
@@ -23,7 +24,11 @@ class Mahasiswa extends BaseController
             // ],
         ];
 
-        $data['lowongan'] = $this->mLowongan->orderBy('id', 'DESC')->findAll(3);
+        $data['lowongan'] = $this->mLowongan
+            ->select('lowongan.*, perusahaan.nama as nama_perusahaan')
+            ->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan')
+            ->orderBy('id', 'DESC')
+            ->findAll(3);
 
         return view('mahasiswa/index', $data);
     }

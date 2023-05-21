@@ -18,13 +18,11 @@ class Lowongan extends Model
         'user_id',
         'judul',
         'deskripsi',
-        'nama_perusahaan',
-        'alamat_perusahaan',
+        'id_perusahaan',
         'tipe_pekerjaan',
         'lama_kontrak',
         'jenis_kontrak',
         'deadline_daftar',
-        'kontak_perusahaan',
         'kriteria',
         'cara_daftar',
         'info_tambahan',
@@ -58,6 +56,18 @@ class Lowongan extends Model
     {
         $this->db->transStart();
 
+        if ($data['id_perusahaan'] == 0 || $data['id_perusahaan'] == null) {
+            $perusahaan = [
+                'nama' => $data['nama_perusahaan'],
+                'alamat' => $data['alamat_perusahaan'],
+                'email' => $data['email_perusahaan'],
+                'whatsapp' => $data['whatsapp_perusahaan'],
+                'deskripsi' => $data['deskripsi_perusahaan'],
+            ];
+            $this->db->table('perusahaan')->insert($perusahaan);
+            $data['id_perusahaan'] = $this->db->insertID();
+        }
+
         $this->insert($data);
 
         $idLowongan = $this->db->insertID();
@@ -79,12 +89,19 @@ class Lowongan extends Model
         return true;
     }
 
-    public function getLowongan($filter)
+    public function getLowongan($filter = null)
     {
+        $this->select([
+            'lowongan.*',
+            'perusahaan.nama as nama_perusahaan',
+        ]);
+        $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan');
+        $this->orderBy('lowongan.id', 'DESC');
+        
         if (isset($filter['search'])) {
             $this->groupStart()
                 ->like('judul', $filter['search'])
-                ->orLike('nama_perusahaan', $filter['search'])
+                ->orLike('perusahaan.nama', $filter['search'])
                 ->groupEnd();
         }
         if (isset($filter['jenis_kontrak'])) {
@@ -93,7 +110,7 @@ class Lowongan extends Model
         if (isset($filter['tipe_pekerjaan'])) {
             $this->whereIn('tipe_pekerjaan', $filter['tipe_pekerjaan']);
         }
-        $this->orderBy('id', 'DESC');
+        
         return $this->paginate(10);
     }
 
@@ -102,8 +119,15 @@ class Lowongan extends Model
         $this->select([
             'lowongan.*',
             'users.username',
+            'perusahaan.nama as nama_perusahaan',
+            'perusahaan.alamat as alamat_perusahaan',
+            'perusahaan.email as email_perusahaan',
+            'perusahaan.whatsapp as whatsapp_perusahaan',
+            'perusahaan.logo as logo_perusahaan',
+            'perusahaan.deskripsi as deskripsi_perusahaan'
         ]);
         $this->join('users', 'users.id = lowongan.user_id');
+        $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan');
         $this->where('lowongan.id', $id);
         return $this->first();
     }

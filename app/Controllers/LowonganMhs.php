@@ -29,12 +29,8 @@ class LowonganMhs extends BaseController
 
         $filter = $this->request->getGet();
         
-        if (isset($filter['filter_applied']) && $filter['filter_applied'] == 1) {
-            $data['lowongan'] = $this->mLowongan->getLowongan($filter);
-            $data['filter'] = $filter;
-        } else {
-            $data['lowongan'] = $this->mLowongan->paginate(10);
-        }
+        $data['lowongan'] = $this->mLowongan->getLowongan($filter);
+        $data['filter'] = $filter;
 
         $data['pager'] = $this->mLowongan->pager;
 

@@ -107,17 +107,26 @@
                             </a>
                         </div>
                         <div class="card-body">
+                            <input type="text" name="id_perusahaan" id="id_perusahaan" hidden>
                             <div class="mb-3">
                                 <label class="form-label required">Nama Perusahaan</label>
-                                <input type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan" placeholder="Nama Perusahaan">
+                                <input readonly type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan" placeholder="Nama Perusahaan">
                             </div>
                             <div class="mb-3">
                                 <label for="alamat_perusahaan" class="form-label required">Alamat Perusahaan</label>
-                                <textarea class="form-control" name="alamat_perusahaan" id="alamat_perusahaan" rows="3"></textarea>
+                                <textarea readonly class="form-control" name="alamat_perusahaan" id="alamat_perusahaan" rows="3"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="kontak_perusahaan" class="form-label required">Kontak Perusahaan</label>
-                                <input type="text" class="form-control" name="kontak_perusahaan" id="kontak_perusahaan" placeholder="Kontak Perusahaan">
+                                <label for="email_perusahaan" class="form-label required">Email Perusahaan</label>
+                                <input readonly type="text" class="form-control" name="email_perusahaan" id="email_perusahaan" placeholder="Email Perusahaan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="whatsapp_perusahaan" class="form-label required">Whatsapp Perusahaan</label>
+                                <input readonly type="text" class="form-control" name="whatsapp_perusahaan" id="whatsapp_perusahaan" placeholder="Whatsapp Perusahaan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="deskripsi_perusahaan" class="form-label required">Deskripsi Perusahaan</label>
+                                <textarea readonly class="form-control" name="deskripsi_perusahaan" id="deskripsi_perusahaan" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -165,7 +174,7 @@
             </div>
             <div class="modal-body">
                 <div class="tab-content">
-                    
+
                     <!-- Cari -->
                     <div class="tab-pane active show" id="tabs_cari_perusahaan">
                         <div class="mb-3">
@@ -192,8 +201,26 @@
 
                     <!-- Tambah -->
                     <div class="tab-pane" id="tabs_tambah_perusahaan">
-                        <h4>Profile tab</h4>
-                        <div>Fringilla egestas nunc quis tellus diam rhoncus ultricies tristique enim at diam, sem nunc amet, pellentesque id egestas velit sed</div>
+                        <div class="mb-3">
+                            <label class="form-label required">Nama Perusahaan</label>
+                            <input type="text" class="form-control" name="tambah_nama_perusahaan" id="tambah_nama_perusahaan" placeholder="Nama Perusahaan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="alamat_perusahaan" class="form-label required">Alamat Perusahaan</label>
+                            <textarea class="form-control" name="tambah_alamat_perusahaan" id="tambah_alamat_perusahaan" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email_perusahaan" class="form-label required">Email Perusahaan</label>
+                            <input type="text" class="form-control" name="tambah_email_perusahaan" id="tambah_email_perusahaan" placeholder="Email Perusahaan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="whatsapp_perusahaan" class="form-label required">Whatsapp Perusahaan</label>
+                            <input type="text" class="form-control" name="tambah_whatsapp_perusahaan" id="tambah_whatsapp_perusahaan" placeholder="Whatsapp Perusahaan">
+                        </div>
+                        <div class="mb-3">
+                            <label for="deskripsi_perusahaan" class="form-label required">Deskripsi Perusahaan</label>
+                            <textarea class="form-control" name="tambah_deskripsi_perusahaan" id="tambah_deskripsi_perusahaan" rows="3"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -383,30 +410,30 @@
 
             } else {
                 $.ajax({
-                        url: "<?= base_url('api/searchPerusahaan') ?>",
-                        type: "POST",
-                        data: {
-                            cari_perusahaan: cari_perusahaan
-                        },
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        // dataType: "json",
-                        // processData: false,
-                        // contentType: false,
-                        success: function(response) {
-                            $('#result_cari_perusahaan').html(response);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            Swal.fire(
-                                'Error',
-                                'Something Went Wrong!',
-                                'error'
-                            )
-                        }
-                    });
+                    url: "<?= base_url('api/searchPerusahaan') ?>",
+                    type: "POST",
+                    data: {
+                        cari_perusahaan: cari_perusahaan
+                    },
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    // dataType: "json",
+                    // processData: false,
+                    // contentType: false,
+                    success: function(response) {
+                        $('#result_cari_perusahaan').html(response);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            'Error',
+                            'Something Went Wrong!',
+                            'error'
+                        )
+                    }
+                });
             }
-            
+
         }, 300));
 
         function debounce(func, wait, immediate) {
@@ -425,11 +452,43 @@
             };
         }
 
+
         $('#btn_save').on('click', function() {
             if ($('#tambah_lowongan_mhs').valid()) {
                 $('#tambah_lowongan_mhs').submit();
             }
         });
+
+        var tab_tambah_input = $('#tabs_tambah_perusahaan input,textarea');
+        tab_tambah_input.on('change', function() {
+            var value = $(this).val();
+            var label = $(this).prev('label').text();
+            console.log(label + ':', value);
+
+            $('#id_perusahaan').val();
+            $('#nama_perusahaan').val($('#tambah_nama_perusahaan').val());
+            $('#alamat_perusahaan').val($('#tambah_alamat_perusahaan').val());
+            $('#email_perusahaan').val($('#tambah_email_perusahaan').val());
+            $('#whatsapp_perusahaan').val($('#tambah_whatsapp_perusahaan').val());
+            $('#deskripsi_perusahaan').val($('#tambah_deskripsi_perusahaan').val());
+        });
     });
+
+    function pilihPerusahaan(button) {
+        var card = event.target.closest('.card-body');
+        var id = button.id;
+        var name = card.querySelector('#compName').textContent;
+        var whatsapp = card.querySelector('#compWhatsapp').textContent;
+        var email = card.querySelector('#compEmail').textContent;
+        var deskripsi = card.querySelector('#compDeskripsi').textContent;
+        var alamat = card.querySelector('#compAlamat').textContent;
+
+        $('#nama_perusahaan').val(name);
+        $('#whatsapp_perusahaan').val(whatsapp);
+        $('#email_perusahaan').val(email);
+        $('#alamat_perusahaan').val(alamat);
+        $('#id_perusahaan').val(id);
+        $('#deskripsi_perusahaan').val(deskripsi);
+    }
 </script>
 <?= $this->endSection() ?>

@@ -87,12 +87,17 @@
                             <?= $lowongan['alamat_perusahaan'] ?>
                         </div>
                         <div class="mb-3">
-                            <small class="form-hint">Kontak</small>
-                            <?= $lowongan['kontak_perusahaan'] ?>
+                            <small class="form-hint">Email</small>
+                            <?= $lowongan['email_perusahaan'] ?>
+                        </div>
+                        <div class="mb-3">
+                            <small class="form-hint">Whatsapp</small>
+                            <?= $lowongan['whatsapp_perusahaan'] ?>
                         </div>
                         <div class="mb-3">
                             <small class="form-hint">Profil Perusahaan</small>
                             <!-- TODO lengkapin -->
+                            <?= $lowongan['deskripsi_perusahaan'] ?>
                         </div>
                     </div>
                     <div class="card-footer">

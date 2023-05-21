@@ -44,7 +44,7 @@
                                 <div class="row g-0">
                                     <div class="col-auto">
                                         <div class="card-body">
-                                            <div class="avatar avatar-md" style="background-image: url(./static/jobs/job-1.jpg)"></div>
+                                            <div class="avatar avatar-md" style="background-image: url(https://preview.tabler.io/static/jobs/job-1.jpg)"></div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -177,7 +177,7 @@
                                 <div class="row g-0">
                                     <div class="col-auto">
                                         <div class="card-body">
-                                            <div class="avatar avatar-md" style="background-image: url(./static/jobs/job-1.jpg)"></div>
+                                            <div class="avatar avatar-md" style="background-image: url(https://preview.tabler.io/static/jobs/job-1.jpg)"></div>
                                         </div>
                                     </div>
                                     <div class="col">
