@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Perusahaan extends Model
+class Mahasiswa extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'perusahaan';
+    protected $table            = 'mahasiswa';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -16,12 +16,11 @@ class Perusahaan extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'nama',
+        'npm',
+        'avatar',
+        'account_id',
         'alamat',
-        'deskripsi',
-        'email',
         'whatsapp',
-        'logo',
-        'account_id'
     ];
 
     // Dates
@@ -48,15 +47,16 @@ class Perusahaan extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getPerusahaan($searchTerm = null)
+    public function deleteAvaImg($id)
     {
-        $builder = $this->db->table($this->table);
-        $builder->select('*');
-        if ($searchTerm) {
-            $builder->like('nama', $searchTerm);
-        }
-        $query = $builder->get();
+        $this->db->transStart();
+        $this->where('id', $id);
+        $this->update(['avatar' => null]);
+        $this->db->transComplete();
 
-        return $query->getResultArray();
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
     }
 }

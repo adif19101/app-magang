@@ -128,7 +128,7 @@
                     $.ajax({
                         url: "<?= base_url('mahasiswa/profile/deleteImage') ?>",
                         type: "POST",
-                        data: form_data,
+                        // data: form_data,
                         headers: {
                             'X-Requested-With': 'XMLHttpRequest'
                         },

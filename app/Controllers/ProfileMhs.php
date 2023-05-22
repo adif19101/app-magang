@@ -3,9 +3,14 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\Mahasiswa;
 
 class ProfileMhs extends BaseController
 {
+    public function __construct() {
+        $this->mMahasiswa = new Mahasiswa();
+    }
+
     public function index()
     {
         //
@@ -14,15 +19,17 @@ class ProfileMhs extends BaseController
     public function deleteImage()
     {
         // TODO fix this
-        if ($this->mLowongan->createLowongan($dataIn)) {
+        $accountId = auth()->id();
+
+        if ($this->mMahasiswa->deleteAvaImg($accountId)) {
             $response = [
                 'status' => 'success',
-                'message' => 'Lowongan berhasil ditambahkan',
+                'message' => 'Foto profil berhasil dihapus',
             ];
         } else {
             $response = [
                 'status' => 'error',
-                'message' => 'Lowongan gagal ditambahkan',
+                'message' => 'Foto profil gagal dihapus',
             ];
         }
 
