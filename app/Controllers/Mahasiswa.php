@@ -32,4 +32,19 @@ class Mahasiswa extends BaseController
 
         return view('mahasiswa/index', $data);
     }
+
+    public function profile()
+    {
+        $data = [
+            'title' => 'Profile - Mahasiswa',
+            'subtitle' => 'Profile',
+            // 'breadcrumbs' => [
+            //     [
+            //         'crumb' => 'Dashboard'
+            //     ],
+            // ],
+        ];
+
+        return view('mahasiswa/mhs_profile', $data);
+    }
 }

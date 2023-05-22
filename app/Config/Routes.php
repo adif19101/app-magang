@@ -55,6 +55,7 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
         static function ($routes) {
             // $routes->resource('users', ['websafe' => 1]);
             $routes->get('/', 'Mahasiswa::index');
+            $routes->get('profile', 'Mahasiswa::profile');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganMhs']);
         }
     );

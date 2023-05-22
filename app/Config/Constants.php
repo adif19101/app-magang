@@ -1,5 +1,7 @@
 <?php
 
+define('DEFAULT_IMAGE', 'assets/img/default.webp');
+
 /*
  | --------------------------------------------------------------------
  | App Namespace
