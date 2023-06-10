@@ -13,7 +13,27 @@ class ProfileMhs extends BaseController
 
     public function index()
     {
-        //
+        $data = [
+            'title' => 'Profile - Mahasiswa',
+            'subtitle' => 'Profile',
+            // 'breadcrumbs' => [
+            //     [
+            //         'crumb' => 'Dashboard'
+            //     ],
+            // ],
+        ];
+
+        $data['mahasiswa'] = $this->mMahasiswa
+            ->select('mahasiswa.*')
+            ->where('account_id', auth()->id())
+            ->first();
+        $data['mahasiswa']['avatar'] = urlImg($data['mahasiswa']['avatar']);
+        $data['mahasiswa'] += [
+            'email' => auth()->user()->email,
+            'username' => auth()->user()->username,
+        ];
+
+        return view('mahasiswa/mhs_profile', $data);
     }
 
     public function deleteImage()
@@ -34,5 +54,10 @@ class ProfileMhs extends BaseController
         }
 
         return $this->response->setJSON($response);
+    }
+
+    public function saveProfile()
+    {
+        
     }
 }

@@ -84,6 +84,15 @@ class Api extends BaseController
 
     public function tesApi()
     {
-        
+        // $this->mMahasiswa = new \App\Models\Mahasiswa();
+
+        // $this->mMahasiswa->insert([
+        //     'nama' => 'M Adif Fikri',
+        //     'npm' => '1910631170101',
+        //     'avatar' => 'assets/img/default.webp',
+        //     'account_id' => auth()->id(),
+        //     'alamat' => 'Jl. Raya Candi No. 6, Sidoarjo',
+        //     'whatsapp' => '081234567890',
+        // ]);
     }
 }

@@ -1,7 +1,7 @@
 <?= $this->extend('layout/tabler_layout') ?>
 
 <?= $this->section('header-button'); ?>
-<div class="col-auto">
+<!-- <div class="col-auto">
     <div class="btn-list">
         <a id="btn_save" class="btn btn-primary">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -13,83 +13,123 @@
             Simpan
         </a>
     </div>
-</div>
+</div> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content') ?>
 
 <div class="page-body">
     <div class="container-xl">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Detail Profile</h3>
-            </div>
-            <div class="card-body">
-                <h2 class="mb-4">My Account</h2>
-                <h3 class="card-title">Profile Details</h3>
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <label id="avatar-preview" for="avatar-upload" class="avatar avatar-xl" style="background-image: url(./static/avatars/000m.jpg)"></label>
-                        <input type="file" id="avatar-upload" style="display: none;">
-                    </div>
-                    <div class="col-auto">
-                        <a href="#" id="btn_change_avatar" class="btn">
-                            Change avatar
-                        </a>
-                    </div>
-                    <div class="col-auto">
-                        <a href="#" id="btn_delete_avatar" class="btn btn-ghost-danger">
-                            Delete avatar
-                        </a>
-                    </div>
-                </div>
-
-                <h3 class="card-title mt-4">Business Profile</h3>
-                <div class="row g-3">
-                    <div class="col-md">
-                        <div class="form-label">Business Name</div>
-                        <input type="text" class="form-control" value="Tabler" wfd-id="id1">
-                    </div>
-                    <div class="col-md">
-                        <div class="form-label">Business ID</div>
-                        <input type="text" class="form-control" value="560afc32" wfd-id="id2">
-                    </div>
-                    <div class="col-md">
-                        <div class="form-label">Location</div>
-                        <input type="text" class="form-control" value="Peimei, China" wfd-id="id3">
-                    </div>
-                </div>
-                <h3 class="card-title mt-4">Email</h3>
-                <p class="card-subtitle">This contact will be shown to others publicly, so choose it carefully.</p>
-                <div>
-                    <div class="row g-2">
-                        <div class="col-auto">
-                            <input type="text" class="form-control w-auto" value="paweluna@howstuffworks.com" wfd-id="id4">
+        <div class="row row-cards">
+            <div class="card">
+                <form id="form_profile" name="form_profile">
+                    <div class="card-header">
+                        <h3 class="card-title">Profile Mahasiswa</h3>
+                        <div class="card-actions">
+                            <a href="#" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                                    <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                    <path d="M14 4l0 4l-6 0l0 -4"></path>
+                                </svg>
+                                Simpan
+                            </a>
                         </div>
-                        <div class="col-auto"><a href="#" class="btn">
-                                Change
-                            </a></div>
                     </div>
-                </div>
-                <h3 class="card-title mt-4">Password</h3>
-                <p class="card-subtitle">You can set a permanent password if you don't want to use temporary login codes.</p>
-                <div>
-                    <a href="#" class="btn">
-                        Set new password
-                    </a>
-                </div>
-                <h3 class="card-title mt-4">Public profile</h3>
-                <p class="card-subtitle">Making your profile public means that anyone on the Dashkit network will be able to find
-                    you.</p>
-                <div>
-                    <label class="form-check form-switch form-switch-lg">
-                        <input class="form-check-input" type="checkbox" wfd-id="id5">
-                        <span class="form-check-label form-check-label-on">You're currently visible</span>
-                        <span class="form-check-label form-check-label-off">You're
-                            currently invisible</span>
-                    </label>
-                </div>
+                    <div class="card-body">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-auto">
+                                <label id="avatar-preview" for="avatar-upload" class="avatar avatar-xl" style="background-image: url(<?= $mahasiswa['avatar'] ?>"></label>
+                                <input type="file" id="avatar-upload" style="display: none;">
+                            </div>
+                            <div class="col-auto">
+                                <a href="#" id="btn_change_avatar" class="btn">
+                                    Ubah avatar
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="#" id="btn_delete_avatar" class="btn btn-ghost-danger">
+                                    Hapus avatar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md">
+                                <label for="nama" class="form-label">Nama Lengkap</label>
+                                <input id="nama" name="nama" type="text" class="form-control" value="<?= $mahasiswa['nama'] ?>">
+                            </div>
+                            <div class="col-md">
+                                <label for="npm" class="form-label">NPM</label>
+                                <input id="npm" name="npm" type="text" class="form-control" value="<?= $mahasiswa['npm'] ?>">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="alamat" class="form-label">Alamat</label>
+                                <textarea class="form-control" name="alamat" id="alamat"><?= $mahasiswa['alamat'] ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
+
+            <div class="card">
+                <form id="form_akun" name="form_akun">
+                    <div class="card-header">
+                        <div>
+                            <h3 class="card-title">Detail Akun</h3>
+                            <p class="card-subtitle">
+                                Perubahan pada detail akun akan membuat anda harus login ulang.
+                            </p>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" id="simpan_detail_akun" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
+                                    <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                                    <path d="M14 4l0 4l-6 0l0 -4"></path>
+                                </svg>
+                                Simpan
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Email</h3>
+                        <p class="card-subtitle">Kosongkan jika tidak ingin mengganti email</p>
+                        <div class="mb-3">
+                            <div class="row g-2">
+                                <label class="col-auto col-form-label">
+                                    <?= $mahasiswa['email'] ?>
+                                </label>
+                                <div class="col-auto">
+                                    <input id="email" name="email" type="text" class="form-control w-auto" placeholder="Email Baru...">
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Password</h3>
+                        <p class="card-subtitle">Kosongkan jika tidak ingin mengganti password</p>
+                        <div class="mb-3">
+                            <input class="form-control w-auto" type="password" name="password" id="password">
+                        </div>
+                        <h3 class="card-title">Username</h3>
+                        <p class="card-subtitle">Kosongkan jika tidak ingin mengganti username</p>
+                        <div>
+                            <div class="row g-2">
+                                <label class="col-auto col-form-label">
+                                    <?= $mahasiswa['username'] ?>
+                                </label>
+                                <div class="col-auto">
+                                    <input id="username" name="username" type="text" class="form-control w-auto" placeholder="Username Baru...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

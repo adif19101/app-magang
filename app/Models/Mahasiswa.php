@@ -51,7 +51,7 @@ class Mahasiswa extends Model
     {
         $this->db->transStart();
         $this->where('id', $id);
-        $this->update(['avatar' => null]);
+        $this->update(['avatar' => 'assets/img/default.webp']);
         $this->db->transComplete();
 
         if ($this->db->transStatus() === false) {
