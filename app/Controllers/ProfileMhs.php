@@ -9,6 +9,7 @@ class ProfileMhs extends BaseController
 {
     public function __construct() {
         $this->mMahasiswa = new Mahasiswa();
+        $this->db = \Config\Database::connect();
     }
 
     public function index()
@@ -59,5 +60,28 @@ class ProfileMhs extends BaseController
     public function saveProfile()
     {
         
+    }
+
+    public function saveDetail()
+    {
+        $users = auth()->getProvider();
+
+        $user = $users->findById(auth()->id());
+        $user->fill($this->request->getPost());
+        
+        if ($users->save($user)) {
+            auth()->logout();
+            $response = [
+                'status' => 'success',
+                'message' => 'Detail akun berhasil disimpan',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Detail akun gagal disimpan',
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
 }

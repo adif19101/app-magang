@@ -154,6 +154,73 @@
             }
         });
 
+        $("#form_akun").validate({
+            ignore: [],
+            rules: {
+                email: {
+                    minlength: 5,
+                    maxlength: 255
+                },
+                password: {
+                    minlength: 8,
+                    maxlength: 255
+                },
+                username: {
+                    minlength: 5,
+                    maxlength: 255
+                },
+            },
+            // messages: {
+            // },
+            submitHandler: function(form) {
+                var form_data = $(form).serializeArray();
+
+                $.ajax({
+                    url: "<?= base_url('mahasiswa/profile/saveDetail') ?>",
+                    type: "POST",
+                    data: form_data,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    dataType: "json",
+                    // processData: false,
+                    // contentType: false,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            Swal.fire(
+                                'Success',
+                                response.message,
+                                'success'
+                            ).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "<?= base_url('mahasiswa/profile') ?>";
+                                }
+                            })
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                response.message,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            'Error',
+                            'Something Went Wrong!',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+
+        $("#simpan_detail_akun").click(function() {
+            if ($('#form_akun').valid()) {
+                $('#form_akun').submit();
+            }
+        });
+
         $("#btn_delete_avatar").click(function() {
             Swal.fire({
                 title: 'Are you sure?',

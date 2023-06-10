@@ -57,6 +57,8 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
             $routes->get('/', 'Mahasiswa::index');
             $routes->get('profile', 'ProfileMhs::index');
             $routes->post('profile/deleteImage', 'ProfileMhs::deleteImage');
+            $routes->post('profile/saveProfile', 'ProfileMhs::saveProfile');
+            $routes->post('profile/saveDetail', 'ProfileMhs::saveDetail');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganMhs']);
         }
     );
