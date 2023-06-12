@@ -1,6 +1,7 @@
 <?php
 
 define('DEFAULT_IMAGE', 'assets/img/default.webp');
+define('AVATAR_UPLOAD_PATH', WRITEPATH . 'uploads/avatar');
 
 /*
  | --------------------------------------------------------------------

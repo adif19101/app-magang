@@ -9,7 +9,6 @@ class ProfileMhs extends BaseController
 {
     public function __construct() {
         $this->mMahasiswa = new Mahasiswa();
-        $this->db = \Config\Database::connect();
     }
 
     public function index()
@@ -28,7 +27,6 @@ class ProfileMhs extends BaseController
             ->select('mahasiswa.*')
             ->where('account_id', auth()->id())
             ->first();
-        $data['mahasiswa']['avatar'] = urlImg($data['mahasiswa']['avatar']);
         $data['mahasiswa'] += [
             'email' => auth()->user()->email,
             'username' => auth()->user()->username,
@@ -59,7 +57,37 @@ class ProfileMhs extends BaseController
 
     public function saveProfile()
     {
-        
+        // echo '<pre>';
+        // var_dump($this->request->getPost());
+        // var_dump($_FILES);
+        // die;
+        // TODO tambahin form whatsapp
+
+        $dataIn = $this->request->getPost();
+
+        $img = $this->request->getFile('avatar_upload');
+
+        if ($img->isValid() && ! $img->hasMoved()) {
+            $imgName = $img->getRandomName();
+
+            if ($img->move(AVATAR_UPLOAD_PATH, $imgName)) {
+                $dataIn += ['avatar' => $imgName];
+            }
+        }
+
+        if ($this->mMahasiswa->saveProfile($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Profile berhasil disimpan',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Profile gagal disimpan',
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
 
     public function saveDetail()

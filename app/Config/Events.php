@@ -49,6 +49,8 @@ Events::on('pre_system', static function () {
 
 Events::on('login', static function () {
     toastNotif('success', 'Login Successful!');
+
+    setUserSession();
 });
 
 Events::on('logout', static function () {

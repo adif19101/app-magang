@@ -93,3 +93,21 @@ function urlImg($fullImgPath, $defaultImg = 'assets/img/default.webp')
 
   return base_url($fullImgPath);
 }
+
+function setUserSession()
+{
+    $db = \Config\Database::connect();
+
+    $userGroup = auth()->user()->getGroups()[0];
+
+    // TODO bikin buat nyimpen data nama, avatar dll di session buat di navbar
+    switch ($userGroup) {
+        case 'user':
+            # code...
+            break;
+        
+        default:
+            # code...
+            break;
+    }
+}

@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 $routes->get('/default-home', 'Home::defaultHome');
+$routes->get('avatar/(:any)', 'AvatarController::show/$1');
 
 // TODO delete later
 $routes->get('/superadmin', 'Home::superadmin');
