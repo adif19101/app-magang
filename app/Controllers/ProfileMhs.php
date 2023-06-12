@@ -37,7 +37,6 @@ class ProfileMhs extends BaseController
 
     public function deleteImage()
     {
-        // TODO fix this
         $accountId = auth()->id();
 
         if ($this->mMahasiswa->deleteAvaImg($accountId)) {
@@ -52,17 +51,12 @@ class ProfileMhs extends BaseController
             ];
         }
 
+        setUserSession();
         return $this->response->setJSON($response);
     }
 
     public function saveProfile()
     {
-        // echo '<pre>';
-        // var_dump($this->request->getPost());
-        // var_dump($_FILES);
-        // die;
-        // TODO tambahin form whatsapp
-
         $dataIn = $this->request->getPost();
 
         $img = $this->request->getFile('avatar_upload');
@@ -87,6 +81,7 @@ class ProfileMhs extends BaseController
             ];
         }
 
+        setUserSession();
         return $this->response->setJSON($response);
     }
 

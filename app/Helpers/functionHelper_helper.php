@@ -25,13 +25,13 @@ function groupUrl($urlSegment = '')
     if (auth()->loggedIn()) {
         $user = auth()->user();
         if ($user->inGroup('admin')) {
-            return base_url('admin'.$urlSegment);
+            return base_url('admin' . $urlSegment);
         }
         if ($user->inGroup('user')) {
-            return base_url('mahasiswa'.$urlSegment);
+            return base_url('mahasiswa' . $urlSegment);
         }
         if ($user->inGroup('superadmin')) {
-            return base_url('admin'.$urlSegment);
+            return base_url('admin' . $urlSegment);
         }
     }
     return base_url();
@@ -83,15 +83,24 @@ function convertDate($date, $format = null)
  **/
 function urlImg($fullImgPath, $defaultImg = 'assets/img/default.webp')
 {
-  if (
-    empty($fullImgPath) ||
-    !is_string($fullImgPath) ||
-    !is_file($fullImgPath)
-  ) {
-    return base_url($defaultImg);
-  };
+    if (
+        empty($fullImgPath) ||
+        !is_string($fullImgPath) ||
+        !is_file($fullImgPath)
+    ) {
+        return base_url($defaultImg);
+    };
 
-  return base_url($fullImgPath);
+    return base_url($fullImgPath);
+}
+
+function showAvatar($avatar)
+{
+    if ($avatar) {
+        return base_url('avatar/' . $avatar);
+    }
+    
+    return urlImg('');
 }
 
 function setUserSession()
@@ -100,14 +109,43 @@ function setUserSession()
 
     $userGroup = auth()->user()->getGroups()[0];
 
-    // TODO bikin buat nyimpen data nama, avatar dll di session buat di navbar
+    // TODO buat user mungkin dah ok.. cek buat admin dan perusahaan
     switch ($userGroup) {
         case 'user':
-            # code...
+            $data = $db->table('mahasiswa')
+                ->select('mahasiswa.*')
+                ->where('account_id', auth()->id())
+                ->get()
+                ->getRowArray();
+            $data += [ 'group' => 'Mahasiswa'];
+
+            session()->set('userDetails', $data);
             break;
-        
+
+        case 'admin':
+            $data = $db->table('admin')
+                ->select('admin.*')
+                ->where('account_id', auth()->id())
+                ->get()
+                ->getRowArray();
+            $data += [ 'group' => 'Admin'];
+
+            session()->set('userDetails', $data);
+            break;
+
+        case 'perusahaan':
+            $data = $db->table('perusahaan')
+                ->select('perusahaan.*')
+                ->where('account_id', auth()->id())
+                ->get()
+                ->getRowArray();
+            $data += [ 'group' => 'Perusahaan'];
+
+            session()->set('userDetails', $data);
+            break;
+
         default:
-            # code...
+            
             break;
     }
 }

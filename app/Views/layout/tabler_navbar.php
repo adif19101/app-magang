@@ -129,10 +129,10 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                     <!--TODO ganti link statis ke gambar beneran  -->
-                    <span class="avatar avatar-sm" style="background-image: url(https://preview.tabler.io/static/avatars/002m.jpg)"></span>
+                    <span class="avatar avatar-sm" style="background-image: url('<?= showAvatar(session()->get('userDetails')['avatar']) ?>')"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>Mallory Hulme</div>
-                        <div class="mt-1 small text-muted">Geologist IV</div>
+                        <div><?= session()->get('userDetails')['nama'] ?></div>
+                        <div class="mt-1 small text-muted"><?= session()->get('userDetails')['group'] ?></div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

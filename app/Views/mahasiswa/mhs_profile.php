@@ -40,7 +40,7 @@
                     <div class="card-body">
                         <div class="row align-items-center mb-4">
                             <div class="col-auto">
-                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= base_url('avatar/' . $mahasiswa['avatar']) ?>'"></label>
+                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?=showAvatar($mahasiswa['avatar']) ?>'"></label>
                                 <input type="file" id="avatar_upload" name="avatar_upload" style="display: none;">
                             </div>
                             <div class="col-auto">
@@ -66,9 +66,13 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-6">
+                            <div class="col-md">
                                 <label for="alamat" class="form-label">Alamat</label>
                                 <textarea class="form-control" name="alamat" id="alamat"><?= $mahasiswa['alamat'] ?></textarea>
+                            </div>
+                            <div class="col-md">
+                                <label for="whatsapp" class="form-label">Whatsapp</label>
+                                <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="<?= $mahasiswa['whatsapp'] ?>">
                             </div>
                         </div>
                     </div>
@@ -170,6 +174,11 @@
                     digits: true,
                     minlength: 13,
                     maxlength: 13
+                },
+                whatsapp: {
+                    required: true,
+                    digits: true,
+                    minlength: 9
                 },
                 alamat: {
                     required: true,

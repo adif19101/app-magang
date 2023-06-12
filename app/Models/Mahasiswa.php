@@ -50,8 +50,9 @@ class Mahasiswa extends Model
     public function deleteAvaImg($id)
     {
         $this->db->transStart();
-        $this->where('id', $id);
-        $this->update(['avatar' => 'assets/img/default.webp']);
+        $this->where('account_id', $id);
+        $this->set(['avatar' => null]);
+        $this->update();
         $this->db->transComplete();
 
         if ($this->db->transStatus() === false) {
