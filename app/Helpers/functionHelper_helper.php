@@ -107,45 +107,47 @@ function setUserSession()
 {
     $db = \Config\Database::connect();
 
-    $userGroup = auth()->user()->getGroups()[0];
-
-    // TODO buat user mungkin dah ok.. cek buat admin dan perusahaan
-    switch ($userGroup) {
-        case 'user':
-            $data = $db->table('mahasiswa')
-                ->select('mahasiswa.*')
-                ->where('account_id', auth()->id())
-                ->get()
-                ->getRowArray();
-            $data += [ 'group' => 'Mahasiswa'];
-
-            session()->set('userDetails', $data);
-            break;
-
-        case 'admin':
-            $data = $db->table('admin')
-                ->select('admin.*')
-                ->where('account_id', auth()->id())
-                ->get()
-                ->getRowArray();
-            $data += [ 'group' => 'Admin'];
-
-            session()->set('userDetails', $data);
-            break;
-
-        case 'perusahaan':
-            $data = $db->table('perusahaan')
-                ->select('perusahaan.*')
-                ->where('account_id', auth()->id())
-                ->get()
-                ->getRowArray();
-            $data += [ 'group' => 'Perusahaan'];
-
-            session()->set('userDetails', $data);
-            break;
-
-        default:
-            
-            break;
+    if (auth()->loggedIn()) {
+        $userGroup = auth()->user()->getGroups()[0];
+    
+        // TODO buat user mungkin dah ok.. cek buat admin dan perusahaan
+        switch ($userGroup) {
+            case 'user':
+                $data = $db->table('mahasiswa')
+                    ->select('mahasiswa.*')
+                    ->where('account_id', auth()->id())
+                    ->get()
+                    ->getRowArray();
+                $data += [ 'group' => 'Mahasiswa'];
+    
+                session()->set('userDetails', $data);
+                break;
+    
+            case 'admin':
+                $data = $db->table('admin')
+                    ->select('admin.*')
+                    ->where('account_id', auth()->id())
+                    ->get()
+                    ->getRowArray();
+                $data += [ 'group' => 'Admin'];
+    
+                session()->set('userDetails', $data);
+                break;
+    
+            case 'perusahaan':
+                $data = $db->table('perusahaan')
+                    ->select('perusahaan.*')
+                    ->where('account_id', auth()->id())
+                    ->get()
+                    ->getRowArray();
+                $data += [ 'group' => 'Perusahaan'];
+    
+                session()->set('userDetails', $data);
+                break;
+    
+            default:
+                
+                break;
+        }
     }
 }

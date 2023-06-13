@@ -56,3 +56,8 @@ Events::on('login', static function () {
 Events::on('logout', static function () {
     toastNotif('success', 'Logout Successful!');
 });
+
+Events::on('post_controller_constructor', static function ()
+{
+    setUserSession();
+});
