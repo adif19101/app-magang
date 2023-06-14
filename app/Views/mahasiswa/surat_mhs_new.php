@@ -34,6 +34,10 @@
                                 <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Lengkap">
                             </div>
                             <div class="mb-3">
+                                <label for="email" class="form-label required">Email</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Email Aktif">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label required">NPM</label>
                                 <input type="text" class="form-control" name="npm" id="npm" placeholder="NPM">
                             </div>
@@ -43,8 +47,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">Agama</label>
-                                <!-- TODO jadiin dropdown liat form req magang -->
                                 <select class="form-select" name="agama" id="agama">
+                                    <option value="">Pilih Agama</option>
                                     <option value="Islam">Islam</option>
                                     <option value="Katolik">Katolik</option>
                                     <option value="Protestan">Protestan</option>
@@ -60,36 +64,11 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">No Hp</label>
-                                <input type="text" class="form-control" name="whatsapp" id="whatsapp" placeholder="Contoh : 085224502100">
+                                <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="Contoh : 085224502100">
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-md-6 masonry-item">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Detail Pendaftaran</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="deadline_daftar" class="form-label">Tenggat Pendaftaran</label>
-                                <input type="date" class="form-control" name="deadline_daftar" id="deadline_daftar">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label required">Kriteria</label>
-                                <textarea class="summernote" name="kriteria" id="kriteria"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label required">Cara Mendaftar</label>
-                                <textarea class="summernote" name="cara_daftar" id="cara_daftar"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Info Tambahan</label>
-                                <textarea class="summernote" name="info_tambahan" id="info_tambahan"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="col-md-6 masonry-item">
                     <div class="card">
                         <div class="card-header justify-content-between">
@@ -117,7 +96,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">Penerima Surat</label>
-                                <input type="text" class="form-control" name="penerima" id="penerima" placeholder="Contoh : Kepala Staff Keuangan/Manajer HRD">
+                                <input type="text" class="form-control" name="penerima_surat" id="penerima_surat" placeholder="Contoh : Kepala Staff Keuangan/Manajer HRD">
                             </div>
                             <div class="mb-3">
                                 <label for="alamat_perusahaan" class="form-label required">Alamat Perusahaan</label>
@@ -130,17 +109,6 @@
                             <div class="mb-3">
                                 <label for="whatsapp_perusahaan" class="form-label required">No Telp Perusahaan</label>
                                 <input readonly type="text" class="form-control" name="whatsapp_perusahaan" id="whatsapp_perusahaan" placeholder="Whatsapp Perusahaan">
-                            </div>
-                            <div class="mb-3">
-                                <label for="jenis_badan_usaha" class="form-label required">Jenis Badan Usaha</label>
-                                <select class="form-select" name="jenis_badan_usaha" id="jenis_badan_usaha">
-                                    <option value="Perseroan Terbatas">Perseroan Terbatas (PT)</option>
-                                    <option value="Commanditaire Vennotschaap">Commanditaire Vennotschaap (CV)</option>
-                                    <option value="Firma">Firma</option>
-                                    <option value="Instansi Pemerintah">Instansi Pemerintah</option>
-                                    <option value="Badan Penelitian">Badan Penelitian</option>
-                                    <option value="Instansi Pendidikan">Instansi Pendidikan</option>
-                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="deskripsi_perusahaan" class="form-label required">Deskripsi Perusahaan</label>
@@ -293,7 +261,7 @@
                 agama: {
                     required: true,
                 },
-                whatsapp: {
+                no_hp: {
                     required: true,
                     digits: true,
                     minlength: 9
@@ -311,7 +279,7 @@
                     minlength: 2,
                     maxlength: 255
                 },
-                penerima: {
+                penerima_surat: {
                     required: true,
                     minlength: 2,
                     maxlength: 255
@@ -331,12 +299,11 @@
                     digits: true,
                     minlength: 9
                 },
-                jenis_badan_usaha: {
-                    required: true,
-                },
                 deskripsi_perusahaan: {
                     required: true,
-                    minlength: 5,
+                },
+                email: {
+                    required: true,
                     maxlength: 255
                 },
             },
