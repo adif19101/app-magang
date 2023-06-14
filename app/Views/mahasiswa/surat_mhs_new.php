@@ -20,7 +20,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <form id="tambah_lowongan_mhs">
+        <form id="buat_surat_permohonan">
             <div class="row row-cards masonry">
                 <div class="col-md-6 masonry-item">
                     <div class="card">
@@ -44,7 +44,15 @@
                             <div class="mb-3">
                                 <label class="form-label required">Agama</label>
                                 <!-- TODO jadiin dropdown liat form req magang -->
-                                <input type="text" class="form-control" name="agama" id="agama" placeholder="Agama">
+                                <select class="form-select" name="agama" id="agama">
+                                    <option value="Islam">Islam</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Protestan">Protestan</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Budha">Budha</option>
+                                    <option value="Konghucu">Konghucu</option>
+                                    <option value="Lain-lain">Lain-lain</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="alamat" class="form-label required">Alamat Lengkap</label>
@@ -57,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 masonry-item">
+                <!-- <div class="col-md-6 masonry-item">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Detail Pendaftaran</h3>
@@ -81,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="col-md-6 masonry-item">
                     <div class="card">
                         <div class="card-header justify-content-between">
@@ -108,6 +116,10 @@
                                 <input readonly type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan" placeholder="Nama Perusahaan">
                             </div>
                             <div class="mb-3">
+                                <label class="form-label required">Penerima Surat</label>
+                                <input type="text" class="form-control" name="penerima" id="penerima" placeholder="Contoh : Kepala Staff Keuangan/Manajer HRD">
+                            </div>
+                            <div class="mb-3">
                                 <label for="alamat_perusahaan" class="form-label required">Alamat Perusahaan</label>
                                 <textarea readonly class="form-control" name="alamat_perusahaan" id="alamat_perusahaan" rows="3"></textarea>
                             </div>
@@ -116,8 +128,19 @@
                                 <input readonly type="text" class="form-control" name="email_perusahaan" id="email_perusahaan" placeholder="Email Perusahaan">
                             </div>
                             <div class="mb-3">
-                                <label for="whatsapp_perusahaan" class="form-label required">Whatsapp Perusahaan</label>
+                                <label for="whatsapp_perusahaan" class="form-label required">No Telp Perusahaan</label>
                                 <input readonly type="text" class="form-control" name="whatsapp_perusahaan" id="whatsapp_perusahaan" placeholder="Whatsapp Perusahaan">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jenis_badan_usaha" class="form-label required">Jenis Badan Usaha</label>
+                                <select class="form-select" name="jenis_badan_usaha" id="jenis_badan_usaha">
+                                    <option value="Perseroan Terbatas">Perseroan Terbatas (PT)</option>
+                                    <option value="Commanditaire Vennotschaap">Commanditaire Vennotschaap (CV)</option>
+                                    <option value="Firma">Firma</option>
+                                    <option value="Instansi Pemerintah">Instansi Pemerintah</option>
+                                    <option value="Badan Penelitian">Badan Penelitian</option>
+                                    <option value="Instansi Pendidikan">Instansi Pendidikan</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="deskripsi_perusahaan" class="form-label required">Deskripsi Perusahaan</label>
@@ -237,55 +260,8 @@
             callbacks: {
                 onChange: function(contents, $editable) {
                     // Trigger validation when the contents of the Summernote editor change
-                    $('#tambah_lowongan_mhs').validate().element('.summernote');
+                    $('#buat_surat_permohonan').validate().element('.summernote');
                 }
-            }
-        });
-
-        $('#skill').select2({
-            placeholder: 'Masukkan kemampuan yang dibutuhkan',
-            multiple: true,
-            ajax: {
-                url: "<?= base_url('api/select2Skill') ?>",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        search: params.term
-                    };
-                },
-                processResults: function(data) {
-                    return {
-                        results: data,
-
-                    };
-                },
-                cache: true
-            },
-            tags: true, // allow manually adding new tags
-            createTag: function(params) { // create new tag
-                return {
-                    id: params.term,
-                    text: params.term,
-                    isNew: true
-                }
-            },
-            minimumInputLength: 2 // minimum number of characters before triggering search
-        });
-
-        $('#skill').on('select2:select', function(e) {
-            var data = e.params.data;
-
-            if (data.isNew) {
-                // Add the new skill to the database
-                $.post("<?= base_url('api/createselect2Skill') ?>", {
-                    nama: data.text
-                }, function(result) {
-                    Toast.fire({
-                        icon: result.status,
-                        title: result.message
-                    });
-                });
             }
         });
 
@@ -295,45 +271,73 @@
             percentPosition: true,
         });
 
-        $("#tambah_lowongan_mhs").validate({
+        $("#buat_surat_permohonan").validate({
             ignore: [],
             rules: {
-                judul: {
+                nama: {
                     required: true,
+                    minlength: 2,
                     maxlength: 255
                 },
-                deskripsi: {
+                npm: {
+                    required: true,
+                    digits: true,
+                    minlength: 13,
+                    maxlength: 13
+                },
+                tmpt_tgl_lahir: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 255
+                },
+                agama: {
                     required: true,
                 },
-                skill: {
+                whatsapp: {
                     required: true,
+                    digits: true,
+                    minlength: 9
                 },
-                tipe_pekerjaan: {
+                alamat: {
                     required: true,
+                    minlength: 5,
+                    maxlength: 255
                 },
-                lama_kontrak: {
-                    required: true,
-                },
-                jenis_kontrak: {
-                    required: true,
-                },
-                deadline_daftar: {
-                    required: true,
-                },
-                kriteria: {
-                    required: true,
-                },
-                cara_daftar: {
+                id_perusahaan: {
                     required: true,
                 },
                 nama_perusahaan: {
                     required: true,
+                    minlength: 2,
+                    maxlength: 255
+                },
+                penerima: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 255
                 },
                 alamat_perusahaan: {
                     required: true,
+                    minlength: 5,
+                    maxlength: 255
                 },
-                kontak_perusahaan: {
+                email_perusahaan: {
                     required: true,
+                    minlength: 5,
+                    maxlength: 255
+                },
+                whatsapp_perusahaan: {
+                    required: true,
+                    digits: true,
+                    minlength: 9
+                },
+                jenis_badan_usaha: {
+                    required: true,
+                },
+                deskripsi_perusahaan: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 255
                 },
             },
             // messages: {
@@ -349,16 +353,9 @@
             },
             submitHandler: function(form) {
                 var form_data = $(form).serializeArray();
-                var skill_ids = $.map($(form).find('#skill option:selected'), function(option) {
-                    return option.value;
-                });
-                form_data.push({
-                    name: 'skill_ids',
-                    value: skill_ids
-                });
 
                 $.ajax({
-                    url: "<?= base_url('mahasiswa/lowongan') ?>",
+                    url: "<?= base_url('mahasiswa/surat') ?>",
                     type: "POST",
                     data: form_data,
                     headers: {
@@ -375,7 +372,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "<?= base_url('mahasiswa/lowongan') ?>";
+                                    window.location.href = "<?= base_url('mahasiswa/surat') ?>";
                                 }
                             })
                         } else {
@@ -449,8 +446,8 @@
 
 
         $('#btn_save').on('click', function() {
-            if ($('#tambah_lowongan_mhs').valid()) {
-                $('#tambah_lowongan_mhs').submit();
+            if ($('#buat_surat_permohonan').valid()) {
+                $('#buat_surat_permohonan').submit();
             }
         });
 
