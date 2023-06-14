@@ -151,3 +151,68 @@ function setUserSession()
         }
     }
 }
+
+/**
+ * @param array $var Required
+ * @param array $keys Required
+ * @param bool $is_base_level Optional, Default FALSE
+ * @return bool
+ */
+function is_all_set($var, $keys, $is_base_level = false)
+{
+    $pointer = $var;
+    foreach ($keys as $key) {
+        if (!isset($pointer[$key])) {
+            return false;
+        }
+        if (!$is_base_level)
+            $pointer = $pointer[$key];
+    }
+    return true;
+}
+
+function is_all_set_and_return($var, $keys)
+{
+    if (is_all_set($var, $keys)) {
+        foreach ($keys as $key) {
+            $var = $var[$key];
+        }
+        return $var;
+    }
+    return false;
+}
+
+function convert_json_to_datatable_query($json)
+{
+    // Just for IDE
+    $length = 'length';
+    $start = 'start';
+    $filename = 'filename';
+    $json['length'] = isset($json['length']) ? $json[$length] : 10;
+    $query = [
+        "columns" => [],
+        "search" => [],
+        "length" => isset($json['length']) ? $json[$length] : 10,
+        "start" => isset($json['start']) ? $json[$start] : 0,
+        "order" => isset($json['order']) ? json_decode($json['order'], true) : [],
+        "filename" => isset($json['filename']) ? $json[$filename] : null,
+    ];
+    $orderables = isset($json['ordbls']) ? json_decode($json['ordbls']) : [];
+    $searchables = isset($json['sbls']) ? json_decode($json['sbls']) : [];
+
+    if (isset($json['columns'])) {
+        $json['columns'] = json_decode($json['columns']);
+        foreach ($json['columns'] as $index => $value) {
+            $query['columns'][$index] = [
+                'searchable' => in_array($index, $searchables),
+                'orderable' => in_array($index, $orderables),
+                'search' => [
+                    'value' => $value,
+                    'regex' => false,
+                ]
+            ];
+        }
+    }
+
+    return $query;
+}
