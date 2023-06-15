@@ -86,15 +86,15 @@ class SuratMhs extends BaseController
             $no++;
             $row = [];
             $row[] = $no;
+            $row[] = '
+                <a href="'.base_url('mahasiswa/surat/'.$tb->id).'" class="btn btn-sm btn-primary">Detail</a>
+            ';
             $row[] = $tb->nama;
             $row[] = $tb->npm;
             $row[] = $tb->email;
             $row[] = $tb->no_hp;
             $row[] = $tb->penerima_surat;
             $row[] = $tb->status;
-            $row[] = '
-                <a href="'.base_url('mahasiswa/surat/'.$tb->id).'" class="btn btn-sm btn-primary">Detail</a>
-            ';
 
             $data[] = $row;
         }

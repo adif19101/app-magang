@@ -13,6 +13,7 @@
     <link rel="manifest" href="<?= base_url('assets/pwa/manifest.json') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/DataTables/datatables.min.css') ?>">
 </head>
 
 <body>
@@ -89,6 +90,7 @@
     <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/additional-methods.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/select2.min.js') ?>"></script>
+    <script src="<?= base_url('assets/DataTables/datatables.min.js') ?>"></script>
 
     <script>
         const Toast = Swal.mixin({
@@ -102,7 +104,31 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-        
+
+        // DataTables debounce search START
+        $.fn.dataTable.Debounce = function(table, options) {
+            var tableId = table.settings()[0].sTableId;
+            $('.dataTables_filter input[aria-controls="' + tableId + '"]') // select the correct input field
+                .unbind() // Unbind previous default bindings
+                .bind('input', (delay(function(e) { // Bind our desired behavior
+                    table.search($(this).val()).draw();
+                    return;
+                }, 350))); // Set delay in milliseconds
+        }
+
+        function delay(callback, ms) {
+            var timer = 0;
+            return function() {
+                var context = this,
+                    args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    callback.apply(context, args);
+                }, ms || 0);
+            };
+        }
+        // DataTables debounce search END
+
         $(document).ready(function() {
 
             <?php if (session()->getFlashdata('toast')) : ?>

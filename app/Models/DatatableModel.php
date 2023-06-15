@@ -36,7 +36,7 @@ abstract class DatatableModel extends Model
                     }
 
                     if (count($this->column_search) - 1 == $i)
-                        $this->groupEnd()();
+                        $this->groupEnd();
                 }
                 $i++;
             }

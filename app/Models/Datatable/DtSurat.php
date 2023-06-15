@@ -8,7 +8,7 @@ class DtSurat extends DatatableModel
 {
     var $table = 'surat';
     var $column_order = array(null, null, 'nama', 'npm', 'email', 'no_hp', 'penerima_surat', 'status');
-    var $column_search = array();
+    var $column_search = array('surat.nama', 'surat.email', 'surat.no_hp', 'surat.penerima_surat', 'surat.status');
     var $order = array('surat.updated_at' => 'desc');
 
     function _select_query()
