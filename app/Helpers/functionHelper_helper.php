@@ -57,19 +57,16 @@ function formChecker($value, $selectedValue, $return)
 
 /**
  * convertDate
- * merubah tanggal urutan tanggal
+ * merubah format tanggal
  *
  * @param  string $date
+ * @param  string $format
  * @return void
  */
-function convertDate($date, $format = null)
+function convertDate($date, $format)
 {
-    if ($format != null) {
-        $tanggal = new DateTime($date);
-        return $tanggal->format($format);
-    }
-    $tanggal = explode("-", $date);
-    return $tanggal[2] . '-' . $tanggal[1] . '-' . $tanggal[0];
+    $tanggal = new DateTime($date);
+    return $tanggal->format($format);
 }
 
 /**
@@ -215,4 +212,28 @@ function convert_json_to_datatable_query($json)
     }
 
     return $query;
+}
+
+function statusBadge($status)
+{
+    switch ($status) {
+        case 'PENDING':
+            return '<span class="badge bg-warning">PENDING</span>';
+            break;
+        case 'APPROVED':
+            return '<span class="badge bg-primary">APPROVED</span>';
+            break;
+        case 'CANCELED':
+            return '<span class="badge bg-danger">CANCELED</span>';
+            break;
+        case 'REJECTED':
+            return '<span class="badge bg-danger">REJECTED</span>';
+            break;
+        case 'DONE':
+            return '<span class="badge bg-success">DONE</span>';
+            break;
+        default:
+            return '<span class="badge bg-warning">PENDING</span>';
+            break;
+    }
 }

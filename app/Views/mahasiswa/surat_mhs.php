@@ -42,9 +42,10 @@
                             <th>Nama</th>
                             <th>NPM</th>
                             <th>Email</th>
-                            <th>No HP</th>
+                            <th>Perusahaan</th>
                             <th>Penerima Surat</th>
                             <th>Status</th>
+                            <th>Tanggal Pengajuan</th>
                         </tr>
                     </thead>
 
@@ -80,6 +81,56 @@
         });
 
         var debounce = new $.fn.dataTable.Debounce(datatable);
+
+        $('#datatable').on('click', '.button-cancel', function() {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Pengajuan surat akan dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, batalkan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url('mahasiswa/surat/') ?>" + this.id,
+                        type: "POST",
+                        data: {
+                            status: "CANCELED"
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire(
+                                    'Success',
+                                    response.message,
+                                    'success'
+                                ).then((result) => {
+                                    if (result.isConfirmed) {
+                                        datatable.draw();
+                                    }
+                                })
+                            } else {
+                                Swal.fire(
+                                    'Error',
+                                    response.message,
+                                    'error'
+                                )
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                'Error',
+                                'Something Went Wrong!',
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
+
+        });
     });
 </script>
 <?= $this->endSection() ?>
