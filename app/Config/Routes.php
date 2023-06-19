@@ -61,8 +61,12 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
             $routes->post('profile/saveProfile', 'ProfileMhs::saveProfile');
             $routes->post('profile/saveDetail', 'ProfileMhs::saveDetail');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganMhs']);
+
             $routes->post('surat/datatable', 'SuratMhs::dt_SuratMhs');
             $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratMhs']);
+
+            $routes->post('suratPlot/datatable', 'SuratPlotMhs::dt_SuratPlotMhs');
+            $routes->resource('suratPlot', ['websafe' => 1, 'controller' => 'SuratPlotMhs']);
         }
     );
 });

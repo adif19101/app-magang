@@ -3,82 +3,98 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\Datatable\DtSurat;
-use App\Models\Surat;
+use App\Models\Datatable\DtSuratPlot;
 
-class SuratMhs extends BaseController
+class SuratPlotMhs extends BaseController
 {
     public function __construct() {
-        $this->mSurat = new Surat();
+        $this->mSuratPlot = new \App\Models\SuratPlot();
     }
+
     public function index()
     {
         $data = [
-            'title' => 'Surat',
-            'subtitle' => 'Surat',
+            'title' => 'Surat Plot Pembimbing',
+            'subtitle' => 'Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
                     'url' => base_url('mahasiswa'), 
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'crumb' => 'Surat'
+                    'crumb' => 'Surat Plot Pembimbing'
                 ],
             ],
         ];
 
-        return view('mahasiswa/surat_mhs', $data);
+        return view('mahasiswa/suratPlot_mhs', $data);
     }
 
     public function new()
     {
         $data = [
-            'title' => 'Pengajuan Surat',
-            'subtitle' => 'Pengajuan Surat',
+            'title' => 'Pengajuan Surat Plot Pembimbing',
+            'subtitle' => 'Pengajuan Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
                     'url' => base_url('mahasiswa'), 
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'url' => base_url('mahasiswa/surat'), 
-                    'crumb' => 'Surat'
+                    'url' => base_url('mahasiswa/suratPlot'), 
+                    'crumb' => 'Surat Plot Pembimbing'
                 ],
                 [
-                    'crumb' => 'Pengajuan Surat'
+                    'crumb' => 'Pengajuan Surat Plot Pembimbing'
                 ],
             ],
         ];
-        return view('mahasiswa/surat_mhs_new', $data);
+        return view('mahasiswa/suratPlot_mhs_new', $data);
     }
 
     public function create()
     {
         $dataIn = $this->request->getPost();
 
+        $suratCovid = $this->request->getFile('surat_covid');
+        if ($suratCovid->isValid() && ! $suratCovid->hasMoved()) {
+            $suratCovidName = $suratCovid->getRandomName();
+            if ($suratCovid->move(SURAT_BUKTI_UPLOAD_PATH, $suratCovidName)) {
+                $dataIn += ['surat_covid' => $suratCovidName];
+            }
+        }
+
+        $suratBalasan = $this->request->getFile('surat_balasan');
+        if ($suratBalasan->isValid() && ! $suratBalasan->hasMoved()) {
+            $suratBalasanName = $suratBalasan->getRandomName();
+            if ($suratBalasan->move(SURAT_BUKTI_UPLOAD_PATH, $suratBalasanName)) {
+                $dataIn += ['surat_balasan' => $suratBalasanName];
+            }
+        }
+
         $dataIn += [
             'user_id' => auth()->id(),
             'status' => 'PENDING',
         ];
         
-        if ($this->mSurat->createSurat($dataIn)) {
+        if ($this->mSuratPlot->insert($dataIn)) {
             $response = [
                 'status' => 'success',
-                'message' => 'Surat Permohonan Magang berhasil ditambahkan',
+                'message' => 'Surat Plot Pembimbing berhasil ditambahkan',
             ];
         } else {
             $response = [
                 'status' => 'error',
-                'message' => 'Surat Permohonan Magang gagal ditambahkan',
+                'message' => 'Surat Plot Pembimbing gagal ditambahkan',
             ];
         }
 
         return $this->response->setJSON($response);
     }
 
-    public function dt_SuratMhs()
+    public function dt_SuratPlotMhs()
     {
-        $dt = new DtSurat();
+        $dt = new DtSuratPlot();
         $data = [];
         $no = $this->request->getPost('start');
 
@@ -91,7 +107,9 @@ class SuratMhs extends BaseController
             $row[] = $tb->npm;
             $row[] = $tb->email;
             $row[] = $tb->nama_perusahaan;
-            $row[] = $tb->penerima_surat;
+            $row[] = $tb->nama_penanggung_jawab;
+            $row[] = convertDate($tb->tanggal_mulai, 'd-m-Y');
+            $row[] = convertDate($tb->tanggal_selesai, 'd-m-Y');
             $row[] = statusBadge($tb->status);
             $row[] = convertDate($tb->created_at, 'd-m-Y');
 
@@ -115,15 +133,15 @@ class SuratMhs extends BaseController
             'id' => $id,
         ];
 
-        if ($this->mSurat->save($dataIn)) {
+        if ($this->mSuratPlot->save($dataIn)) {
             $response = [
                 'status' => 'success',
-                'message' => 'Surat Permohonan Magang berhasil diupdate',
+                'message' => 'Surat Plot berhasil diupdate',
             ];
         } else {
             $response = [
                 'status' => 'error',
-                'message' => 'Surat Permohonan Magang gagal diupdate',
+                'message' => 'Surat Plot gagal diupdate',
             ];
         }
 
@@ -133,7 +151,7 @@ class SuratMhs extends BaseController
     public function dtAction($id, $status)
     {
         $button = '<div class="btn-list">
-            <a href="'.base_url('mahasiswa/surat/'.$id).'" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            <a href="'.base_url('mahasiswa/suratPlot/'.$id).'" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
@@ -143,7 +161,7 @@ class SuratMhs extends BaseController
             </a>';
 
         if ($status == 'DONE') {
-            $button .= '<a href="'.base_url('mahasiswa/surat/download/'.$id).'" class="btn btn-success btn-icon btn-sm" title="Download" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            $button .= '<a href="'.base_url('mahasiswa/suratPlot/download/'.$id).'" class="btn btn-success btn-icon btn-sm" title="Download" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>

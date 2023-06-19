@@ -173,8 +173,8 @@
                             </span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= groupUrl('surat') ?>">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-files" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -187,6 +187,14 @@
                                 Surat
                             </span>
                         </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="<?= groupUrl('surat') ?>">
+                                Permohonan Magang
+                            </a>
+                            <a class="dropdown-item" href="<?= groupUrl('suratPlot') ?>">
+                                Plot Pembimbing
+                            </a>
+                        </div>
                     </li>
                 </ul>
                 <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last align-end me-md-2">
