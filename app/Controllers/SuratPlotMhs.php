@@ -45,7 +45,7 @@ class SuratPlotMhs extends BaseController
                     'crumb' => 'Surat Plot Pembimbing'
                 ],
                 [
-                    'crumb' => 'Pengajuan Surat Plot Pembimbing'
+                    'crumb' => 'Pengajuan'
                 ],
             ],
         ];

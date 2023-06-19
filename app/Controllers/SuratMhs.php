@@ -14,15 +14,15 @@ class SuratMhs extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Surat',
-            'subtitle' => 'Surat',
+            'title' => 'Surat Permohonan Magang',
+            'subtitle' => 'Surat Permohonan Magang',
             'breadcrumbs' => [
                 [
                     'url' => base_url('mahasiswa'), 
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'crumb' => 'Surat'
+                    'crumb' => 'Surat Permohonan Magang'
                 ],
             ],
         ];
@@ -33,8 +33,8 @@ class SuratMhs extends BaseController
     public function new()
     {
         $data = [
-            'title' => 'Pengajuan Surat',
-            'subtitle' => 'Pengajuan Surat',
+            'title' => 'Pengajuan Surat Permohonan Magang',
+            'subtitle' => 'Pengajuan Surat Permohonan Magang',
             'breadcrumbs' => [
                 [
                     'url' => base_url('mahasiswa'), 
@@ -42,10 +42,10 @@ class SuratMhs extends BaseController
                 ],
                 [
                     'url' => base_url('mahasiswa/surat'), 
-                    'crumb' => 'Surat'
+                    'crumb' => 'Surat Permohonan Magang'
                 ],
                 [
-                    'crumb' => 'Pengajuan Surat'
+                    'crumb' => 'Pengajuan'
                 ],
             ],
         ];
