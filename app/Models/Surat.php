@@ -78,4 +78,37 @@ class Surat extends Model
         }
         return true;
     }
+
+    public function showSurat($id)
+    {
+        $this->select([
+            'surat.*',
+            'perusahaan.nama as nama_perusahaan',
+            'perusahaan.alamat as alamat_perusahaan',
+            'perusahaan.email as email_perusahaan',
+            'perusahaan.whatsapp as whatsapp_perusahaan',
+            'perusahaan.deskripsi as deskripsi_perusahaan',
+        ]);
+
+        $this->join('perusahaan', 'surat.id_perusahaan = perusahaan.id', 'left');
+
+        $this->where('surat.id', $id);
+
+        return $this->first();
+    }
+
+    public function downloadFilename($id)
+    {
+        $this->select([
+            'surat.npm',
+            'surat.surat_final',
+            'perusahaan.nama as nama_perusahaan',
+        ]);
+
+        $this->join('perusahaan', 'surat.id_perusahaan = perusahaan.id', 'left');
+
+        $this->where('surat.id', $id);
+
+        return $this->first();
+    }
 }

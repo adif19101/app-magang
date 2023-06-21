@@ -48,6 +48,10 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
 
             $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
+
+            $routes->post('surat/datatable', 'SuratAdmin::dt_SuratAdmin');
+            $routes->get('surat/download/(:segment)', 'SuratAdmin::download/$1');
+            $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratAdmin']);
         }
     );
 });

@@ -3,6 +3,7 @@
 define('DEFAULT_IMAGE', 'assets/img/default.webp');
 define('AVATAR_UPLOAD_PATH', WRITEPATH . 'uploads/avatar');
 define('SURAT_BUKTI_UPLOAD_PATH', WRITEPATH . 'uploads/suratBukti');
+define('SURAT_FINAL_UPLOAD_PATH', WRITEPATH . 'uploads/suratFinal');
 
 /*
  | --------------------------------------------------------------------
