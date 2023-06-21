@@ -5,12 +5,14 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtSurat;
 use App\Models\Surat;
+use CodeIgniter\Files\File;
 
 class SuratMhs extends BaseController
 {
     public function __construct() {
         $this->mSurat = new Surat();
     }
+
     public function index()
     {
         $data = [
@@ -76,6 +78,62 @@ class SuratMhs extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function show($id)
+    {
+        $data = [
+            'title' => 'Detail Surat Permohonan Magang',
+            'subtitle' => 'Detail Surat Permohonan Magang',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('mahasiswa'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('mahasiswa/surat'),
+                    'crumb' => 'Surat Permohonan Magang'
+                ],
+                [
+                    'crumb' => 'Detail'
+                ],
+            ],
+            'surat' => $this->mSurat->showSurat($id),
+        ];
+
+        return view('mahasiswa/surat_mhs_show', $data);
+    }
+
+    public function update($id)
+    {
+        $dataIn = $this->request->getPost();
+        $dataIn += [
+            'id' => $id,
+        ];
+
+        if ($this->mSurat->save($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Surat Permohonan Magang berhasil diupdate',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Surat Permohonan Magang gagal diupdate',
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function download($id)
+    {
+        $surat = $this->mSurat->downloadFilename($id);
+        $filepath = SURAT_FINAL_UPLOAD_PATH . '/' . $surat['surat_final'];
+        $file = new File($filepath);
+
+        return $this->response->download($filepath, null)
+            ->setFileName("PERMOHONAN_MAGANG_" . $surat['npm'] . "_" . $surat['nama_perusahaan']. '.' . $file->guessExtension());
+    }
+
     public function dt_SuratMhs()
     {
         $dt = new DtSurat();
@@ -106,28 +164,6 @@ class SuratMhs extends BaseController
         ];
 
         return $this->response->setJSON($output);
-    }
-
-    public function update($id)
-    {
-        $dataIn = $this->request->getPost();
-        $dataIn += [
-            'id' => $id,
-        ];
-
-        if ($this->mSurat->save($dataIn)) {
-            $response = [
-                'status' => 'success',
-                'message' => 'Surat Permohonan Magang berhasil diupdate',
-            ];
-        } else {
-            $response = [
-                'status' => 'error',
-                'message' => 'Surat Permohonan Magang gagal diupdate',
-            ];
-        }
-
-        return $this->response->setJSON($response);
     }
 
     public function dtAction($id, $status)

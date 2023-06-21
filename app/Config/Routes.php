@@ -70,6 +70,7 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganMhs']);
 
             $routes->post('surat/datatable', 'SuratMhs::dt_SuratMhs');
+            $routes->get('surat/download/(:segment)', 'SuratMhs::download/$1');
             $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratMhs']);
 
             $routes->post('suratPlot/datatable', 'SuratPlotMhs::dt_SuratPlotMhs');
