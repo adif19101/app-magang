@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SuratPlot extends Model
+class Admin extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'surat_plot';
+    protected $table            = 'admin';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
@@ -15,24 +15,10 @@ class SuratPlot extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'user_id',
         'nama',
-        'npm',
-        'email',
-        'surat_covid',
-        'surat_balasan',
-        'nama_perusahaan',
-        'alamat_perusahaan',
-        'nama_penanggung_jawab',
-        'hp_penanggung_jawab',
-        'latitude',
-        'longitude',
-        'tanggal_mulai',
-        'tanggal_selesai',
-        'bidang_minat',
-        'rencana_magang',
-        'status',
-        'surat_final'
+        'avatar',
+        'account_id',
+        'whatsapp',
     ];
 
     // Dates

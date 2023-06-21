@@ -26,6 +26,7 @@ class Surat extends Model
         'alamat',
         'penerima_surat',
         'status',
+        'surat_final'
     ];
 
     // Dates

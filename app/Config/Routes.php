@@ -40,11 +40,14 @@ $routes->get('/superadmin', 'Home::superadmin');
 $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function ($routes) {
     $routes->group(
         '',
-        ['filter' => ['group:admin,superadmin', 'permission:users.manage']],
+        ['filter' => ['group:admin,superadmin', 'permission:users.create']],
         static function ($routes) {
             $routes->resource('users');
             $routes->get('/', 'Admin::index');
             $routes->get('users', 'Admin::users');
+
+            $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
+            $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
         }
     );
 });

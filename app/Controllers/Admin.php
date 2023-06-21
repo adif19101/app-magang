@@ -8,7 +8,14 @@ class Admin extends BaseController
 {
     public function index()
     {
-        echo 'admin';
+        $data = [
+            'title' => 'Dashboard - Admin',
+            'subtitle' => 'Dashboard',
+        ];
+
+        // TODO ganti jd statistik 
+
+        return view('admin/index', $data);
     }
 
     public function users(int $idUser = null)

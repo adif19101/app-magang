@@ -67,7 +67,7 @@
                                             <path d="M12 7v5l3 3"></path>
                                             <path d="M15 19l2 2l4 -4"></path>
                                         </svg>
-                                        Tenggat Daftar : <?= convertDate($lowongan['deadline_daftar'])  ?>
+                                        Tenggat Daftar : <?= convertDate($lowongan['deadline_daftar'], 'd-m-Y')  ?>
                                     </span>
                                 </div>
                             </div>
