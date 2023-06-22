@@ -6,17 +6,17 @@
     <div class="container-xl">
         <div class="card mb-4">
             <div class="card-header row align-items-center justify-content-between">
-                <h3 class="card-title col-auto">Lowongan Magang</h3>
+                <h3 class="card-title col-auto">Surat Magang</h3>
 
                 <div class="col-auto">
                     <div class="btn-list">
-                        <a href="<?= base_url('admin/lowongan/new') ?>" class="btn btn-primary">
+                        <a href="<?= base_url('mahasiswa/suratPlot/new') ?>" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M12 5l0 14" />
                                 <path d="M5 12l14 0" />
                             </svg>
-                            Tambah
+                            Ajukan Surat
                         </a>
                     </div>
                 </div>
@@ -27,13 +27,15 @@
                         <tr>
                             <th>No</th>
                             <th>Action</th>
-                            <th>Judul</th>
+                            <th>Nama</th>
+                            <th>NPM</th>
+                            <th>Email</th>
                             <th>Perusahaan</th>
-                            <th>Tenggat Pendaftaran</th>
-                            <th>Tipe Pekerjaan</th>
-                            <th>Lama Kontrak</th>
-                            <th>Jenis Kontrak</th>
-                            <th>Terakhir Diubah</th>
+                            <th>Penanggung Jawab</th>
+                            <th>Tanggal Mulai</th>
+                            <th>Tanggal Selesai</th>
+                            <th>Status</th>
+                            <th>Tanggal Pengajuan</th>
                         </tr>
                     </thead>
 
@@ -56,7 +58,7 @@
             serverSide: true,
             order: [],
             ajax: {
-                url: "<?= base_url('admin/lowongan/datatable') ?>",
+                url: "<?= base_url('mahasiswa/suratPlot/datatable') ?>",
                 type: "POST"
             },
             columnDefs: [{
@@ -72,21 +74,24 @@
 
         var debounce = new $.fn.dataTable.Debounce(datatable);
 
-        $('#datatable').on('click', '.button-delete', function() {
+        $('#datatable').on('click', '.button-cancel', function() {
             Swal.fire({
                 title: 'Apakah anda yakin?',
-                text: "Lowongan Magang Akan Dihapus!",
+                text: "Pengajuan surat akan dibatalkan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus!',
+                confirmButtonText: 'Ya, batalkan!',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('admin/lowongan/') ?>" + this.id + "/delete",
+                        url: "<?= base_url('mahasiswa/suratPlot/') ?>" + this.id,
                         type: "POST",
+                        data: {
+                            status: "CANCELED"
+                        },
                         success: function(response) {
                             if (response.status == 'success') {
                                 Swal.fire(

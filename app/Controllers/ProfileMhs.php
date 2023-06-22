@@ -61,7 +61,7 @@ class ProfileMhs extends BaseController
 
         $img = $this->request->getFile('avatar_upload');
 
-        if ($img->isValid() && ! $img->hasMoved()) {
+        if (isset($img) && $img->isValid() && ! $img->hasMoved()) {
             $imgName = $img->getRandomName();
 
             if ($img->move(AVATAR_UPLOAD_PATH, $imgName)) {

@@ -39,6 +39,10 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Admin',
             'description' => 'Day to day administrators of the site.',
         ],
+        'verifikator' => [
+            'title'       => 'Verifikator',
+            'description' => 'Verifikator surat magang.',
+        ],
         'user' => [
             'title'       => 'User',
             'description' => 'General users of the site. Mahasiswa.',
@@ -75,6 +79,8 @@ class AuthGroups extends ShieldAuthGroups
         'home.access'         => 'Can access the home page',
 
         'companies.access'    => 'listing lowongan magang per instansi',
+
+        'doc.access'          => 'Can access the document page',
     ];
 
     /**
@@ -96,6 +102,9 @@ class AuthGroups extends ShieldAuthGroups
             'users.create',
             'users.edit',
             'users.delete',
+        ],
+        'verifikator' => [
+            'doc.access',
         ],
         'user' => [
             'home.access',

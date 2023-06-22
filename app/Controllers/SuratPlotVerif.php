@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtSuratPlot;
 
-class SuratPlotMhs extends BaseController
+class SuratPlotVerif extends BaseController
 {
     public function __construct() {
         $this->mSuratPlot = new \App\Models\SuratPlot();
@@ -18,7 +18,7 @@ class SuratPlotMhs extends BaseController
             'subtitle' => 'Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
-                    'url' => base_url('mahasiswa'), 
+                    'url' => base_url('verifikator'),
                     'crumb' => 'Dashboard'
                 ],
                 [
@@ -27,72 +27,64 @@ class SuratPlotMhs extends BaseController
             ],
         ];
 
-        return view('mahasiswa/suratPlot_mhs', $data);
+        return view('verifikator/suratPlot_verif', $data);
     }
 
-    public function new()
+    public function show($id)
     {
         $data = [
-            'title' => 'Pengajuan Surat Plot Pembimbing',
-            'subtitle' => 'Pengajuan Surat Plot Pembimbing',
+            'title' => 'Detail Surat Plot Pembimbing',
+            'subtitle' => 'Detail Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
-                    'url' => base_url('mahasiswa'), 
+                    'url' => base_url('verifikator'),
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'url' => base_url('mahasiswa/suratPlot'), 
+                    'url' => base_url('verifikator/suratPlot'),
                     'crumb' => 'Surat Plot Pembimbing'
                 ],
                 [
-                    'crumb' => 'Pengajuan'
+                    'crumb' => 'Detail'
                 ],
             ],
+            'surat' => $this->mSuratPlot->find($id),
         ];
-        return view('mahasiswa/suratPlot_mhs_new', $data);
+
+        return view('verifikator/suratPlot_verif_show', $data);
     }
 
-    public function create()
+    public function update($id)
     {
         $dataIn = $this->request->getPost();
-
-        $suratCovid = $this->request->getFile('surat_covid');
-        if (isset($suratCovid) && $suratCovid->isValid() && ! $suratCovid->hasMoved()) {
-            $suratCovidName = $suratCovid->getRandomName();
-            if ($suratCovid->move(SURAT_BUKTI_UPLOAD_PATH, $suratCovidName)) {
-                $dataIn += ['surat_covid' => $suratCovidName];
-            }
-        }
-
-        $suratBalasan = $this->request->getFile('surat_balasan');
-        if (isset($suratBalasan) && $suratBalasan->isValid() && ! $suratBalasan->hasMoved()) {
-            $suratBalasanName = $suratBalasan->getRandomName();
-            if ($suratBalasan->move(SURAT_BUKTI_UPLOAD_PATH, $suratBalasanName)) {
-                $dataIn += ['surat_balasan' => $suratBalasanName];
-            }
-        }
-
         $dataIn += [
-            'user_id' => auth()->id(),
-            'status' => 'PENDING',
+            'id' => $id,
         ];
-        
-        if ($this->mSuratPlot->insert($dataIn)) {
+
+        $suratFinal = $this->request->getFile('surat_final');
+        if (isset($suratFinal) && $suratFinal->isValid() && !$suratFinal->hasMoved()) {
+            $suratFinalName = $suratFinal->getRandomName();
+            if ($suratFinal->move(SURAT_FINAL_UPLOAD_PATH, $suratFinalName)) {
+                $dataIn += ['surat_final' => $suratFinalName];
+            }
+        }
+
+        if ($this->mSuratPlot->save($dataIn)) {
             $response = [
                 'status' => 'success',
-                'message' => 'Surat Plot Pembimbing berhasil ditambahkan',
+                'message' => 'Surat Plot Pembimbing berhasil diupdate',
             ];
         } else {
             $response = [
                 'status' => 'error',
-                'message' => 'Surat Plot Pembimbing gagal ditambahkan',
+                'message' => 'Surat Plot Pembimbing gagal diupdate',
             ];
         }
 
         return $this->response->setJSON($response);
     }
 
-    public function dt_SuratPlotMhs()
+    public function dt_SuratPlotVerif()
     {
         $dt = new DtSuratPlot();
         $data = [];
@@ -126,32 +118,10 @@ class SuratPlotMhs extends BaseController
         return $this->response->setJSON($output);
     }
 
-    public function update($id)
-    {
-        $dataIn = $this->request->getPost();
-        $dataIn += [
-            'id' => $id,
-        ];
-
-        if ($this->mSuratPlot->save($dataIn)) {
-            $response = [
-                'status' => 'success',
-                'message' => 'Surat Plot berhasil diupdate',
-            ];
-        } else {
-            $response = [
-                'status' => 'error',
-                'message' => 'Surat Plot gagal diupdate',
-            ];
-        }
-
-        return $this->response->setJSON($response);
-    }
-
     public function dtAction($id, $status)
     {
         $button = '<div class="btn-list">
-            <a href="'.base_url('mahasiswa/suratPlot/'.$id).'" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            <a href="' . base_url('verifikator/suratPlot/' . $id) . '" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
@@ -161,7 +131,7 @@ class SuratPlotMhs extends BaseController
             </a>';
 
         if ($status == 'DONE') {
-            $button .= '<a href="'.base_url('mahasiswa/suratPlot/download/'.$id).'" class="btn btn-success btn-icon btn-sm" title="Download" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            $button .= '<a href="' . base_url('verifikator/suratPlot/download/' . $id) . '" class="btn btn-success btn-icon btn-sm" title="Download" target="_blank" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
@@ -171,7 +141,14 @@ class SuratPlotMhs extends BaseController
             </a>';
         }
         if ($status == 'PENDING') {
-            $button .= '<a id="'.$id.'" class="btn btn-danger btn-icon btn-sm button-cancel" title="Cancel" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            $button .= '<a data-status="APPROVED" id="' . $id . '" class="btn btn-info btn-icon btn-sm button-status" title="Approve" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M5 12l5 5l10 -10"></path>
+            </svg>
+        </a>';
+
+            $button .= '<a data-status="REJECTED" id="' . $id . '" class="btn btn-danger btn-icon btn-sm button-status" title="Reject" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M4 7l16 0"></path>

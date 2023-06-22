@@ -32,7 +32,10 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 $routes->get('/default-home', 'Home::defaultHome');
-$routes->get('avatar/(:any)', 'AvatarController::show/$1');
+$routes->get('avatar/(:any)', 'ServerFileController::avatar/$1');
+// TODO tambahin filter permission
+$routes->get('suratBukti/(:any)', 'ServerFileController::suratBukti/$1');
+$routes->get('suratFinal/(:any)', 'ServerFileController::suratFinal/$1');
 
 // TODO delete later
 $routes->get('/superadmin', 'Home::superadmin');
@@ -52,6 +55,24 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
             $routes->post('surat/datatable', 'SuratAdmin::dt_SuratAdmin');
             $routes->get('surat/download/(:segment)', 'SuratAdmin::download/$1');
             $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratAdmin']);
+        }
+    );
+});
+
+$routes->group('verifikator', ['filter' => 'group:verifikator,superadmin'], static function ($routes) {
+    $routes->group(
+        '',
+        ['filter' => ['group:verifikator,superadmin', 'permission:doc.access']],
+        static function ($routes) {
+            $routes->resource('users');
+            $routes->get('/', 'Verifikator::index');
+
+            // $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
+            // $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
+
+            $routes->post('suratPlot/datatable', 'SuratPlotVerif::dt_SuratPlotVerif');
+            $routes->get('suratPlot/download/(:segment)', 'SuratPlotVerif::download/$1');
+            $routes->resource('suratPlot', ['websafe' => 1, 'controller' => 'SuratPlotVerif']);
         }
     );
 });

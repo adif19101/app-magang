@@ -27,6 +27,9 @@ function groupUrl($urlSegment = '')
         if ($user->inGroup('admin')) {
             return base_url('admin' . $urlSegment);
         }
+        if ($user->inGroup('verifikator')) {
+            return base_url('verifikator' . $urlSegment);
+        }
         if ($user->inGroup('user')) {
             return base_url('mahasiswa' . $urlSegment);
         }
@@ -131,6 +134,17 @@ function setUserSession()
                 session()->set('userDetails', $data);
                 break;
     
+            case 'verifikator':
+                $data = $db->table('admin')
+                    ->select('admin.*')
+                    ->where('account_id', auth()->id())
+                    ->get()
+                    ->getRowArray();
+                $data += [ 'group' => 'Verifikator'];
+    
+                session()->set('userDetails', $data);
+                break;
+    
             case 'perusahaan':
                 $data = $db->table('perusahaan')
                     ->select('perusahaan.*')
@@ -221,7 +235,7 @@ function statusBadge($status)
             return '<span class="badge bg-warning">PENDING</span>';
             break;
         case 'APPROVED':
-            return '<span class="badge bg-primary">APPROVED</span>';
+            return '<span class="badge bg-info">APPROVED</span>';
             break;
         case 'CANCELED':
             return '<span class="badge bg-danger">CANCELED</span>';

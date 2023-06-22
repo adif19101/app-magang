@@ -65,7 +65,7 @@ class SuratAdmin extends BaseController
         ];
 
         $suratFinal = $this->request->getFile('surat_final');
-        if ($suratFinal->isValid() && !$suratFinal->hasMoved()) {
+        if (isset($suratFinal) && $suratFinal->isValid() && !$suratFinal->hasMoved()) {
             $suratFinalName = $suratFinal->getRandomName();
             if ($suratFinal->move(SURAT_FINAL_UPLOAD_PATH, $suratFinalName)) {
                 $dataIn += ['surat_final' => $suratFinalName];

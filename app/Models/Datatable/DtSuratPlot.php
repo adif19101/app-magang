@@ -9,7 +9,7 @@ class DtSuratPlot extends DatatableModel
     var $table = 'surat_plot';
     var $column_order = array(null, null, 'nama', 'npm', 'email', 'nama_perusahaan', 'nama_penanggung_jawab', 'tanggal_mulai', 'tanggal_selesai', 'status', 'created_at');
     var $column_search = array('nama', 'npm', 'email', 'nama_perusahaan', 'nama_penanggung_jawab', 'status');
-    var $order = array('updated_at' => 'desc');
+    var $order = array('created_at' => 'desc');
 
     function _select_query()
     {
