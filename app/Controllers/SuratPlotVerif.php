@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtSuratPlot;
+use CodeIgniter\Files\File;
 
 class SuratPlotVerif extends BaseController
 {
@@ -82,6 +83,16 @@ class SuratPlotVerif extends BaseController
         }
 
         return $this->response->setJSON($response);
+    }
+
+    public function download($id)
+    {
+        $surat = $this->mSurat->downloadFilename($id);
+        $filepath = SURAT_FINAL_UPLOAD_PATH . '/' . $surat['surat_final'];
+        $file = new File($filepath);
+
+        return $this->response->download($filepath, null)
+            ->setFileName("PLOT_PEMBIMBING_" . $surat['npm'] . "_" . $surat['nama_perusahaan']. '.' . $file->guessExtension());
     }
 
     public function dt_SuratPlotVerif()

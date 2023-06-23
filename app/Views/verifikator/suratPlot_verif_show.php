@@ -47,8 +47,9 @@
             <div class="row row-cards masonry">
                 <div class="col-md-6 masonry-item">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header justify-content-between">
                             <h3 class="card-title">Surat Plot Pembimbing</h3>
+                            <?= statusBadge($surat['status']) ?>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
