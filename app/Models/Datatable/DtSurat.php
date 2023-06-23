@@ -24,7 +24,7 @@ class DtSurat extends DatatableModel
         $this->join('perusahaan', 'surat.id_perusahaan = perusahaan.id');
         // $this->join('users', 'surat.user_id = users.id');
         
-        if (auth()->user()->getGroups()[0] == 'user') {
+        if (auth()->user()->getGroups()[0] == 'mahasiswa') {
             $this->where('surat.user_id', auth()->id());
         }
     }

@@ -45,12 +45,14 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
         '',
         ['filter' => ['group:admin,superadmin', 'permission:users.create']],
         static function ($routes) {
-            $routes->resource('users');
             $routes->get('/', 'Admin::index');
-            $routes->get('users', 'Admin::users');
+            // $routes->get('users', 'Admin::users');
 
             $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
+
+            $routes->post('users/datatable', 'UserAdmin::datatable');
+            $routes->resource('users', ['websafe' => 1, 'controller' => 'UserAdmin']);
 
             $routes->post('surat/datatable', 'SuratAdmin::dt_SuratAdmin');
             $routes->get('surat/download/(:segment)', 'SuratAdmin::download/$1');
@@ -68,7 +70,6 @@ $routes->group('verifikator', ['filter' => 'group:verifikator,superadmin'], stat
         '',
         ['filter' => ['group:verifikator,superadmin', 'permission:doc.access']],
         static function ($routes) {
-            $routes->resource('users');
             $routes->get('/', 'Verifikator::index');
 
             // $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
@@ -81,10 +82,10 @@ $routes->group('verifikator', ['filter' => 'group:verifikator,superadmin'], stat
     );
 });
 
-$routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static function ($routes) {
+$routes->group('mahasiswa', ['filter' => 'group:mahasiswa,superadmin'], static function ($routes) {
     $routes->group(
         '',
-        ['filter' => ['group:user,superadmin', 'permission:home.access']],
+        ['filter' => ['group:mahasiswa,superadmin', 'permission:home.access']],
         static function ($routes) {
             // $routes->resource('users', ['websafe' => 1]);
             $routes->get('/', 'Mahasiswa::index');

@@ -30,7 +30,7 @@ function groupUrl($urlSegment = '')
         if ($user->inGroup('verifikator')) {
             return base_url('verifikator' . $urlSegment);
         }
-        if ($user->inGroup('user')) {
+        if ($user->inGroup('mahasiswa')) {
             return base_url('mahasiswa' . $urlSegment);
         }
         if ($user->inGroup('superadmin')) {
@@ -112,7 +112,7 @@ function setUserSession()
     
         // TODO buat user mungkin dah ok.. cek buat admin dan perusahaan
         switch ($userGroup) {
-            case 'user':
+            case 'mahasiswa':
                 $data = $db->table('mahasiswa')
                     ->select('mahasiswa.*')
                     ->where('account_id', auth()->id())

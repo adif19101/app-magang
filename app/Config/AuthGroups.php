@@ -14,7 +14,7 @@ class AuthGroups extends ShieldAuthGroups
      * --------------------------------------------------------------------
      * The group that a newly registered user is added to.
      */
-    public string $defaultGroup = 'user';
+    public string $defaultGroup = 'mahasiswa';
 
     /**
      * --------------------------------------------------------------------
@@ -43,8 +43,8 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Verifikator',
             'description' => 'Verifikator surat magang.',
         ],
-        'user' => [
-            'title'       => 'User',
+        'mahasiswa' => [
+            'title'       => 'Mahasiswa',
             'description' => 'General users of the site. Mahasiswa.',
         ],
         'company' => [
@@ -106,7 +106,7 @@ class AuthGroups extends ShieldAuthGroups
         'verifikator' => [
             'doc.access',
         ],
-        'user' => [
+        'mahasiswa' => [
             'home.access',
             'jobs.*',
         ],

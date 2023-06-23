@@ -22,7 +22,7 @@ class DtSuratPlot extends DatatableModel
 
         // $this->join('users', 'user_id = users.id');
         
-        if (auth()->user()->getGroups()[0] == 'user') {
+        if (auth()->user()->getGroups()[0] == 'mahasiswa') {
             $this->where('surat_plot.user_id', auth()->id());
         }
     }
