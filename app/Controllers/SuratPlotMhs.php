@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtSuratPlot;
+use CodeIgniter\Files\File;
 
 class SuratPlotMhs extends BaseController
 {
@@ -92,6 +93,62 @@ class SuratPlotMhs extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function show($id)
+    {
+        $data = [
+            'title' => 'Detail Surat Plot Pembimbing',
+            'subtitle' => 'Detail Surat Plot Pembimbing',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('mahasiswa'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('mahasiswa/suratPlot'),
+                    'crumb' => 'Surat Plot Pembimbing'
+                ],
+                [
+                    'crumb' => 'Detail'
+                ],
+            ],
+            'surat' => $this->mSuratPlot->find($id),
+        ];
+
+        return view('mahasiswa/suratPlot_mhs_show', $data);
+    }
+
+    public function update($id)
+    {
+        $dataIn = $this->request->getPost();
+        $dataIn += [
+            'id' => $id,
+        ];
+
+        if ($this->mSuratPlot->save($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Surat Plot berhasil diupdate',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Surat Plot gagal diupdate',
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function download($id)
+    {
+        $surat = $this->mSuratPlot->downloadFilename($id);
+        $filepath = SURAT_FINAL_UPLOAD_PATH . '/' . $surat['surat_final'];
+        $file = new File($filepath);
+
+        return $this->response->download($filepath, null)
+            ->setFileName("PLOT_PEMBIMBING_" . $surat['npm'] . "_" . $surat['nama_perusahaan']. '.' . $file->guessExtension());
+    }
+
     public function dt_SuratPlotMhs()
     {
         $dt = new DtSuratPlot();
@@ -124,28 +181,6 @@ class SuratPlotMhs extends BaseController
         ];
 
         return $this->response->setJSON($output);
-    }
-
-    public function update($id)
-    {
-        $dataIn = $this->request->getPost();
-        $dataIn += [
-            'id' => $id,
-        ];
-
-        if ($this->mSuratPlot->save($dataIn)) {
-            $response = [
-                'status' => 'success',
-                'message' => 'Surat Plot berhasil diupdate',
-            ];
-        } else {
-            $response = [
-                'status' => 'error',
-                'message' => 'Surat Plot gagal diupdate',
-            ];
-        }
-
-        return $this->response->setJSON($response);
     }
 
     public function dtAction($id, $status)

@@ -99,6 +99,7 @@ $routes->group('mahasiswa', ['filter' => 'group:user,superadmin'], static functi
             $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratMhs']);
 
             $routes->post('suratPlot/datatable', 'SuratPlotMhs::dt_SuratPlotMhs');
+            $routes->get('suratPlot/download/(:segment)', 'SuratPlotMhs::download/$1');
             $routes->resource('suratPlot', ['websafe' => 1, 'controller' => 'SuratPlotMhs']);
         }
     );
