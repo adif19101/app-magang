@@ -43,10 +43,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="surat_covid" class="form-label required">Surat Pernyataan Mengikuti Protokol Kesehatan Selama Magang Dan Pertanggung Jawaban Resiko Covid19</label>
+                                <small class="form-hint">File : .pdf</small>
                                 <input type="file" class="form-control" name="surat_covid" id="surat_covid">
                             </div>
                             <div class="mb-3">
                                 <label for="surat_balasan" class="form-label required">Surat Balasan Dari Unit Tujuan Magang</label>
+                                <small class="form-hint">File : .pdf</small>
                                 <input type="file" class="form-control" name="surat_balasan" id="surat_balasan">
                             </div>
                         </div>
@@ -145,9 +147,11 @@
                 },
                 surat_covid: {
                     required: true,
+                    extension: "pdf",
                 },
                 surat_balasan: {
                     required: true,
+                    extension: "pdf",
                 },
                 nama_perusahaan: {
                     required: true,

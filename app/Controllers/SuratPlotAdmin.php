@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\Datatable\DtSuratPlot;
 use CodeIgniter\Files\File;
 
-class SuratPlotVerif extends BaseController
+class SuratPlotAdmin extends BaseController
 {
     public function __construct() {
         $this->mSuratPlot = new \App\Models\SuratPlot();
@@ -19,7 +19,7 @@ class SuratPlotVerif extends BaseController
             'subtitle' => 'Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
-                    'url' => base_url('verifikator'),
+                    'url' => base_url('admin'),
                     'crumb' => 'Dashboard'
                 ],
                 [
@@ -28,7 +28,7 @@ class SuratPlotVerif extends BaseController
             ],
         ];
 
-        return view('verifikator/suratPlot_verif', $data);
+        return view('admin/suratPlot_admin', $data);
     }
 
     public function show($id)
@@ -38,11 +38,11 @@ class SuratPlotVerif extends BaseController
             'subtitle' => 'Detail Surat Plot Pembimbing',
             'breadcrumbs' => [
                 [
-                    'url' => base_url('verifikator'),
+                    'url' => base_url('admin'),
                     'crumb' => 'Dashboard'
                 ],
                 [
-                    'url' => base_url('verifikator/suratPlot'),
+                    'url' => base_url('admin/suratPlot'),
                     'crumb' => 'Surat Plot Pembimbing'
                 ],
                 [
@@ -52,7 +52,7 @@ class SuratPlotVerif extends BaseController
             'surat' => $this->mSuratPlot->find($id),
         ];
 
-        return view('verifikator/suratPlot_verif_show', $data);
+        return view('admin/suratPlot_admin_show', $data);
     }
 
     public function update($id)
@@ -95,7 +95,7 @@ class SuratPlotVerif extends BaseController
             ->setFileName("PLOT_PEMBIMBING_" . $surat['npm'] . "_" . $surat['nama_perusahaan']. '.' . $file->guessExtension());
     }
 
-    public function dt_SuratPlotVerif()
+    public function dt_SuratPlotAdmin()
     {
         $dt = new DtSuratPlot();
         $data = [];
@@ -132,7 +132,7 @@ class SuratPlotVerif extends BaseController
     public function dtAction($id, $status)
     {
         $button = '<div class="btn-list">
-            <a href="' . base_url('verifikator/suratPlot/' . $id) . '" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            <a href="' . base_url('admin/suratPlot/' . $id) . '" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
@@ -142,7 +142,7 @@ class SuratPlotVerif extends BaseController
             </a>';
 
         if ($status == 'DONE') {
-            $button .= '<a href="' . base_url('verifikator/suratPlot/download/' . $id) . '" class="btn btn-success btn-icon btn-sm" title="Download" target="_blank" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            $button .= '<a href="' . base_url('admin/suratPlot/download/' . $id) . '" class="btn btn-success btn-icon btn-sm" title="Download" target="_blank" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-download" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
@@ -150,25 +150,6 @@ class SuratPlotVerif extends BaseController
             <path d="M12 4l0 12"></path>
             </svg>
             </a>';
-        }
-        if ($status == 'PENDING') {
-            $button .= '<a data-status="APPROVED" id="' . $id . '" class="btn btn-info btn-icon btn-sm button-status" title="Approve" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M5 12l5 5l10 -10"></path>
-            </svg>
-        </a>';
-
-            $button .= '<a data-status="REJECTED" id="' . $id . '" class="btn btn-danger btn-icon btn-sm button-status" title="Reject" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M4 7l16 0"></path>
-            <path d="M10 11l0 6"></path>
-            <path d="M14 11l0 6"></path>
-            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-            </svg>
-        </a>';
         }
 
         return $button .= '</div>';

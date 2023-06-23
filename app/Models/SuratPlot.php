@@ -58,4 +58,17 @@ class SuratPlot extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function downloadFilename($id)
+    {
+        $this->select([
+            'npm',
+            'surat_final',
+            'nama_perusahaan',
+        ]);
+
+        $this->where('id', $id);
+
+        return $this->first();
+    }
 }

@@ -55,6 +55,10 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
             $routes->post('surat/datatable', 'SuratAdmin::dt_SuratAdmin');
             $routes->get('surat/download/(:segment)', 'SuratAdmin::download/$1');
             $routes->resource('surat', ['websafe' => 1, 'controller' => 'SuratAdmin']);
+
+            $routes->post('suratPlot/datatable', 'SuratPlotAdmin::dt_SuratPlotAdmin');
+            $routes->get('suratPlot/download/(:segment)', 'SuratPlotAdmin::download/$1');
+            $routes->resource('suratPlot', ['websafe' => 1, 'controller' => 'SuratPlotAdmin']);
         }
     );
 });

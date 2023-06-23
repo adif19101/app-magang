@@ -121,7 +121,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="surat_final" class="form-label required">Surat Permohonan</label>
-                        <small class="form-hint">File : .pdf/.doc/.docx</small>
+                        <small class="form-hint">File : .pdf</small>
                         <input type="file" class="form-control" name="surat_final" id="surat_final">
                     </div>
                 </div>
@@ -150,7 +150,7 @@
             rules: {
                 surat_final: {
                     required: true,
-                    extension: "pdf|doc|docx",
+                    extension: "pdf",
                 },
             },
             // messages: {
