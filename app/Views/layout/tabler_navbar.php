@@ -196,6 +196,24 @@
                             </a>
                         </div>
                     </li>
+                    <?php if(auth()->user()->inGroup('admin')) :?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= groupUrl('user') ?>">
+                            <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                                    <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-link-title">
+                                Users
+                            </span>
+                        </a>
+                    </li>
+                    <?php endif; ?>
                 </ul>
                 <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last align-end me-md-2">
                     <form id="search_form" name="search_form" action="<?= groupUrl('lowongan') ?>" method="get" autocomplete="off" novalidate="">

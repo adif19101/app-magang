@@ -51,8 +51,8 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
             $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
 
-            $routes->post('users/datatable', 'UserAdmin::datatable');
-            $routes->resource('users', ['websafe' => 1, 'controller' => 'UserAdmin']);
+            $routes->post('user/datatable', 'UserAdmin::datatable');
+            $routes->resource('user', ['websafe' => 1, 'controller' => 'UserAdmin']);
 
             $routes->post('surat/datatable', 'SuratAdmin::dt_SuratAdmin');
             $routes->get('surat/download/(:segment)', 'SuratAdmin::download/$1');
