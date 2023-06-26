@@ -71,6 +71,29 @@ class UserAdmin extends BaseController
         }
     }
 
+    public function new()
+    {
+        $data = [
+            'title' => 'Tambah User',
+            'subtitle' => 'Tambah User',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('admin'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('admin/user'),
+                    'crumb' => 'Kelola User'
+                ],
+                [
+                    'crumb' => 'Tambah'
+                ],
+            ],
+        ];
+
+        return view('admin/user_admin_new', $data);
+    }
+
     public function datatable()
     {
         $dt = new DtUser();
