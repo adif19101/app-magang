@@ -47,8 +47,8 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Mahasiswa',
             'description' => 'General users of the site. Mahasiswa.',
         ],
-        'company' => [
-            'title'       => 'Company',
+        'perusahaan' => [
+            'title'       => 'Perusahaan',
             'description' => 'Company users of the site. Akun instansi penyedia lowongan magang.',
         ],
     ];
@@ -110,7 +110,7 @@ class AuthGroups extends ShieldAuthGroups
             'home.access',
             'jobs.*',
         ],
-        'company' => [
+        'perusahaan' => [
             'companies.access',
             'jobs.create',
             'jobs.edit',

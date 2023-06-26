@@ -411,8 +411,8 @@ class Auth extends ShieldAuth
                 $url = '/verifikator';
                 break;
                 
-            case auth()->user()->inGroup('company'):
-                $url = '/company';
+            case auth()->user()->inGroup('perusahaan'):
+                $url = '/perusahaan';
                 break;
             
             case auth()->user()->inGroup('superadmin'):
