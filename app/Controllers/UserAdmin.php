@@ -4,9 +4,14 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtUser;
+use App\Models\User;
 
 class UserAdmin extends BaseController
 {
+    public function __construct() {
+        $this->mUser = new User();
+    }
+
     public function index()
     {
         $data = [
@@ -24,6 +29,46 @@ class UserAdmin extends BaseController
         ];
 
         return view('admin/user_admin', $data);
+    }
+
+    public function show($id)
+    {
+        $data = [
+            'title' => 'Detail User',
+            'subtitle' => 'Detail User',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('admin'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('admin/user'),
+                    'crumb' => 'Kelola User'
+                ],
+                [
+                    'crumb' => 'Detail'
+                ],
+            ],
+        ];
+
+        $userGroup = $this->mUser->getGroup($id);
+
+        switch ($userGroup) {
+            case 'mahasiswa':
+                $data['user'] = $this->mUser->showMhs($id);
+                return view('admin/user_mhs_show', $data);
+                break;
+
+            case 'perusahaan':
+                $data['user'] = $this->mUser->showPerusahaan($id);
+                return view('admin/user_perusahaan_show', $data);
+                break;
+            
+            default:
+                $data['user'] = $this->mUser->showAdmin($id);
+                return view('admin/user_admin_show', $data);
+                break;
+        }
     }
 
     public function datatable()

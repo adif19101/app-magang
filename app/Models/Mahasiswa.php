@@ -17,6 +17,7 @@ class Mahasiswa extends Model
     protected $allowedFields    = [
         'nama',
         'npm',
+        'tmpt_tgl_lahir',
         'avatar',
         'account_id',
         'alamat',
