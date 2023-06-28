@@ -8,7 +8,8 @@ use App\Models\User;
 
 class UserAdmin extends BaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->mUser = new User();
     }
 
@@ -63,7 +64,7 @@ class UserAdmin extends BaseController
                 $data['user'] = $this->mUser->showPerusahaan($id);
                 return view('admin/user_perusahaan_show', $data);
                 break;
-            
+
             default:
                 $data['user'] = $this->mUser->showAdmin($id);
                 return view('admin/user_admin_show', $data);
@@ -92,6 +93,49 @@ class UserAdmin extends BaseController
         ];
 
         return view('admin/user_admin_new', $data);
+    }
+
+    public function create()
+    {
+        $dataIn = $this->request->getPost();
+
+        switch ($dataIn['group']) {
+            case 'mahasiswa':
+
+                if ($this->mUser->insertMhs($dataIn)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Akun mahasiswa berhasil ditambahkan',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Akun mahasiswa gagal ditambahkan',
+                    ];
+                }
+                break;
+
+            case 'perusahaan':
+                // TODO lanjutin
+                break;
+
+            case 'admin':
+                
+                break;
+
+            case 'verifikator':
+                
+                break;
+
+            default:
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Akun gagal ditambahkan',
+                ];
+                break;
+        }
+
+        return $this->response->setJSON($response);
     }
 
     public function datatable()
@@ -143,7 +187,7 @@ class UserAdmin extends BaseController
         <path d="M13.5 6.5l4 4"></path>
         </svg>
         </a>';
-    
+
         $button .= '<a id="' . $id . '" class="btn btn-danger btn-icon btn-sm button-delete" title="Delete" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

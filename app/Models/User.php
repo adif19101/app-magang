@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Shield\Entities\User as EntitiesUser;
 
 class User extends Model
 {
@@ -125,5 +126,56 @@ class User extends Model
         $this->where('users.id', $id);
 
         return $this->get()->getFirstRow('array');
+    }
+
+    public function insertMhs($data)
+    {
+        $this->db->transStart();
+
+        $user = auth()->getProvider();
+        $users = new EntitiesUser([
+            'username' => $data['username'],
+            'password' => '12345678',
+            'email' => $data['email'],
+        ]);
+        $idUser = $user->insert($users, true);
+
+        $users = new EntitiesUser([
+            'id' => $idUser,
+        ]);
+        $users->addGroup('mahasiswa');
+
+        $mahasiswa = [
+            'account_id' => $idUser,
+            'nama' => $data['nama'],
+            'npm' => $data['npm'],
+            'tmpt_tgl_lahir' => $data['tmpt_tgl_lahir'],
+            'alamat' => $data['alamat'],
+            'whatsapp' => $data['whatsapp'],
+        ];
+
+        $this->db->table('mahasiswa')->insert($mahasiswa);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
+    }
+
+    public function insertPerusahaan($data)
+    {
+        
+    }
+
+    public function insertAdmin($data)
+    {
+        
+    }
+
+    public function insertVerif($data)
+    {
+        
     }
 }
