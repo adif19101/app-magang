@@ -20,7 +20,7 @@ class Perusahaan extends Model
         'deskripsi',
         'email',
         'whatsapp',
-        'logo',
+        'avatar',
         'account_id'
     ];
 
