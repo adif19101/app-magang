@@ -101,7 +101,6 @@ class UserAdmin extends BaseController
 
         switch ($dataIn['group']) {
             case 'mahasiswa':
-
                 if ($this->mUser->insertMhs($dataIn)) {
                     $response = [
                         'status' => 'success',
@@ -116,15 +115,55 @@ class UserAdmin extends BaseController
                 break;
 
             case 'perusahaan':
-                // TODO lanjutin
+                $avatar = $this->request->getFile('avatar_upload');
+                if (isset($avatar) && $avatar->isValid() && !$avatar->hasMoved()) {
+                    $avatarName = $avatar->getRandomName();
+                    if ($avatar->move(AVATAR_UPLOAD_PATH, $avatarName)) {
+                        $dataIn += ['avatar' => $avatarName];
+                    }
+                } else {
+                    $dataIn += ['avatar' => null];
+                }
+
+                if ($this->mUser->insertPerusahaan($dataIn)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Akun perusahaan berhasil ditambahkan',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Akun perusahaan gagal ditambahkan',
+                    ];
+                }
                 break;
 
             case 'admin':
-                
+                if ($this->mUser->insertAdmin($dataIn, 'admin')) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Akun admin berhasil ditambahkan',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Akun admin gagal ditambahkan',
+                    ];
+                }
                 break;
 
             case 'verifikator':
-                
+                if ($this->mUser->insertAdmin($dataIn, 'verifikator')) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Akun verifikator berhasil ditambahkan',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Akun verifikator gagal ditambahkan',
+                    ];
+                }
                 break;
 
             default:

@@ -66,10 +66,13 @@ function formChecker($value, $selectedValue, $return)
  * @param  string $format
  * @return void
  */
-function convertDate($date, $format)
+function convertDate($date = null, $format = 'd-m-Y')
 {
-    $tanggal = new DateTime($date);
-    return $tanggal->format($format);
+    if (!$date == null) {
+        $tanggal = new DateTime($date);
+        return $tanggal->format($format);
+    }
+    return '-';
 }
 
 /**

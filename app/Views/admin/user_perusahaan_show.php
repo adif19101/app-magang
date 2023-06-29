@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="row align-items-center mb-4">
                     <div class="col-auto">
-                        <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($user['logo']) ?>'"></label>
+                        <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($user['avatar']) ?>'"></label>
                     </div>
                     <div class="col-auto">
                             <label class="form-label">Avatar</label>

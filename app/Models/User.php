@@ -115,7 +115,7 @@ class User extends Model
             'perusahaan.alamat',
             'perusahaan.deskripsi',
             'perusahaan.email as email_perusahaan',
-            'perusahaan.logo',
+            'perusahaan.avatar',
             'perusahaan.whatsapp',
         ]);
 
@@ -135,7 +135,7 @@ class User extends Model
         $user = auth()->getProvider();
         $users = new EntitiesUser([
             'username' => $data['username'],
-            'password' => '12345678',
+            'password' => $data['email'],
             'email' => $data['email'],
         ]);
         $idUser = $user->insert($users, true);
@@ -166,16 +166,71 @@ class User extends Model
 
     public function insertPerusahaan($data)
     {
+        $this->db->transStart();
         
+        $user = auth()->getProvider();
+        $users = new EntitiesUser([
+            'username' => $data['username'],
+            'password' => $data['email'],
+            'email' => $data['email'],
+        ]);
+        $idUser = $user->insert($users, true);
+
+        $users = new EntitiesUser([
+            'id' => $idUser,
+        ]);
+        $users->addGroup('perusahaan');
+
+        $perusahaan = [
+            'account_id' => $idUser,
+            'nama' => $data['nama'],
+            'alamat' => $data['alamat'],
+            'deskripsi' => $data['deskripsi'],
+            'email' => $data['email'],
+            'whatsapp' => $data['whatsapp'],
+            'avatar' => $data['avatar']
+        ];
+
+        $this->db->table('perusahaan')->insert($perusahaan);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
     }
 
-    public function insertAdmin($data)
+    public function insertAdmin($data, $group)
     {
-        
-    }
+        $this->db->transStart();
 
-    public function insertVerif($data)
-    {
-        
+        $user = auth()->getProvider();
+        $users = new EntitiesUser([
+            'username' => $data['username'],
+            'password' => $data['email'],
+            'email' => $data['email'],
+        ]);
+        $idUser = $user->insert($users, true);
+
+        $users = new EntitiesUser([
+            'id' => $idUser,
+        ]);
+        $users->addGroup($group);
+
+        $admin = [
+            'account_id' => $idUser,
+            'nama' => $data['nama'],
+            'whatsapp' => $data['whatsapp'],
+        ];
+
+        $this->db->table('admin')->insert($admin);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
     }
 }
