@@ -233,4 +233,35 @@ class User extends Model
         }
         return true;
     }
+
+    public function createAccPerusahaan($data)
+    {
+        $this->db->transStart();
+        
+        $user = auth()->getProvider();
+        $users = new EntitiesUser([
+            'username' => $data['username'],
+            'password' => $data['email'],
+            'email' => $data['email'],
+        ]);
+        $idUser = $user->insert($users, true);
+
+        $users = new EntitiesUser([
+            'id' => $idUser,
+        ]);
+        $users->addGroup('perusahaan');
+
+        $perusahaan = [
+            'account_id' => $idUser,
+        ];
+
+        $this->db->table('perusahaan')->where('id', $data['id'])->update($perusahaan);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
+    }
 }

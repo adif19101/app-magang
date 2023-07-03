@@ -83,4 +83,28 @@ class Api extends BaseController
 
         return $this->respond($result);
     }
+
+    public function searchDataPerusahaan()
+    {
+        $search = $this->request->getPost('cari_perusahaan');
+
+        $data = $this->mPerusahaan->getPerusahaan($search, $where = ['account_id' => null]);
+
+        if (!$data) {
+            $response = [
+                'status' => 'error',
+                'message' => 'Perusahaan tidak ditemukan',
+            ];
+
+            return $this->respond($response);
+        }
+
+        $response = [
+            'status' => 'success',
+            'message' => 'Perusahaan ditemukan',
+            'data' => $data,
+        ];
+
+        return $this->respond($response);
+    }
 }

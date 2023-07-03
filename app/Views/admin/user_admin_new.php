@@ -89,6 +89,12 @@
 
                     <!-- Panel Perusahaan -->
                     <div class="tab-pane" id="tabs-perusahaan">
+                        <div class="row">
+                            <div class="mb-3 text-center">
+                                <label class="form-label-inline">Data perusahaan sudah ada di sistem?</label>
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modal-perusahaan-terdaftar">Buat Akun Perusahaan Terdaftar</button>
+                            </div>
+                        </div>
                         <form id="form-tabs-perusahaan">
                             <div class="row align-items-center mb-4">
                                 <div class="col-auto">
@@ -186,6 +192,52 @@
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="card-footer">
+                Password default sama dengan email yang digunakan.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Perusahaan Terdaftar -->
+<div class="modal modal-blur fade" id="modal-perusahaan-terdaftar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Buat Akun Perusahaan Terdaftar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="input-icon mb-3">
+                        <input id="cari_perusahaan" name="cari_perusahaan" type="text" value="" class="form-control" placeholder="Nama Perusahaan...">
+                        <span class="input-icon-addon">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+                                <path d="M21 21l-6 -6" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div id="result_cari_perusahaan">
+                    <!-- Placeholder message -->
+                    <div class="container text-center" id="placeholder_message">
+                        <span>
+                            Cari perusahaan yang sudah terdaftar di sistem untuk membuat akun perusahaan.
+                        </span>
+                    </div>
+
+                    <!-- Container for cards -->
+                    <div class="container">
+                        <div class="row row-cards" id="card_container"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>
@@ -416,6 +468,188 @@
                 $('#form-' + id_tab).submit();
             }
         });
+
+        $('#cari_perusahaan').keyup(debounce(function() {
+            var cari_perusahaan = this.value;
+
+            if (cari_perusahaan == '') {
+                $('#result_cari_perusahaan').html('<div class="container text-center"><span>Cari perusahaan yang sudah terdaftar di sistem untuk membuat akun perusahaan.</span></div>');
+
+            } else {
+                $.ajax({
+                    url: "<?= base_url('api/searchDataPerusahaan') ?>",
+                    type: "POST",
+                    data: {
+                        cari_perusahaan: cari_perusahaan
+                    },
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    // dataType: "json",
+                    // processData: false,
+                    // contentType: false,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            var cardContainer = document.getElementById("card_container");
+
+                            for (var key in response.data) {
+                                if (response.data.hasOwnProperty(key)) {
+                                    var data = response.data[key];
+
+                                    var colDiv = document.createElement("div");
+                                    colDiv.classList.add("col-sm-12", "col-lg-6");
+
+                                    var card = document.createElement("div");
+                                    card.classList.add("card", "card-sm");
+                                    card.innerHTML = `
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="avatar me-3 rounded" style="background-image: url(http://localhost/assets/img/default.webp"></span>
+                                                <div>
+                                                    <div class="compName">${data.nama}</div>
+                                                </div>
+                                            </div>
+                                            ${data.whatsapp ? `
+                                            <div class="compWhatsapp mb-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
+                                                    <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
+                                                </svg>${data.whatsapp}
+                                            </div>
+                                            ` : ''}
+                                            ${data.email ? `
+                                            <div class="compEmail mb-3">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-at" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
+                                                    <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28"></path>
+                                                </svg>${data.email}
+                                            </div>
+                                            ` : ''}
+                                            ${data.deskripsi ? `
+                                                <p class="compDeskripsi">${data.deskripsi}</p>
+                                            ` : ''}
+                                            ${data.alamat ? `
+                                                <p class="compAlamat">${data.alamat}</p>
+                                            ` : ''}
+                                            <button id="${data.id}" data-nama="${data.nama}" data-email="${data.email}" class="btn btn-primary button-pilih-perusahaan">Pilih</button>
+                                        </div>
+                                    `;
+
+                                    colDiv.appendChild(card);
+                                    cardContainer.appendChild(colDiv);
+                                }
+                            }
+
+                            // Check if any cards were added
+                            var placeholderMessage = document.getElementById("placeholder_message");
+                            if (cardContainer.children.length > 0) {
+                                // Hide the placeholder message
+                                placeholderMessage.style.display = "none";
+                            } else {
+                                // Show the placeholder message
+                                placeholderMessage.style.display = "block";
+                            }
+                        } else {
+                            Swal.fire(
+                                'Error',
+                                response.message,
+                                'error'
+                            )
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        Swal.fire(
+                            'Error',
+                            'Something Went Wrong!',
+                            'error'
+                        )
+                    }
+                });
+            }
+
+        }, 300));
+
+        $(document).on('click', '.button-pilih-perusahaan', function() {
+            console.log(this.id);
+            var id_perusahaan = this.id;
+            var email_perusahaan = $(this).data('email');
+            var nama_perusahaan = $(this).data('nama');
+            var username = email_perusahaan.split('@')[0];
+
+            Swal.fire({
+                title: 'Buat akun?',
+                text: `Buat akun untuk ${nama_perusahaan}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Buat!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "<?= base_url('admin/user') ?>",
+                        type: "POST",
+                        data: {
+                            id: id_perusahaan,
+                            email: email_perusahaan,
+                            group: 'perusahaan-terdaftar',
+                            username: username
+                        },
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        dataType: "json",
+                        // processData: false,
+                        // contentType: false,
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire(
+                                    'Success',
+                                    response.message,
+                                    'success'
+                                ).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            "<?= base_url('admin/user') ?>";
+                                    }
+                                })
+                            } else {
+                                Swal.fire(
+                                    'Error',
+                                    response.message,
+                                    'error'
+                                )
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            Swal.fire(
+                                'Error',
+                                'Something Went Wrong!',
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
+        });
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this,
+                    args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        }
     });
 </script>
 <?= $this->endSection() ?>

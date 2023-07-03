@@ -138,6 +138,20 @@ class UserAdmin extends BaseController
                 }
                 break;
 
+            case 'perusahaan-terdaftar':
+                if ($this->mUser->createAccPerusahaan($dataIn)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Akun perusahaan berhasil ditambahkan',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Akun perusahaan gagal ditambahkan',
+                    ];
+                }
+                break;
+
             case 'admin':
                 if ($this->mUser->insertAdmin($dataIn, 'admin')) {
                     $response = [

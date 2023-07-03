@@ -48,12 +48,15 @@ class Perusahaan extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getPerusahaan($searchTerm = null)
+    public function getPerusahaan($searchTerm = null, $where = null)
     {
         $builder = $this->db->table($this->table);
         $builder->select('*');
         if ($searchTerm) {
             $builder->like('nama', $searchTerm);
+        }
+        if ($where) {
+            $builder->where($where);
         }
         $query = $builder->get();
 

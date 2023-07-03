@@ -110,6 +110,7 @@ $routes->group('api', function($routes) {
     $routes->get('select2Skill', 'Api::select2Skill');
     $routes->post('createselect2Skill', 'Api::createselect2Skill');
     $routes->post('searchPerusahaan', 'Api::searchPerusahaan');
+    $routes->post('searchDataPerusahaan', 'Api::searchDataPerusahaan');
 
     // TODO delete later
     $routes->post('tes', 'Api::tesApi');
