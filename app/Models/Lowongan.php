@@ -26,6 +26,7 @@ class Lowongan extends Model
         'kriteria',
         'cara_daftar',
         'info_tambahan',
+        'daftar_langsung',
     ];
 
     // Dates
@@ -89,6 +90,36 @@ class Lowongan extends Model
         return true;
     }
 
+    public function createLowonganPerusahaan($data)
+    {
+        $this->db->transStart();
+
+        $id_perusahaan = $this->db->table('perusahaan')
+            ->getWhere(['account_id' => auth()->id()], 1)
+            ->getRow()->id;
+
+        $data += ['id_perusahaan' => $id_perusahaan];
+        $this->insert($data);
+
+        $idLowongan = $this->db->insertID();
+        $lowonganSkill = [];
+        $skills = explode(",", $data['skill_ids']);
+        foreach ($skills as $skill) {
+            $lowonganSkill[] = [
+                'lowongan_id' => $idLowongan,
+                'skill_id' => $skill,
+            ];
+        }
+        $this->db->table('lowongan_skill')->insertBatch($lowonganSkill);
+
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
+    }
+
     public function getLowongan($filter = null)
     {
         $this->select([
@@ -97,7 +128,7 @@ class Lowongan extends Model
         ]);
         $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan');
         $this->orderBy('lowongan.id', 'DESC');
-        
+
         if (isset($filter['search'])) {
             $this->groupStart()
                 ->like('judul', $filter['search'])
@@ -110,7 +141,7 @@ class Lowongan extends Model
         if (isset($filter['tipe_pekerjaan'])) {
             $this->whereIn('tipe_pekerjaan', $filter['tipe_pekerjaan']);
         }
-        
+
         return $this->paginate(10);
     }
 

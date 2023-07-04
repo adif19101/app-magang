@@ -36,6 +36,9 @@ function groupUrl($urlSegment = '')
         if ($user->inGroup('superadmin')) {
             return base_url('admin' . $urlSegment);
         }
+        if ($user->inGroup('perusahaan')) {
+            return base_url('perusahaan' . $urlSegment);
+        }
     }
     return base_url();
 }

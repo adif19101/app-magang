@@ -82,6 +82,23 @@ $routes->group('verifikator', ['filter' => 'group:verifikator,superadmin'], stat
     );
 });
 
+$routes->group('perusahaan', ['filter' => 'group:perusahaan,superadmin'], static function ($routes) {
+    $routes->group(
+        '',
+        ['filter' => ['group:perusahaan,superadmin', 'permission:doc.access']],
+        static function ($routes) {
+            $routes->get('/', 'Perusahaan::index');
+
+            // $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
+            // $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
+
+            $routes->post('lowongan/datatable', 'LowonganPerusahaan::datatable');
+            $routes->get('lowongan/download/(:segment)', 'LowonganPerusahaan::download/$1');
+            $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganPerusahaan']);
+        }
+    );
+});
+
 $routes->group('mahasiswa', ['filter' => 'group:mahasiswa,superadmin'], static function ($routes) {
     $routes->group(
         '',

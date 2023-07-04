@@ -115,6 +115,7 @@ class AuthGroups extends ShieldAuthGroups
             'jobs.create',
             'jobs.edit',
             'jobs.delete',
+            'doc.access',
         ],
     ];
 }
