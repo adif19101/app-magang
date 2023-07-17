@@ -58,11 +58,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <div class="form-control-plaintext"><?= $surat['nama'] ?></div>
+                                <div class="form-control-plaintext"><?= $surat['email'] ?></div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">NPM</label>
-                                <div class="form-control-plaintext"><?= $surat['nama'] ?></div>
+                                <div class="form-control-plaintext"><?= $surat['npm'] ?></div>
                             </div>
                             <div class="mb-3">
                                 <label for="surat_covid" class="form-label">Surat Pernyataan Mengikuti Protokol Kesehatan Selama Magang Dan Pertanggung Jawaban Resiko Covid19</label>

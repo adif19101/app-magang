@@ -93,6 +93,8 @@ $routes->group('perusahaan', ['filter' => 'group:perusahaan,superadmin'], static
             // $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
 
             $routes->post('lowongan/datatable', 'LowonganPerusahaan::datatable');
+            $routes->post('lowongan/dtPelamar/(:segment)', 'LowonganPerusahaan::dtPelamar/$1');
+            $routes->get('lowongan/pelamar/(:segment)', 'LowonganPerusahaan::pelamar/$1');
             $routes->get('lowongan/download/(:segment)', 'LowonganPerusahaan::download/$1');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganPerusahaan']);
         }
@@ -110,6 +112,8 @@ $routes->group('mahasiswa', ['filter' => 'group:mahasiswa,superadmin'], static f
             $routes->post('profile/deleteImage', 'ProfileMhs::deleteImage');
             $routes->post('profile/saveProfile', 'ProfileMhs::saveProfile');
             $routes->post('profile/saveDetail', 'ProfileMhs::saveDetail');
+
+            $routes->post('lowongan/lamar/(:segment)', 'LowonganMhs::lamar/$1');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganMhs']);
 
             $routes->post('surat/datatable', 'SuratMhs::dt_SuratMhs');

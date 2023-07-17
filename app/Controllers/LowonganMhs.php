@@ -9,6 +9,7 @@ class LowonganMhs extends BaseController
 {
     public function __construct() {
         $this->mLowongan = new Lowongan();
+        $this->mPelamar = new \App\Models\Pelamar();
     }
 
     public function index()
@@ -118,5 +119,44 @@ class LowonganMhs extends BaseController
     public function delete(int $id)
     {
         
+    }
+
+    public function lamar(int $id)
+    {
+        $dataIn = $this->request->getPost();
+        $dataIn += [
+            'user_id' => auth()->id(),
+            'id_lowongan' => $id,
+        ];
+
+        $cv = $this->request->getFile('cv');
+        if (isset($cv) && $cv->isValid() && !$cv->hasMoved()) {
+            $cvName = $cv->getRandomName();
+            if ($cv->move(SURAT_LAMARAN_UPLOAD_PATH, $cvName)) {
+                $dataIn += ['cv' => $cvName];
+            }
+        }
+
+        $dokPendukung = $this->request->getFile('dokumen_pendukung');
+        if (isset($dokPendukung) && $dokPendukung->isValid() && !$dokPendukung->hasMoved()) {
+            $dokPendukungName = $dokPendukung->getRandomName();
+            if ($dokPendukung->move(SURAT_LAMARAN_UPLOAD_PATH, $dokPendukungName)) {
+                $dataIn += ['dokumen_pendukung' => $dokPendukungName];
+            }
+        }
+
+        if ($this->mPelamar->save($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Berhasil melamar',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Gagal melamar',
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
 }
