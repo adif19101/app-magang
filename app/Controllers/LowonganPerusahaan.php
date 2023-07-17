@@ -4,12 +4,14 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Datatable\DtLowongan;
+use App\Models\Datatable\DtPelamar;
 use App\Models\Lowongan;
 
 class LowonganPerusahaan extends BaseController
 {
     public function __construct() {
         $this->mLowongan = new Lowongan();
+        $this->mPelamar = new \App\Models\Pelamar();
     }
 
     public function index()
@@ -29,6 +31,31 @@ class LowonganPerusahaan extends BaseController
         ];
 
         return view('perusahaan/lowongan_perusahaan', $data);
+    }
+
+    public function show($id)
+    {
+        $data = [
+            'title' => 'Lowongan Magang',
+            'subtitle' => 'Detail Lowongan Magang',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('perusahaan'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('perusahaan/lowongan'),
+                    'crumb' => 'Lowongan'
+                ],
+                [
+                    'crumb' => 'Detail Lowongan'
+                ],
+            ],
+        ];
+
+        $data['lowongan'] = $this->mLowongan->detailLowonganPerusahaan($id);
+
+        return view('perusahaan/lowongan_perusahaan_show', $data);
     }
 
     public function new()
@@ -74,6 +101,35 @@ class LowonganPerusahaan extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function pelamar($id)
+    {
+        $data['pelamar'] = $this->mPelamar->detailPelamar($id);
+
+        $data += [
+            'title' => 'Detail Pelamar',
+            'subtitle' => 'Detail Pelamar',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('perusahaan'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('perusahaan/lowongan'),
+                    'crumb' => 'Lowongan'
+                ],
+                [
+                    'url' => base_url('perusahaan/lowongan/'. $data['pelamar']['id_lowongan']),
+                    'crumb' => 'Detail Lowongan'
+                ],
+                [
+                    'crumb' => 'Pelamar'
+                ],
+            ],
+        ];
+
+        return view('perusahaan/pelamar_perusahaan_show', $data);
+    }
+
     public function datatable()
     {
         $dt = new DtLowongan();
@@ -92,6 +148,35 @@ class LowonganPerusahaan extends BaseController
             $row[] = $tb->lama_kontrak;
             $row[] = $tb->jenis_kontrak;
             $row[] = convertDate($tb->updated_at, 'd-m-Y');
+
+            $data[] = $row;
+        }
+
+        $output = [
+            'draw' => $this->request->getPost('draw'),
+            'recordsTotal' => $dt->count_all(),
+            'recordsFiltered' => $dt->count_filtered(),
+            'data' => $data,
+        ];
+
+        return $this->response->setJSON($output);
+    }
+
+    public function dtPelamar($idLowongan)
+    {
+        $dt = new DtPelamar($idLowongan);
+        $data = [];
+        $no = $this->request->getPost('start');
+
+        foreach ($dt->get_datatables() as $tb) {
+            $no++;
+            $row = [];
+            $row[] = $no;
+            $row[] = $this->dtPelamarAction($tb->id);
+            $row[] = $tb->nama;
+            $row[] = $tb->email;
+            $row[] = $tb->whatsapp;
+            $row[] = convertDate($tb->created_at, 'd-m-Y');
 
             $data[] = $row;
         }
@@ -134,6 +219,21 @@ class LowonganPerusahaan extends BaseController
             <path d="M14 11l0 6"></path>
             <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
             <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+            </svg>
+            </a>';
+
+        return $button .= '</div>';
+    }
+
+    public function dtPelamarAction($id)
+    {
+        $button = '<div class="btn-list">
+            <a href="' . base_url('perusahaan/lowongan/pelamar/' . $id) . '" target="_blank" class="btn btn-primary btn-icon btn-sm" title="Detail" aria-label="Button" data-bs-toggle="tooltip" data-bs-placement="right">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+            <path d="M12 9h.01"></path>
+            <path d="M11 12h1v4h1"></path>
             </svg>
             </a>';
 

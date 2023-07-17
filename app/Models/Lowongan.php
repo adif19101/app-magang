@@ -154,12 +154,24 @@ class Lowongan extends Model
             'perusahaan.alamat as alamat_perusahaan',
             'perusahaan.email as email_perusahaan',
             'perusahaan.whatsapp as whatsapp_perusahaan',
-            'perusahaan.logo as logo_perusahaan',
+            'perusahaan.avatar as logo_perusahaan',
             'perusahaan.deskripsi as deskripsi_perusahaan'
         ]);
         $this->join('users', 'users.id = lowongan.user_id');
         $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan');
         $this->where('lowongan.id', $id);
+        return $this->first();
+    }
+
+    public function detailLowonganPerusahaan($id)
+    {
+        $this->select([
+            'lowongan.*',
+        ]);
+        $this->where([
+            'lowongan.id' => $id,
+            'lowongan.user_id' => auth()->id(),
+        ]);
         return $this->first();
     }
 }

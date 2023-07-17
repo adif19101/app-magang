@@ -46,4 +46,16 @@ class ServerFileController extends BaseController
             exit();
         }
     }
+
+    public function suratLamaran($filename)
+    {
+        $path = SURAT_LAMARAN_UPLOAD_PATH . '/' . $filename;
+
+        if (file_exists($path) && is_readable($path)) {
+            $mimeType = mime_content_type($path);
+            header('Content-Type: ' . $mimeType);
+            readfile($path);
+            exit();
+        }
+    }
 }

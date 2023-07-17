@@ -36,6 +36,7 @@ $routes->get('avatar/(:any)', 'ServerFileController::avatar/$1');
 // TODO tambahin filter permission
 $routes->get('suratBukti/(:any)', 'ServerFileController::suratBukti/$1');
 $routes->get('suratFinal/(:any)', 'ServerFileController::suratFinal/$1');
+$routes->get('suratLamaran/(:any)', 'ServerFileController::suratLamaran/$1');
 
 // TODO delete later
 $routes->get('/superadmin', 'Home::superadmin');
