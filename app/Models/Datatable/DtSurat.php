@@ -26,6 +26,8 @@ class DtSurat extends DatatableModel
         
         if (auth()->user()->getGroups()[0] == 'mahasiswa') {
             $this->where('surat.user_id', auth()->id());
+        } else {
+            $this->where('surat.status !=', 'CANCELED');
         }
     }
 

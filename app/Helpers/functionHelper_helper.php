@@ -257,3 +257,11 @@ function statusBadge($status)
             break;
     }
 }
+
+function newRibbon($number)
+{
+    if ($number > 0) {
+        return '<div class="ribbon bg-red">NEW</div>';
+    }
+    return '';
+}
