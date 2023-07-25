@@ -139,7 +139,9 @@ $routes->group('api', function($routes) {
     $routes->get('tes', 'Api::tesApi');
 });
 
-service('auth')->routes($routes);
+service('auth')->routes($routes, ['except' => ['register']]);
+$routes->get('register', 'RegisterController::registerView');
+$routes->post('register', 'RegisterController::registerAction');
 
 /*
  * --------------------------------------------------------------------
