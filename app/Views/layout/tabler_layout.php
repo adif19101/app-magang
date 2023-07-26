@@ -113,10 +113,19 @@
         }
         // DataTables debounce search END
 
+        <?php if(!isset($customOffline) OR !$customOffline): ?>
         // PWA
         UpUp.start({
-            'content': '<html><body>OFFLINE</body></html>'
+            'content-url': 'offline.html',
+            'assets': [
+                'assets/css/tabler.min.css',
+                'assets/img/undraw_quitting_time_dm8t.svg',
+                'assets/js/tabler.min.js',
+                'favicon-16x16.png',
+                'favicon-32x32.png',
+            ]
         });
+        <?php endif; ?>
 
         $(document).ready(function() {
 
