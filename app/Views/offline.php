@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>You're Offline!</title>
 
-    <link rel="stylesheet" href="https://localhost/assets/css/tabler.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="https://localhost/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://localhost/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('favicon-32x32.png') ?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= base_url('favicon-16x16.png') ?>">
   </head>
 
   <body class="border-top-wide border-primary d-flex flex-column">
@@ -18,7 +18,7 @@
         <div class="empty">
           <div class="empty-img">
             <img
-              src="https://localhost/assets/img/undraw_quitting_time_dm8t.svg"
+              src="<?= base_url('assets/img/undraw_quitting_time_dm8t.svg') ?>"
               height="128"
               alt=""
             />
@@ -41,7 +41,7 @@
       </div>
     </div>
     
-    <script src="https://localhost/assets/js/tabler.min.js"></script>
+    <script src="<?= base_url('assets/js/tabler.min.js') ?>"></script>
   </body>
 
 </html>

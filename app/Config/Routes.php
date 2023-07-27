@@ -32,6 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::home');
 $routes->get('/default-home', 'Home::defaultHome');
+$routes->get('/offline', 'Home::offline');
 $routes->get('avatar/(:any)', 'ServerFileController::avatar/$1');
 // TODO tambahin filter permission
 $routes->get('suratBukti/(:any)', 'ServerFileController::suratBukti/$1');

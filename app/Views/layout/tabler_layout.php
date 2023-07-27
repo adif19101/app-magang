@@ -113,17 +113,19 @@
         }
         // DataTables debounce search END
 
+        // TODO ganti ke workbox biar bisa cache bbrp halaman(ambil 5 halaman terakhir)
         <?php if(!isset($customOffline) OR !$customOffline): ?>
         // PWA
         UpUp.start({
-            'content-url': 'offline.html',
+            'content-url': '<?= base_url(uri_string()) ?>',
             'assets': [
                 'assets/css/tabler.min.css',
                 'assets/img/undraw_quitting_time_dm8t.svg',
                 'assets/js/tabler.min.js',
                 'favicon-16x16.png',
                 'favicon-32x32.png',
-            ]
+            ],
+            'service-worker-url': '<?= base_url('upup.sw.min.js') ?>',
         });
         <?php endif; ?>
 

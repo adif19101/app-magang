@@ -35,7 +35,8 @@ class Filters extends BaseConfig
             'session' => ['except' => [
                 'login',
                 'register',
-                '/'
+                '/',
+                'offline',
             ]],
         ],
         'after' => [

@@ -55,9 +55,17 @@
             }
         })
 
+        // TODO rubah pwanya jd hal utama
         // PWA
         UpUp.start({
-            'content': '<html><body>OFFLINE</body></html>'
+            'content-url': '<?= base_url('offline') ?>',
+            'assets': [
+                '<?= base_url("assets/css/tabler.min.css") ?>',
+                '<?= base_url("assets/img/undraw_quitting_time_dm8t.svg") ?>',
+                '<?= base_url("assets/js/tabler.min.js") ?>',
+                '<?= base_url("favicon-16x16.png") ?>',
+                '<?= base_url("favicon-32x32.png") ?>',
+            ],
         });
 
         $(document).ready(function() {

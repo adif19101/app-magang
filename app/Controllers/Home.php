@@ -14,4 +14,13 @@ class Home extends BaseController
 
         return view('homepage', $data);
     }
+
+    public function offline()
+    {
+        $data = [
+            'title' => 'Magang Informatika Unsika',
+        ];
+
+        return view('offline', $data);
+    }
 }
