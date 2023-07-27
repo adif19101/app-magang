@@ -24,7 +24,7 @@
             <div class="card">
                 <form id="form_profile" name="form_profile">
                     <div class="card-header">
-                        <h3 class="card-title">Profile Mahasiswa</h3>
+                        <h3 class="card-title">Profile Perusahaan</h3>
                         <div class="card-actions">
                             <a id="simpan_profile" href="#" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -40,7 +40,7 @@
                     <div class="card-body">
                         <div class="row align-items-center mb-4">
                             <div class="col-auto">
-                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($mahasiswa['avatar']) ?>'"></label>
+                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($perusahaan['avatar']) ?>'"></label>
                                 <input type="file" id="avatar_upload" name="avatar_upload" style="display: none;">
                             </div>
                             <div class="col-auto">
@@ -57,28 +57,28 @@
 
                         <div class="row g-3 mb-2">
                             <div class="col-md">
-                                <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input id="nama" name="nama" type="text" class="form-control" value="<?= $mahasiswa['nama'] ?>">
+                                <label for="nama" class="form-label">Nama Perusahaan</label>
+                                <input id="nama" name="nama" type="text" class="form-control" value="<?= $perusahaan['nama'] ?>">
                             </div>
                             <div class="col-md">
-                                <label for="npm" class="form-label">NPM</label>
-                                <input id="npm" name="npm" type="text" class="form-control" value="<?= $mahasiswa['npm'] ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md">
-                                <label class="form-label">Tempat, Tanggal Lahir</label>
-                                <input type="text" class="form-control" name="tmpt_tgl_lahir" id="tmpt_tgl_lahir"  value="<?= $mahasiswa['tmpt_tgl_lahir'] ?>" placeholder="Contoh: Karawang, 1 Januari 2018">
-                            </div>
-                            <div class="col-md">
-                                <label for="whatsapp" class="form-label">Whatsapp</label>
-                                <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="<?= $mahasiswa['whatsapp'] ?>">
+                                <label for="email" class="form-label">Email Perusahaan</label>
+                                <input id="email" name="email" type="text" class="form-control" value="<?= $perusahaan['email'] ?>">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-md">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <textarea class="form-control" name="alamat" id="alamat"><?= $mahasiswa['alamat'] ?></textarea>
+                                <label for="alamat" class="form-label">Alamat Perusahaan</label>
+                                <textarea class="form-control" name="alamat" id="alamat"><?= $perusahaan['alamat'] ?></textarea>
+                            </div>
+                            <div class="col-md">
+                                <label for="deskripsi" class="form-label">Deskripsi Perusahaan</label>
+                                <textarea class="form-control" name="deskripsi" id="deskripsi"><?= $perusahaan['deskripsi'] ?></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md">
+                                <label for="whatsapp" class="form-label">Whatsapp Perusahaan</label>
+                                <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="<?= $perusahaan['whatsapp'] ?>">
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                         <div class="mb-3">
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $mahasiswa['email'] ?>
+                                    <?= $perusahaan['email'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="email" name="email" type="text" class="form-control w-auto" placeholder="Email Baru...">
@@ -129,7 +129,7 @@
                         <div>
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $mahasiswa['username'] ?>
+                                    <?= $perusahaan['username'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="username" name="username" type="text" class="form-control w-auto" placeholder="Username Baru...">
@@ -175,14 +175,9 @@
                     minlength: 2,
                     maxlength: 255
                 },
-                npm: {
+                email: {
                     required: true,
-                    digits: true,
-                    minlength: 13,
-                    maxlength: 13
-                },
-                tmpt_tgl_lahir: {
-                    required: true,
+                    email: true,
                     minlength: 5,
                     maxlength: 255
                 },
@@ -196,6 +191,10 @@
                     minlength: 5,
                     maxlength: 255
                 },
+                deskripsi: {
+                    minlength: 5,
+                    maxlength: 30000
+                },
             },
             // messages: {
             // },
@@ -203,7 +202,7 @@
                 var form_data = new FormData(form);
 
                 $.ajax({
-                    url: "<?= base_url('mahasiswa/profile/saveProfile') ?>",
+                    url: "<?= base_url('perusahaan/profile/saveProfile') ?>",
                     type: "POST",
                     data: form_data,
                     headers: {
@@ -220,7 +219,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "<?= base_url('mahasiswa/profile') ?>";
+                                    window.location.href = "<?= base_url('perusahaan/profile') ?>";
                                 }
                             })
                         } else {
@@ -270,7 +269,7 @@
                 var form_data = $(form).serializeArray();
 
                 $.ajax({
-                    url: "<?= base_url('mahasiswa/profile/saveDetail') ?>",
+                    url: "<?= base_url('perusahaan/profile/saveDetail') ?>",
                     type: "POST",
                     data: form_data,
                     headers: {
@@ -287,7 +286,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "<?= base_url('mahasiswa/profile') ?>";
+                                    window.location.href = "<?= base_url('perusahaan/profile') ?>";
                                 }
                             })
                         } else {

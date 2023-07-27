@@ -1,21 +1,5 @@
 <?= $this->extend('layout/tabler_layout') ?>
 
-<?= $this->section('header-button'); ?>
-<!-- <div class="col-auto">
-    <div class="btn-list">
-        <a id="btn_save" class="btn btn-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2"></path>
-                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                <path d="M14 4l0 4l-6 0l0 -4"></path>
-            </svg>
-            Simpan
-        </a>
-    </div>
-</div> -->
-<?= $this->endSection(); ?>
-
 <?= $this->section('content') ?>
 
 <div class="page-body">
@@ -24,7 +8,7 @@
             <div class="card">
                 <form id="form_profile" name="form_profile">
                     <div class="card-header">
-                        <h3 class="card-title">Profile Mahasiswa</h3>
+                        <h3 class="card-title">Profile Verifikator</h3>
                         <div class="card-actions">
                             <a id="simpan_profile" href="#" class="btn btn-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -40,7 +24,7 @@
                     <div class="card-body">
                         <div class="row align-items-center mb-4">
                             <div class="col-auto">
-                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($mahasiswa['avatar']) ?>'"></label>
+                                <label id="avatar-preview" for="avatar_upload" class="avatar avatar-xl" style="background-image: url('<?= showAvatar($admin['avatar']) ?>'"></label>
                                 <input type="file" id="avatar_upload" name="avatar_upload" style="display: none;">
                             </div>
                             <div class="col-auto">
@@ -58,27 +42,11 @@
                         <div class="row g-3 mb-2">
                             <div class="col-md">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input id="nama" name="nama" type="text" class="form-control" value="<?= $mahasiswa['nama'] ?>">
-                            </div>
-                            <div class="col-md">
-                                <label for="npm" class="form-label">NPM</label>
-                                <input id="npm" name="npm" type="text" class="form-control" value="<?= $mahasiswa['npm'] ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md">
-                                <label class="form-label">Tempat, Tanggal Lahir</label>
-                                <input type="text" class="form-control" name="tmpt_tgl_lahir" id="tmpt_tgl_lahir"  value="<?= $mahasiswa['tmpt_tgl_lahir'] ?>" placeholder="Contoh: Karawang, 1 Januari 2018">
+                                <input id="nama" name="nama" type="text" class="form-control" value="<?= $admin['nama'] ?>">
                             </div>
                             <div class="col-md">
                                 <label for="whatsapp" class="form-label">Whatsapp</label>
-                                <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="<?= $mahasiswa['whatsapp'] ?>">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <textarea class="form-control" name="alamat" id="alamat"><?= $mahasiswa['alamat'] ?></textarea>
+                                <input id="whatsapp" name="whatsapp" type="text" class="form-control" value="<?= $admin['whatsapp'] ?>">
                             </div>
                         </div>
                     </div>
@@ -112,7 +80,7 @@
                         <div class="mb-3">
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $mahasiswa['email'] ?>
+                                    <?= $admin['email'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="email" name="email" type="text" class="form-control w-auto" placeholder="Email Baru...">
@@ -129,7 +97,7 @@
                         <div>
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $mahasiswa['username'] ?>
+                                    <?= $admin['username'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="username" name="username" type="text" class="form-control w-auto" placeholder="Username Baru...">
@@ -175,26 +143,10 @@
                     minlength: 2,
                     maxlength: 255
                 },
-                npm: {
-                    required: true,
-                    digits: true,
-                    minlength: 13,
-                    maxlength: 13
-                },
-                tmpt_tgl_lahir: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 255
-                },
                 whatsapp: {
                     required: true,
                     digits: true,
                     minlength: 9
-                },
-                alamat: {
-                    required: true,
-                    minlength: 5,
-                    maxlength: 255
                 },
             },
             // messages: {
@@ -203,7 +155,7 @@
                 var form_data = new FormData(form);
 
                 $.ajax({
-                    url: "<?= base_url('mahasiswa/profile/saveProfile') ?>",
+                    url: "<?= base_url('verifikator/profile/saveProfile') ?>",
                     type: "POST",
                     data: form_data,
                     headers: {
@@ -220,7 +172,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "<?= base_url('mahasiswa/profile') ?>";
+                                    window.location.href = "<?= base_url('verifikator/profile') ?>";
                                 }
                             })
                         } else {
@@ -270,7 +222,7 @@
                 var form_data = $(form).serializeArray();
 
                 $.ajax({
-                    url: "<?= base_url('mahasiswa/profile/saveDetail') ?>",
+                    url: "<?= base_url('verifikator/profile/saveDetail') ?>",
                     type: "POST",
                     data: form_data,
                     headers: {
@@ -287,7 +239,7 @@
                                 'success'
                             ).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "<?= base_url('mahasiswa/profile') ?>";
+                                    window.location.href = "<?= base_url('verifikator/profile') ?>";
                                 }
                             })
                         } else {
@@ -327,7 +279,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('mahasiswa/profile/deleteImage') ?>",
+                        url: "<?= base_url('admin/profile/deleteImage') ?>",
                         type: "POST",
                         // data: form_data,
                         headers: {

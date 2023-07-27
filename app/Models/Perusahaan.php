@@ -62,4 +62,44 @@ class Perusahaan extends Model
 
         return $query->getResultArray();
     }
+
+    public function deleteAvaImg($id)
+    {
+        $this->db->transStart();
+        $this->where('account_id', $id);
+        $this->set(['avatar' => null]);
+        $this->update();
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            return false;
+        }
+        return true;
+    }
+
+    public function saveProfile($data)
+    {
+        $oldAvatar = $this->select('avatar')->where('account_id', auth()->id())->first()['avatar'];
+
+        $this->db->transBegin();
+        $save = $this->whereIn('account_id', [auth()->id()])
+            ->set($data)
+            ->update();
+
+        if (!$save) {
+            $this->db->transRollback();
+            if (isset($data['avatar']) && $data['avatar'] != null) {
+                unlink(AVATAR_UPLOAD_PATH . '/' . $data['avatar']);
+            }
+            return false;
+        }
+
+        $this->db->transCommit();
+        if ($oldAvatar != null && isset($data['avatar']) && $data['avatar'] != null) {
+            unlink(AVATAR_UPLOAD_PATH . '/' . $oldAvatar);
+        }
+
+        $this->db->transComplete();
+        return true;
+    }
 }

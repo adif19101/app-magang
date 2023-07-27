@@ -48,7 +48,10 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
         ['filter' => ['group:admin,superadmin', 'permission:users.create']],
         static function ($routes) {
             $routes->get('/', 'Admin::index');
-            // $routes->get('users', 'Admin::users');
+            $routes->get('profile', 'ProfileAdmin::index');
+            $routes->post('profile/deleteImage', 'ProfileAdmin::deleteImage');
+            $routes->post('profile/saveProfile', 'ProfileAdmin::saveProfile');
+            $routes->post('profile/saveDetail', 'ProfileAdmin::saveDetail');
 
             $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
@@ -73,6 +76,10 @@ $routes->group('verifikator', ['filter' => 'group:verifikator,superadmin'], stat
         ['filter' => ['group:verifikator,superadmin', 'permission:doc.access']],
         static function ($routes) {
             $routes->get('/', 'Verifikator::index');
+            $routes->get('profile', 'ProfileVerif::index');
+            $routes->post('profile/deleteImage', 'ProfileVerif::deleteImage');
+            $routes->post('profile/saveProfile', 'ProfileVerif::saveProfile');
+            $routes->post('profile/saveDetail', 'ProfileVerif::saveDetail');
 
             // $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             // $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
@@ -90,6 +97,10 @@ $routes->group('perusahaan', ['filter' => 'group:perusahaan,superadmin'], static
         ['filter' => ['group:perusahaan,superadmin', 'permission:doc.access']],
         static function ($routes) {
             $routes->get('/', 'Perusahaan::index');
+            $routes->get('profile', 'ProfilePerusahaan::index');
+            $routes->post('profile/deleteImage', 'ProfilePerusahaan::deleteImage');
+            $routes->post('profile/saveProfile', 'ProfilePerusahaan::saveProfile');
+            $routes->post('profile/saveDetail', 'ProfilePerusahaan::saveDetail');
 
             // $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
             // $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
