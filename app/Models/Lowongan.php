@@ -120,7 +120,7 @@ class Lowongan extends Model
         return true;
     }
 
-    public function getLowongan($filter = null)
+    public function getLowongan($filter = null, $perPage = 10)
     {
         $this->select([
             'lowongan.id',
@@ -151,7 +151,7 @@ class Lowongan extends Model
             $this->whereIn('tipe_pekerjaan', $filter['tipe_pekerjaan']);
         }
 
-        return $this->paginate(10);
+        return $this->paginate($perPage);
     }
 
     public function detailLowongan($id)

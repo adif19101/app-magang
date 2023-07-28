@@ -121,6 +121,8 @@ $routes->group('mahasiswa', ['filter' => 'group:mahasiswa,superadmin'], static f
         static function ($routes) {
             // $routes->resource('users', ['websafe' => 1]);
             $routes->get('/', 'Mahasiswa::index');
+            $routes->post('datatable', 'Mahasiswa::datatable');
+            
             $routes->get('profile', 'ProfileMhs::index');
             $routes->post('profile/deleteImage', 'ProfileMhs::deleteImage');
             $routes->post('profile/saveProfile', 'ProfileMhs::saveProfile');
