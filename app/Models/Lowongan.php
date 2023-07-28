@@ -123,10 +123,19 @@ class Lowongan extends Model
     public function getLowongan($filter = null)
     {
         $this->select([
-            'lowongan.*',
+            'lowongan.id',
+            'lowongan.judul',
+            'lowongan.tipe_pekerjaan',
+            'lowongan.jenis_kontrak',
+            'lowongan.lama_kontrak',
             'perusahaan.nama as nama_perusahaan',
+            'perusahaan.avatar as logo_perusahaan',
+            'GROUP_CONCAT(skill.nama SEPARATOR \', \') as skills'
         ]);
-        $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan');
+        $this->join('perusahaan', 'perusahaan.id = lowongan.id_perusahaan', 'left');
+        $this->join('lowongan_skill', 'lowongan_skill.lowongan_id = lowongan.id', 'left');
+        $this->join('skill', 'skill.id = lowongan_skill.skill_id', 'left');
+        $this->groupBy('lowongan.id'); // Group the results by lowongan.id to avoid duplicates
         $this->orderBy('lowongan.id', 'DESC');
 
         if (isset($filter['search'])) {

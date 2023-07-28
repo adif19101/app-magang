@@ -69,7 +69,7 @@
                                 <div class="row g-0">
                                     <div class="col-auto">
                                         <div class="card-body">
-                                            <div class="avatar avatar-md" style="background-image: url(https://preview.tabler.io/static/jobs/job-1.jpg)"></div>
+                                            <div class="avatar avatar-md" style="background-image: url('<?= showAvatar($jobDetail['logo_perusahaan']) ?>')"></div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -144,10 +144,20 @@
                                                 </div>
                                                 <div class="col-md-auto">
                                                     <div class="mt-3 badges">
-                                                        <span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">PHP</span>
-                                                        <span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">Laravel</span>
-                                                        <span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">CSS</span>
-                                                        <span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">Vue</span>
+                                                        <?php if (!empty($jobDetail['skills'])) : ?>
+                                                            <?php
+                                                            $skills = explode(', ', $jobDetail['skills']);
+                                                            $count = 0;
+                                                            foreach ($skills as $skill) {
+                                                                if ($count++ > 2) {
+                                                                    echo '<span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">+'. count($skills) - $count .'</span>';
+                                                                    break;
+                                                                } else {
+                                                                    echo '<span href="#" class="badge badge-outline text-muted border fw-normal badge-pill">'. $skill .'</span>';
+                                                                }
+                                                            }
+                                                            ?>
+                                                        <?php endif; ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,14 +183,14 @@
     $(document).ready(function() {
         document.getElementById('filter_form').addEventListener('submit', combineSearchAndFilterParams);
         document.getElementById('search_form').addEventListener('submit', combineSearchAndFilterParams);
-    
+
         function combineSearchAndFilterParams(event) {
             event.preventDefault(); // prevent form from submitting normally
-    
+
             const searchParams = new URLSearchParams(new FormData(document.getElementById('search_form'))); // retrieve search form inputs
             const filterParams = new URLSearchParams(new FormData(document.getElementById('filter_form'))); // retrieve filter form inputs
             const combinedParams = new URLSearchParams([...searchParams, ...filterParams]); // combine into a single query string
-    
+
             const url = `${window.location.pathname}?${combinedParams}`; // construct URL with combined query parameters
             window.location.href = url; // navigate to new URL
         }
