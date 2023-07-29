@@ -80,6 +80,30 @@ class LowonganPerusahaan extends BaseController
         return view('perusahaan/lowongan_perusahaan_new', $data);
     }
 
+    public function edit(int $id) {
+        $data = [
+            'title' => 'Lowongan Magang',
+            'subtitle' => 'Edit Lowongan Magang',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('perusahaan'), 
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('perusahaan/lowongan'), 
+                    'crumb' => 'Lowongan'
+                ],
+                [
+                    'crumb' => 'Edit Lowongan'
+                ],
+            ],
+        ];
+
+        $data['lowongan'] = $this->mLowongan->detailLowonganPerusahaan($id);
+
+        return view('perusahaan/lowongan_perusahaan_edit', $data);
+    }
+
     public function create()
     {
         $dataIn = $this->request->getPost();
@@ -95,6 +119,30 @@ class LowonganPerusahaan extends BaseController
             $response = [
                 'status' => 'error',
                 'message' => 'Lowongan gagal ditambahkan',
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function update(int $id)
+    {
+        $dataIn = $this->request->getPost();
+
+        $dataIn += [
+            'id' => $id,
+            'daftar_langsung' => isset($dataIn['daftar_langsung']) ? 1 : 0,
+        ];
+        
+        if ($this->mLowongan->save($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Lowongan berhasil diubah',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Lowongan gagal diubah',
             ];
         }
 
