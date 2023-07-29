@@ -55,7 +55,7 @@ class Lowongan extends Model
 
     public function createLowongan($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
 
         if ($data['id_perusahaan'] == 0 || $data['id_perusahaan'] == null) {
             $perusahaan = [
@@ -82,17 +82,18 @@ class Lowongan extends Model
         }
         $this->db->table('lowongan_skill')->insertBatch($lowonganSkill);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function createLowonganPerusahaan($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
 
         $id_perusahaan = $this->db->table('perusahaan')
             ->getWhere(['account_id' => auth()->id()], 1)
@@ -112,12 +113,13 @@ class Lowongan extends Model
         }
         $this->db->table('lowongan_skill')->insertBatch($lowonganSkill);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function getLowongan($filter = null, $perPage = 10)
@@ -182,5 +184,22 @@ class Lowongan extends Model
             'lowongan.user_id' => auth()->id(),
         ]);
         return $this->first();
+    }
+
+    public function deleteLowongan($id)
+    {
+        $this->db->transStart();
+
+        $this->db->table('lowongan_skill')->where('lowongan_id', $id)->delete();
+        
+        $this->delete($id);
+
+        if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
+            return false;
+        } else {
+            $this->db->transCommit();
+            return true;
+        }
     }
 }

@@ -33,7 +33,7 @@ class LowonganAdmin extends BaseController
 
     public function delete($id)
     {
-        if ($this->mLowongan->delete($id)) {
+        if ($this->mLowongan->deleteLowongan($id)) {
             $response = [
                 'status' => 'success',
                 'message' => 'Lowongan Magang berhasil dihapus',

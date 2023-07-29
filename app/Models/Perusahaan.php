@@ -65,16 +65,19 @@ class Perusahaan extends Model
 
     public function deleteAvaImg($id)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
+
         $this->where('account_id', $id);
         $this->set(['avatar' => null]);
         $this->update();
-        $this->db->transComplete();
-
+        
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function saveProfile($data)

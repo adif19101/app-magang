@@ -87,7 +87,27 @@ class LowonganMhs extends BaseController
 
     public function edit(int $id)
     {
-        
+        $data = [
+            'title' => 'Lowongan Magang',
+            'subtitle' => 'Edit Lowongan Magang',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('mahasiswa'), 
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('mahasiswa/lowongan'), 
+                    'crumb' => 'Lowongan'
+                ],
+                [
+                    'crumb' => 'Edit Lowongan'
+                ],
+            ],
+        ];
+
+        $data['lowongan'] = $this->mLowongan->detailLowongan($id);
+
+        return view('mahasiswa/lowongan_mhs_edit', $data);
     }
 
     public function create()
@@ -113,12 +133,40 @@ class LowonganMhs extends BaseController
 
     public function update(int $id)
     {
+        $dataIn = $this->request->getPost();
+
+        $dataIn += ['id' => $id];
         
+        if ($this->mLowongan->save($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Lowongan berhasil diubah',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Lowongan gagal diubah',
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
     
-    public function delete(int $id)
+    public function delete($id)
     {
-        
+        if ($this->mLowongan->deleteLowongan($id)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Lowongan Magang berhasil dihapus',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Lowongan Magang gagal dihapus',
+            ];
+        }
+
+        return $this->response->setJSON($response);
     }
 
     public function lamar(int $id)

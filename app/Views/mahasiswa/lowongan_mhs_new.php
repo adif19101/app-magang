@@ -327,17 +327,19 @@
                 },
                 kriteria: {
                     required: true,
+                    maxlength: 30000,
                 },
                 cara_daftar: {
                     required: true,
+                    maxlength: 30000,
+                },
+                info_tambahan: {
+                    maxlength: 30000,
                 },
                 nama_perusahaan: {
                     required: true,
                 },
                 alamat_perusahaan: {
-                    required: true,
-                },
-                kontak_perusahaan: {
                     required: true,
                 },
             },

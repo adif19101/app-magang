@@ -130,7 +130,7 @@ class User extends Model
 
     public function insertMhs($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
 
         $user = auth()->getProvider();
         $users = new EntitiesUser([
@@ -156,17 +156,18 @@ class User extends Model
 
         $this->db->table('mahasiswa')->insert($mahasiswa);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function insertPerusahaan($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
         
         $user = auth()->getProvider();
         $users = new EntitiesUser([
@@ -193,17 +194,18 @@ class User extends Model
 
         $this->db->table('perusahaan')->insert($perusahaan);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function insertAdmin($data, $group)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
 
         $user = auth()->getProvider();
         $users = new EntitiesUser([
@@ -226,17 +228,18 @@ class User extends Model
 
         $this->db->table('admin')->insert($admin);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function createAccPerusahaan($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
         
         $user = auth()->getProvider();
         $users = new EntitiesUser([
@@ -257,11 +260,12 @@ class User extends Model
 
         $this->db->table('perusahaan')->where('id', $data['id'])->update($perusahaan);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 }

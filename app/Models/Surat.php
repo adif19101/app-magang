@@ -55,7 +55,7 @@ class Surat extends Model
 
     public function createSurat($data)
     {
-        $this->db->transStart();
+        $this->db->transBegin();
 
         if ($data['id_perusahaan'] == 0 || $data['id_perusahaan'] == null) {
             $perusahaan = [
@@ -71,12 +71,13 @@ class Surat extends Model
 
         $this->insert($data);
 
-        $this->db->transComplete();
-
         if ($this->db->transStatus() === false) {
+            $this->db->transRollback();
             return false;
+        } else {
+            $this->db->transCommit();
+            return true;
         }
-        return true;
     }
 
     public function showSurat($id)
