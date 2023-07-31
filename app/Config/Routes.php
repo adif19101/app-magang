@@ -53,7 +53,10 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
             $routes->post('profile/saveProfile', 'ProfileAdmin::saveProfile');
             $routes->post('profile/saveDetail', 'ProfileAdmin::saveDetail');
 
+            $routes->post('lowongan/dtPelamar/(:segment)', 'LowonganAdmin::dtPelamar/$1');
             $routes->post('lowongan/datatable', 'LowonganAdmin::dt_lowongan');
+            $routes->get('lowongan/pelamar/(:segment)', 'LowonganAdmin::pelamar/$1');
+            $routes->get('lowongan/download/(:segment)', 'LowonganAdmin::download/$1');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
 
             $routes->post('user/datatable', 'UserAdmin::datatable');
