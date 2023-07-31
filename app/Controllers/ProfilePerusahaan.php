@@ -89,7 +89,9 @@ class ProfilePerusahaan extends BaseController
         $users = auth()->getProvider();
 
         $user = $users->findById(auth()->id());
-        $user->fill($this->request->getPost());
+
+        $data = array_filter($this->request->getPost(), 'strlen');
+        $user->fill($data);
         
         if ($users->save($user)) {
             auth()->logout();
