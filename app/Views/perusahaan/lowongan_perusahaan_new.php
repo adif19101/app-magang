@@ -161,6 +161,13 @@
                         icon: result.status,
                         title: result.message
                     });
+
+                    if (result.status === 'success' && result.last_id) {
+                        // Manually update the option's value with the received last_id
+                        var $optionToUpdate = $('#skill').find('option[data-select2-tag=true][value="' + data.text + '"]');
+                        $optionToUpdate.val(result.last_id).attr('selected', true);
+                        $('#skill').trigger('change');
+                    }
                 });
             }
         });

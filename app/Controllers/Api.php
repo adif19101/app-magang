@@ -34,6 +34,7 @@ class Api extends BaseController
             $response = [
                 'status' => 'success',
                 'message' => 'Kemampuan berhasil ditambahkan',
+                'last_id' => $this->mSkill->getInsertID(),
             ];
         } else {
             $response = [

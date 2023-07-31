@@ -290,6 +290,13 @@
                         icon: result.status,
                         title: result.message
                     });
+
+                    if (result.status === 'success' && result.last_id) {
+                        // Manually update the option's value with the received last_id
+                        var $optionToUpdate = $('#skill').find('option[data-select2-tag=true][value="' + data.text + '"]');
+                        $optionToUpdate.val(result.last_id).attr('selected', true);
+                        $('#skill').trigger('change');
+                    }
                 });
             }
         });
@@ -461,7 +468,7 @@
             }
         });
 
-        var tab_tambah_input = $('#tabs_tambah_perusahaan input,textarea');
+        var tab_tambah_input = $('#tabs_tambah_perusahaan').find('input, textarea');
         tab_tambah_input.on('change', function() {
             var value = $(this).val();
             var label = $(this).prev('label').text();
