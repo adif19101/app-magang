@@ -11,6 +11,9 @@ class UserAdmin extends BaseController
     public function __construct()
     {
         $this->mUser = new User();
+        $this->mMahasiswa = new \App\Models\Mahasiswa();
+        $this->mPerusahaan = new \App\Models\Perusahaan();
+        $this->mAdmin = new \App\Models\Admin();
     }
 
     public function index()
@@ -93,6 +96,46 @@ class UserAdmin extends BaseController
         ];
 
         return view('admin/user_admin_new', $data);
+    }
+
+    public function edit($id)
+    {
+        $data = [
+            'title' => 'Edit User',
+            'subtitle' => 'Edit User',
+            'breadcrumbs' => [
+                [
+                    'url' => base_url('admin'),
+                    'crumb' => 'Dashboard'
+                ],
+                [
+                    'url' => base_url('admin/user'),
+                    'crumb' => 'Kelola User'
+                ],
+                [
+                    'crumb' => 'Edit'
+                ],
+            ],
+        ];
+
+        $userGroup = $this->mUser->getGroup($id);
+
+        switch ($userGroup) {
+            case 'mahasiswa':
+                $data['user'] = $this->mUser->showMhs($id);
+                return view('admin/user_mhs_edit', $data);
+                break;
+
+            case 'perusahaan':
+                $data['user'] = $this->mUser->showPerusahaan($id);
+                return view('admin/user_perusahaan_edit', $data);
+                break;
+
+            default:
+                $data['user'] = $this->mUser->showAdmin($id);
+                return view('admin/user_admin_edit', $data);
+                break;
+        }
     }
 
     public function create()
@@ -186,6 +229,112 @@ class UserAdmin extends BaseController
                     'message' => 'Akun gagal ditambahkan',
                 ];
                 break;
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function update($id)
+    {
+        $dataIn = $this->request->getPost();
+        $dataIn += ['account_id' => $id];
+
+        $img = $this->request->getFile('avatar_upload');
+
+        if (isset($img) && $img->isValid() && !$img->hasMoved()) {
+            $imgName = $img->getRandomName();
+
+            if ($img->move(AVATAR_UPLOAD_PATH, $imgName)) {
+                $dataIn += ['avatar' => $imgName];
+            }
+        }
+
+        if ($this->mUser->updateUser($dataIn)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Akun berhasil diupdate',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Akun gagal diupdate',
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function deleteImage()
+    {
+        $id = $this->request->getPost('id');
+        $group = $this->request->getPost('group');
+
+        switch ($group) {
+            case 'mahasiswa':
+                if ($this->mMahasiswa->deleteAvaImg($id)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Foto profil berhasil dihapus',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Foto profil gagal dihapus',
+                    ];
+                }
+                break;
+
+            case 'perusahaan':
+                if ($this->mPerusahaan->deleteAvaImg($id)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Foto profil berhasil dihapus',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Foto profil gagal dihapus',
+                    ];
+                }
+                break;
+
+            case 'admin':
+                if ($this->mAdmin->deleteAvaImg($id)) {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Foto profil berhasil dihapus',
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Foto profil gagal dihapus',
+                    ];
+                }
+                break;
+
+            default:
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Foto profil gagal dihapus',
+                ];
+                break;
+        }
+
+        return $this->response->setJSON($response);
+    }
+
+    public function delete($id)
+    {
+        if ($this->mUser->deleteUser($id)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'User berhasil dihapus',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'User gagal dihapus',
+            ];
         }
 
         return $this->response->setJSON($response);

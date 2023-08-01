@@ -44,9 +44,9 @@ class User extends Model
     public function getGroup($id)
     {
         $group =  $this->db->table('auth_groups_users')
-        ->select('group')
-        ->where('user_id', $id)->get()->getFirstRow('array');
-        
+            ->select('group')
+            ->where('user_id', $id)->get()->getFirstRow('array');
+
         return $group['group'];
     }
 
@@ -168,7 +168,7 @@ class User extends Model
     public function insertPerusahaan($data)
     {
         $this->db->transBegin();
-        
+
         $user = auth()->getProvider();
         $users = new EntitiesUser([
             'username' => $data['username'],
@@ -240,7 +240,7 @@ class User extends Model
     public function createAccPerusahaan($data)
     {
         $this->db->transBegin();
-        
+
         $user = auth()->getProvider();
         $users = new EntitiesUser([
             'username' => $data['username'],
@@ -267,5 +267,88 @@ class User extends Model
             $this->db->transCommit();
             return true;
         }
+    }
+
+    public function updateUser($data)
+    {
+        $tabel = $data['group'];
+        unset($data['group']);
+        $oldAvatar = $this->db->table($tabel)
+            ->select('avatar')->getWhere(['account_id' => $data['account_id']])->getRow()->avatar;
+
+        $this->db->transBegin();
+        $save = $this->db->table($tabel)
+            ->whereIn('account_id', [$data['account_id']])
+            ->set($data)
+            ->update();
+
+        if (!$save) {
+            $this->db->transRollback();
+            if (isset($data['avatar']) && $data['avatar'] != null) {
+                unlink(AVATAR_UPLOAD_PATH . '/' . $data['avatar']);
+            }
+            return false;
+        }
+
+        $this->db->transCommit();
+        if ($oldAvatar != null && isset($data['avatar']) && $data['avatar'] != null) {
+            unlink(AVATAR_UPLOAD_PATH . '/' . $oldAvatar);
+        }
+
+        $this->db->transComplete();
+        return true;
+    }
+
+    public function deleteUser($id)
+    {
+        $this->db->transBegin();
+        $group = $this->getGroup($id);
+
+        switch ($group) {
+            case 'mahasiswa':
+                $tabel = 'mahasiswa';
+                break;
+
+            case 'perusahaan':
+                $tabel = 'perusahaan';
+                break;
+
+            case 'admin':
+                $tabel = 'admin';
+                break;
+
+            case 'verifikator':
+                $tabel = 'admin';
+                break;
+
+            default:
+                return false;
+        }
+
+        if ($group == 'perusahaan') {
+            $edit = $this->db->table($tabel)
+            ->where(['account_id' => $id])
+            ->set(['account_id' => null])
+            ->update();
+            
+        } else {
+            $edit = $this->db->table($tabel)
+                ->where(['account_id' => $id])
+                ->delete();
+        }
+
+        $users = auth()->getProvider();
+
+        $users->delete($id, true);
+
+        if (!$edit) {
+            $this->db->transRollback();
+            return false;
+        }
+
+        $this->db->transCommit();
+
+        $this->db->transComplete();
+        return true;
     }
 }

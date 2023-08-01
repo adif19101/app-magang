@@ -59,6 +59,7 @@ $routes->group('admin', ['filter' => 'group:admin,superadmin'], static function 
             $routes->get('lowongan/download/(:segment)', 'LowonganAdmin::download/$1');
             $routes->resource('lowongan', ['websafe' => 1, 'controller' => 'LowonganAdmin']);
 
+            $routes->post('user/deleteImage', 'UserAdmin::deleteImage');
             $routes->post('user/datatable', 'UserAdmin::datatable');
             $routes->resource('user', ['websafe' => 1, 'controller' => 'UserAdmin']);
 
