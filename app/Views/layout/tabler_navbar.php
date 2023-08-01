@@ -140,6 +140,7 @@
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center justify-content-between">
                 <ul class="navbar-nav">
+                    <?php if(auth()->user()->can('navmenu.home')) :?>
                     <li class="nav-item active">
                         <a class="nav-link" href="<?= groupUrl() ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -155,6 +156,8 @@
                             </span>
                         </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('navmenu.joblist')) :?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= groupUrl('lowongan') ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -173,6 +176,8 @@
                             </span>
                         </a>
                     </li>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('navmenu.suratmohon') OR auth()->user()->can('navmenu.suratplot')) :?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -188,15 +193,20 @@
                             </span>
                         </a>
                         <div class="dropdown-menu">
+                        <?php if(auth()->user()->can('navmenu.suratmohon')) :?>
                             <a class="dropdown-item" href="<?= groupUrl('surat') ?>">
                                 Permohonan Magang
                             </a>
+                        <?php endif; ?>
+                        <?php if(auth()->user()->can('navmenu.suratplot')) :?>
                             <a class="dropdown-item" href="<?= groupUrl('suratPlot') ?>">
                                 Plot Pembimbing
                             </a>
+                        <?php endif; ?>
                         </div>
                     </li>
-                    <?php if(auth()->user()->inGroup('admin')) :?>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('navmenu.users')) :?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= groupUrl('user') ?>">
                             <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -215,6 +225,7 @@
                     </li>
                     <?php endif; ?>
                 </ul>
+                <?php if(auth()->user()->can('navmenu.search')) :?>
                 <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last align-end me-md-2">
                     <form id="search_form" name="search_form" action="<?= groupUrl('lowongan') ?>" method="get" autocomplete="off" novalidate="">
                         <input type="hidden" name="filter_applied" value="1">
@@ -231,6 +242,7 @@
                         </div>
                     </form>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

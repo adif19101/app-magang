@@ -31,10 +31,6 @@ class AuthGroups extends ShieldAuthGroups
      * @see https://github.com/codeigniter4/shield/blob/develop/docs/quickstart.md#change-available-groups for more info
      */
     public array $groups = [
-        'superadmin' => [
-            'title'       => 'Super Admin',
-            'description' => 'Complete control of the site.',
-        ],
         'admin' => [
             'title'       => 'Admin',
             'description' => 'Day to day administrators of the site.',
@@ -81,6 +77,13 @@ class AuthGroups extends ShieldAuthGroups
         'companies.access'    => 'listing lowongan magang per instansi',
 
         'doc.access'          => 'Can access the document page',
+
+        'navmenu.home'        => 'Can access the home page',
+        'navmenu.joblist'     => 'Can access the job list page',
+        'navmenu.suratmohon'       => 'Can access the surat permohonan page',
+        'navmenu.suratplot'       => 'Can access the surat plot page',
+        'navmenu.users'       => 'Can access the users page',
+        'navmenu.search'      => 'Can access the search page',
     ];
 
     /**
@@ -90,25 +93,33 @@ class AuthGroups extends ShieldAuthGroups
      * Maps permissions to groups.
      */
     public array $matrix = [
-        'superadmin' => [
-            'admin.*',
-            'users.*',
-            'jobs.*',
-            'companies.*',
-            'home.*'
-        ],
         'admin' => [
             'admin.access',
             'users.create',
             'users.edit',
             'users.delete',
+
+            'navmenu.home',
+            'navmenu.joblist',
+            'navmenu.suratmohon',
+            'navmenu.suratplot',
+            'navmenu.users',
         ],
         'verifikator' => [
             'doc.access',
+
+            'navmenu.home',
+            'navmenu.suratplot',
         ],
         'mahasiswa' => [
             'home.access',
             'jobs.*',
+
+            'navmenu.home',
+            'navmenu.joblist',
+            'navmenu.suratmohon',
+            'navmenu.suratplot',
+            'navmenu.search',
         ],
         'perusahaan' => [
             'companies.access',
@@ -116,6 +127,9 @@ class AuthGroups extends ShieldAuthGroups
             'jobs.edit',
             'jobs.delete',
             'doc.access',
+
+            'navmenu.home',
+            'navmenu.joblist',
         ],
     ];
 }

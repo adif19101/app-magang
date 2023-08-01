@@ -7,9 +7,9 @@
     <title><?= $title ?></title>
     <!-- <link rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css') ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
+    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler-payments.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/DataTables/datatables.min.css') ?>">
