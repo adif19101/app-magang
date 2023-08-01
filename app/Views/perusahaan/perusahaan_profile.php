@@ -112,7 +112,7 @@
                         <div class="mb-3">
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $perusahaan['email'] ?>
+                                    <?= $perusahaan['account_email'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="email" name="email" type="text" class="form-control w-auto" placeholder="Email Baru...">
@@ -129,7 +129,7 @@
                         <div>
                             <div class="row g-2">
                                 <label class="col-auto col-form-label">
-                                    <?= $perusahaan['username'] ?>
+                                    <?= $perusahaan['account_username'] ?>
                                 </label>
                                 <div class="col-auto">
                                     <input id="username" name="username" type="text" class="form-control w-auto" placeholder="Username Baru...">

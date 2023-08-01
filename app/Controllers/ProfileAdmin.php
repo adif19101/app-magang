@@ -26,8 +26,8 @@ class ProfileAdmin extends BaseController
             ->where('account_id', auth()->id())
             ->first();
         $data['admin'] += [
-            'email' => auth()->user()->email,
-            'username' => auth()->user()->username,
+            'account_email' => auth()->user()->email,
+            'account_username' => auth()->user()->username,
         ];
 
         return view('admin/admin_profile', $data);

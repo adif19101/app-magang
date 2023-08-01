@@ -28,8 +28,8 @@ class ProfileMhs extends BaseController
             ->where('account_id', auth()->id())
             ->first();
         $data['mahasiswa'] += [
-            'email' => auth()->user()->email,
-            'username' => auth()->user()->username,
+            'account_email' => auth()->user()->email,
+            'account_username' => auth()->user()->username,
         ];
 
         return view('mahasiswa/mhs_profile', $data);
