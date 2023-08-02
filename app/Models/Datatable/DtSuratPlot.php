@@ -24,6 +24,8 @@ class DtSuratPlot extends DatatableModel
         
         if (auth()->user()->getGroups()[0] == 'mahasiswa') {
             $this->where('surat_plot.user_id', auth()->id());
+        } else {
+            $this->where('surat_plot.status !=', 'CANCELED');
         }
     }
 
