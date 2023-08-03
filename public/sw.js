@@ -77,7 +77,13 @@ const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
   return caches.match(request)
     .then(cachedResponse => {
       if (cachedResponse) {
-        // Serve the cached page if available
+        // Serve the cached page if available and revalidate in the background
+        event.waitUntil(
+          caches.open('pages')
+            .then(cache => {
+              cache.add(request.url, {cache: 'reload'});
+            })
+        );
         return cachedResponse;
       }
 
