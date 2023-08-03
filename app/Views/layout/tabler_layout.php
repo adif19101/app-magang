@@ -5,11 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title><?= $title ?></title>
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/bootstrap/css/bootstrap.min.css') ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
-    <!-- <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-payments.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>"> -->
     <link rel="stylesheet" href="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/DataTables/datatables.min.css') ?>">
@@ -67,14 +63,24 @@
     <script src="<?= base_url('assets/js/jquery.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/masonry.pkgd.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/tabler.min.js') ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <script src="https://kit.fontawesome.com/d7e4f69e6f.js" crossorigin="anonymous"></script> -->
+    <script src="<?= base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
     <script src="<?= base_url('assets/summernote-0.8.18-dist/summernote-lite.js') ?>"></script>
     <script src="<?= base_url('assets/js/jquery.validate.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/additional-methods.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/select2.min.js') ?>"></script>
     <script src="<?= base_url('assets/DataTables/datatables.min.js') ?>"></script>
-    <script src="<?= base_url('upup.min.js') ?>"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('Service Worker registered:', registration);
+                }).catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 
     <script>
         const Toast = Swal.mixin({
@@ -112,22 +118,6 @@
             };
         }
         // DataTables debounce search END
-
-        // TODO ganti ke workbox biar bisa cache bbrp halaman(ambil 5 halaman terakhir)
-        <?php if(!isset($customOffline) OR !$customOffline): ?>
-        // PWA
-        UpUp.start({
-            'content-url': '<?= base_url(uri_string()) ?>',
-            'assets': [
-                'assets/css/tabler.min.css',
-                'assets/img/undraw_quitting_time_dm8t.svg',
-                'assets/js/tabler.min.js',
-                'favicon-16x16.png',
-                'favicon-32x32.png',
-            ],
-            'service-worker-url': '<?= base_url('upup.sw.min.js') ?>',
-        });
-        <?php endif; ?>
 
         $(document).ready(function() {
 

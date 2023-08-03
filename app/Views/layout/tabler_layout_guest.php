@@ -39,8 +39,19 @@
     <script src="<?= base_url('assets/js/vanilla-zoom.js') ?>"></script>
     <script src="<?= base_url('assets/js/masonry.pkgd.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/tabler.min.js') ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="<?= base_url('upup.min.js') ?>"></script>
+    <script src="<?= base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('Service Worker registered:', registration);
+                }).catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 
     <script>
         const Toast = Swal.mixin({
@@ -54,19 +65,6 @@
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-
-        // TODO rubah pwanya jd hal utama
-        // PWA
-        UpUp.start({
-            'content-url': '<?= base_url('offline') ?>',
-            'assets': [
-                '<?= base_url("assets/css/tabler.min.css") ?>',
-                '<?= base_url("assets/img/undraw_quitting_time_dm8t.svg") ?>',
-                '<?= base_url("assets/js/tabler.min.js") ?>',
-                '<?= base_url("favicon-16x16.png") ?>',
-                '<?= base_url("favicon-32x32.png") ?>',
-            ],
-        });
 
         $(document).ready(function() {
 
