@@ -1,7 +1,7 @@
-importScripts('https://localhost/workbox/workbox-v7.0.0/workbox-sw.js');
+importScripts('/workbox/workbox-v7.0.0/workbox-sw.js');
 
 workbox.setConfig({
-  modulePathPrefix: 'https://localhost/workbox/workbox-v7.0.0/',
+  modulePathPrefix: '/workbox/workbox-v7.0.0/',
 });
 
 // Precache assets (except HTML pages, those will be handled automatically)
