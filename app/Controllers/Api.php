@@ -62,7 +62,7 @@ class Api extends BaseController
 
         foreach ($data as $key) {
             $result = $result . '<div class="col-sm-12 col-lg-6"><div class="card card-sm"><div class="card-body"><div class="d-flex align-items-center mb-3">'
-                . '<span class="avatar me-3 rounded" style="background-image: url(' . urlImg($key['avatar']) . '"></span>'
+                . '<span class="avatar me-3 rounded" style="background-image: url(' . showAvatar($key['avatar']) . '"></span>'
                 . '<div><div id="compName">' . $key['nama'] . '</div></div></div>';
 
             if ($key['whatsapp']) {

@@ -469,6 +469,23 @@
             }
         });
 
+        let BASE_URL = "<?= base_url('/') ?>";
+        function urlImg(fullImgPath, defaultImg = 'assets/img/default.webp') {
+            if (fullImgPath === '' || typeof fullImgPath !== 'string' || !is_file(fullImgPath)) {
+                return BASE_URL + defaultImg;
+            }
+
+            return BASE_URL + fullImgPath;
+        }
+
+        function showAvatar(avatar = null) {
+            if (avatar) {
+                return BASE_URL + 'avatar/' + avatar;
+            }
+
+            return urlImg('');
+        }
+
         $('#cari_perusahaan').keyup(debounce(function() {
             var cari_perusahaan = this.value;
 
@@ -504,7 +521,7 @@
                                     card.innerHTML = `
                                         <div class="card-body">
                                             <div class="d-flex align-items-center mb-3">
-                                                <span class="avatar me-3 rounded" style="background-image: url(http://localhost/assets/img/default.webp"></span>
+                                                <span class="avatar me-3 rounded" style="background-image: url(${showAvatar(data.avatar)}"></span>
                                                 <div>
                                                     <div class="compName">${data.nama}</div>
                                                 </div>
