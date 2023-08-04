@@ -59,29 +59,10 @@ class AuthGroups extends ShieldAuthGroups
      * If a permission is not listed here it cannot be used.
      */
     public array $permissions = [
-        'admin.access'        => 'Can access the sites admin area',
-        'admin.settings'      => 'Can access the main site settings',
-
-        'users.manage-admins' => 'Can manage other admins',
-        'users.create'        => 'Can create new non-admin users',
-        'users.edit'          => 'Can edit existing non-admin users',
-        'users.delete'        => 'Can delete existing non-admin users',
-
-        'jobs.access'         => 'listing semua lowongan magang',
-        'jobs.create'         => 'Can create new jobs',
-        'jobs.edit'           => 'Can edit existing jobs',
-        'jobs.delete'         => 'Can delete existing jobs',
-
-        'home.access'         => 'Can access the home page',
-
-        'companies.access'    => 'listing lowongan magang per instansi',
-
-        'doc.access'          => 'Can access the document page',
-
         'navmenu.home'        => 'Can access the home page',
         'navmenu.joblist'     => 'Can access the job list page',
-        'navmenu.suratmohon'       => 'Can access the surat permohonan page',
-        'navmenu.suratplot'       => 'Can access the surat plot page',
+        'navmenu.suratmohon'  => 'Can access the surat permohonan page',
+        'navmenu.suratplot'   => 'Can access the surat plot page',
         'navmenu.users'       => 'Can access the users page',
         'navmenu.search'      => 'Can access the search page',
     ];
@@ -94,11 +75,6 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'admin' => [
-            'admin.access',
-            'users.create',
-            'users.edit',
-            'users.delete',
-
             'navmenu.home',
             'navmenu.joblist',
             'navmenu.suratmohon',
@@ -106,15 +82,10 @@ class AuthGroups extends ShieldAuthGroups
             'navmenu.users',
         ],
         'verifikator' => [
-            'doc.access',
-
             'navmenu.home',
             'navmenu.suratplot',
         ],
         'mahasiswa' => [
-            'home.access',
-            'jobs.*',
-
             'navmenu.home',
             'navmenu.joblist',
             'navmenu.suratmohon',
@@ -122,12 +93,6 @@ class AuthGroups extends ShieldAuthGroups
             'navmenu.search',
         ],
         'perusahaan' => [
-            'companies.access',
-            'jobs.create',
-            'jobs.edit',
-            'jobs.delete',
-            'doc.access',
-
             'navmenu.home',
             'navmenu.joblist',
         ],
