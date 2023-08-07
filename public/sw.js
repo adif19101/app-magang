@@ -74,33 +74,26 @@ workbox.routing.registerRoute(
 // Handle navigation requests and show the offline page if fetching fails
 const navigationRoute = new workbox.routing.NavigationRoute(({ event }) => {
   const { request } = event;
-  return caches.match(request)
-    .then(cachedResponse => {
-      if (cachedResponse) {
-        // Serve the cached page if available and revalidate in the background
-        event.waitUntil(
-          caches.open('pages')
-            .then(cache => {
-              cache.add(request.url, {cache: 'reload'});
-            })
-        );
-        return cachedResponse;
-      }
+  return fetch(request)
+    .then(networkResponse => {
+      // Clone the network response before caching
+      const responseClone = networkResponse.clone();
 
-      // If the page is not in the cache, try fetching from the network
-      return fetch(request)
-        .then(networkResponse => {
-          // Clone the network response before caching
-          const responseClone = networkResponse.clone();
+      // Cache the fetched page for future use
+      caches.open('pages')
+        .then(cache => cache.put(request, responseClone));
 
-          // Cache the fetched page for future use
-          caches.open('pages')
-            .then(cache => cache.put(request, responseClone));
+      return networkResponse;
+    })
+    .catch(() => {
+      // If fetching from the network fails, serve the cached page
+      return caches.match(request)
+        .then(cachedResponse => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
 
-          return networkResponse;
-        })
-        .catch(() => {
-          // If fetching from the network also fails, serve the offline page
+          // If the page is not in the cache, serve the offline page
           return caches.match('/offline');
         });
     });
