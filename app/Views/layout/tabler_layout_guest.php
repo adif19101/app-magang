@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/baguetteBox.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/vanilla-zoom.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/tabler.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-flags.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-payments.min.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/tabler-vendors.min.css') ?>">
 
     <!-- PWA -->
     <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('apple-touch-icon.png') ?>">
