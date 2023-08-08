@@ -490,7 +490,8 @@
             var cari_perusahaan = this.value;
 
             if (cari_perusahaan == '') {
-                $('#result_cari_perusahaan').html('<div class="container text-center"><span>Cari perusahaan yang sudah terdaftar di sistem untuk membuat akun perusahaan.</span></div>');
+                $('#placeholder_message').html('<span>Cari perusahaan yang sudah terdaftar di sistem untuk membuat akun perusahaan.</span>');
+                document.getElementById("card_container").innerHTML = '';
 
             } else {
                 $.ajax({
@@ -506,8 +507,9 @@
                     // processData: false,
                     // contentType: false,
                     success: function(response) {
+                        var cardContainer = document.getElementById("card_container");
+                        cardContainer.innerHTML = '';
                         if (response.status == 'success') {
-                            var cardContainer = document.getElementById("card_container");
 
                             for (var key in response.data) {
                                 if (response.data.hasOwnProperty(key)) {
@@ -559,21 +561,17 @@
                                 }
                             }
 
-                            // Check if any cards were added
-                            var placeholderMessage = document.getElementById("placeholder_message");
-                            if (cardContainer.children.length > 0) {
-                                // Hide the placeholder message
-                                placeholderMessage.style.display = "none";
-                            } else {
-                                // Show the placeholder message
-                                placeholderMessage.style.display = "block";
-                            }
                         } else {
-                            Swal.fire(
-                                'Error',
-                                response.message,
-                                'error'
-                            )
+                            $('#placeholder_message').html('<span>Nama perusahaan tidak ditemukan atau sudah memiliki akun</span>');
+                        }
+                        // Check if any cards were added
+                        var placeholderMessage = document.getElementById("placeholder_message");
+                        if (cardContainer.children.length > 0) {
+                            // Hide the placeholder message
+                            placeholderMessage.style.display = "none";
+                        } else {
+                            // Show the placeholder message
+                            placeholderMessage.style.display = "block";
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
