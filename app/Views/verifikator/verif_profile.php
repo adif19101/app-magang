@@ -279,7 +279,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('admin/profile/deleteImage') ?>",
+                        url: "<?= base_url('verifikator/profile/deleteImage') ?>",
                         type: "POST",
                         // data: form_data,
                         headers: {

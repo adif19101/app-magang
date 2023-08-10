@@ -149,6 +149,23 @@ class LowonganPerusahaan extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function delete($id)
+    {
+        if ($this->mLowongan->deleteLowongan($id)) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Lowongan Magang berhasil dihapus',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Lowongan Magang gagal dihapus',
+            ];
+        }
+
+        return $this->response->setJSON($response);
+    }
+
     public function pelamar($id)
     {
         $data['pelamar'] = $this->mPelamar->detailPelamar($id);

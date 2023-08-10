@@ -326,7 +326,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "<?= base_url('mahasiswa/profile/deleteImage') ?>",
+                        url: "<?= base_url('perusahaan/profile/deleteImage') ?>",
                         type: "POST",
                         // data: form_data,
                         headers: {

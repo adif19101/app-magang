@@ -271,9 +271,6 @@
                     minlength: 5,
                     maxlength: 255
                 },
-                id_perusahaan: {
-                    required: true,
-                },
                 nama_perusahaan: {
                     required: true,
                     minlength: 2,
