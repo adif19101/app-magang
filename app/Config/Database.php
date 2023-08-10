@@ -29,7 +29,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root',
         'password' => '',
-        'database' => 'app_magang_dev',
+        'database' => 'app_magang',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
